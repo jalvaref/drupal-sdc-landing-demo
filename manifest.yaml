@@ -1,0 +1,30 @@
+schema_version: "1.0"
+package:
+  name: "energia-demo-sdc-components"
+  version: "0.1.0"
+  status: "prototype"
+  source_html: "web/themes/custom/sdc_landing/templates/page--front.html.twig"
+  target_stack: "Drupal 11 + SDC"
+components:
+  - id: "C01"
+    name: "HeroPromotional"
+    path: "web/themes/custom/sdc_landing/components/hero-promotional"
+  - id: "C03"
+    name: "OfferCard"
+    path: "web/themes/custom/sdc_landing/components/offer-card"
+  - id: "C05"
+    name: "BenefitsGrid"
+    path: "web/themes/custom/sdc_landing/components/benefits-grid"
+  - id: "C09"
+    name: "FaqAccordion"
+    path: "web/themes/custom/sdc_landing/components/faq-accordion"
+  - id: "C10"
+    name: "TrustStrip"
+    path: "web/themes/custom/sdc_landing/components/trust-strip"
+validation:
+  yaml_schema: "pending"
+  commands: ["drush theme:enable sdc_landing", "drush cr"]
+approvals:
+  design: false
+  html: false
+  sdc: false

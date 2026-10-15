@@ -1,0 +1,13 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Hero promotional
+status: stable
+props:
+  type: object
+  properties:
+    eyebrow: { type: string }
+    title: { type: string }
+    description: { type: string }
+    benefits: { type: array, items: { type: string } }
+    primary_label: { type: string }
+    secondary_label: { type: string }
+    visual_label: { type: string }

@@ -1,0 +1,11 @@
+name: SDC Landing Demo
+type: theme
+base theme: false
+description: 'Tema demo para composición de landings con Single Directory Components.'
+core_version_requirement: '^10.3 || ^11'
+libraries:
+  - sdc_landing/global
+regions:
+  header: Header
+  content: Content
+  footer: Footer

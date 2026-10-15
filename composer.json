@@ -1,0 +1,17 @@
+{
+  "name": "poc-gobierno-ia-sdc/drupal-demo",
+  "description": "Demo Drupal 11 con catálogo de componentes SDC para generación de landings.",
+  "type": "project",
+  "require": { "drupal/core-recommended": "^11.0", "drush/drush": "^13.0", "pantheon-systems/drupal-integrations": "^11" },
+  "repositories": [{ "type": "composer", "url": "https://packages.drupal.org/8" }],
+  "config": {
+    "platform": { "php": "8.3" },
+    "allow-plugins": { "composer/installers": true, "drupal/core-composer-scaffold": true, "drupal/core-project-message": true, "oomphinc/composer-installers-extender": true, "php-http/discovery": true, "symfony/runtime": true }
+  },
+  "extra": {
+    "drupal-scaffold": { "locations": { "web-root": "web/" }, "allowed-packages": ["drupal/core", "pantheon-systems/drupal-integrations"] },
+    "installer-paths": { "web/core": ["type:drupal-core"], "web/modules/contrib/{$name}": ["type:drupal-module"], "web/themes/contrib/{$name}": ["type:drupal-theme"], "web/private/scripts/quicksilver/{$name}": ["type:quicksilver-script"] }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

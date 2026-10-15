@@ -1,0 +1,12 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Offer card
+status: stable
+props:
+  type: object
+  properties:
+    title: { type: string }
+    description: { type: string }
+    price: { type: string }
+    price_note: { type: string }
+    cta_label: { type: string }
+    badge: { type: string }
