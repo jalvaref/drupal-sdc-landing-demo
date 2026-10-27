@@ -50,7 +50,7 @@ final class ImportDraftForm extends FormBase {
         $form_state->getValue('proposal_file'),
         $form_state->getValue('title') ?: NULL,
       );
-      $this->messenger()->addStatus($this->t('Draft creado: node/@id.', ['@id' => $node->id()]));
+      $this->messenger()->addStatus($this->t('Draft creado o actualizado: node/@id.', ['@id' => $node->id()]));
       $form_state->setRedirect('entity.node.edit_form', ['node' => $node->id()]);
     }
     catch (\Throwable $exception) {

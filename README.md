@@ -37,6 +37,7 @@ node agent/bin/validate-run.mjs agent/examples/energia-move
 node agent/bin/approve-run.mjs agent/examples/energia-move --to visual_approved
 node agent/bin/approve-run.mjs agent/examples/energia-move --to html_approved
 node agent/bin/generate-sdc-package.mjs agent/examples/energia-move
+node agent/bin/validate-sdc-package.mjs agent/examples/energia-move/sdc-package
 # Requiere working tree limpio y, para crear la PR automáticamente, GITHUB_TOKEN
 node agent/bin/prepare-pull-request.mjs agent/examples/energia-move
 ```

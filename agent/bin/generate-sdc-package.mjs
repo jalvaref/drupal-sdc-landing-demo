@@ -34,7 +34,15 @@ for (const candidate of candidates) {
   const componentDir = join(outPath, 'components', slug);
   await mkdir(componentDir, { recursive: true });
   await writeFile(join(componentDir, `${slug}.component.yml`), `$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json\nname: ${candidate.name}\nstatus: experimental\nprops:\n  type: object\n  properties:\n${propsToYaml(candidate.props)}`);
-  await writeFile(join(componentDir, `${slug}.twig`), `<section class="${slug}" data-component-id="${candidate.component_id}">\n  {# Candidate generated from approved HTML. Complete props before cataloguing. #}\n</section>\n`);
+  await writeFile(join(componentDir, `${slug}.twig`), `<section class="${slug}" data-component-id="${candidate.component_id}">\n  <h2>{{ title|default('${candidate.name}') }}</h2>\n  <p>{{ description|default('Contenido pendiente de completar.') }}</p>\n  {# Candidate generated from approved HTML. Complete props before cataloguing. #}\n</section>\n`);
+  await writeFile(join(componentDir, `${slug}.css`), `.${slug} {\n  padding: var(--sdc-space-6, 2rem);\n  border: 1px solid var(--sdc-line, #d9e2ec);\n  border-radius: var(--sdc-radius-lg, 1rem);\n  background: var(--sdc-surface, #f5f7fa);\n}\n`);
+  await writeFile(join(componentDir, `${slug}.stories.json`), JSON.stringify({
+    component_id: candidate.component_id,
+    name: candidate.name,
+    variant: candidate.variant,
+    props: candidate.props || {},
+    status: 'experimental'
+  }, null, 2) + '\n');
   await writeFile(join(componentDir, 'README.md'), `# ${candidate.name}\n\nEstado: experimental.\n\nJustificación: ${candidate.justification}\n\nLa anatomía y los props deben completarse antes de incorporar el componente al catálogo.\n`);
 }
 

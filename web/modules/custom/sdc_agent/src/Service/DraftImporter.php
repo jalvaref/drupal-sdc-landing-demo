@@ -38,13 +38,29 @@ final class DraftImporter {
     $body = $this->buildBody($proposal, $path, $summary);
     $format = $this->entityTypeManager->getStorage('filter_format')->load('full_html') ? 'full_html' : 'basic_html';
 
-    $node = $this->entityTypeManager->getStorage('node')->create([
+    $nodeStorage = $this->entityTypeManager->getStorage('node');
+    $existingIds = $nodeStorage->getQuery()
+      ->condition('type', 'landing')
+      ->condition('field_agent_run_id', $proposal['run_id'])
+      ->accessCheck(FALSE)
+      ->execute();
+    $node = $existingIds
+      ? $nodeStorage->load(reset($existingIds))
+      : $nodeStorage->create([
       'type' => 'landing',
       'title' => $nodeTitle,
       'body' => ['value' => $body, 'format' => $format],
       'uid' => $this->currentUser->id() ?: 1,
       'status' => 0,
+      'field_agent_run_id' => $proposal['run_id'],
     ]);
+    if (!$node) {
+      throw new \RuntimeException('No se pudo cargar el draft existente.');
+    }
+    $node->setTitle($nodeTitle);
+    $node->set('body', ['value' => $body, 'format' => $format]);
+    $node->set('field_agent_run_id', $proposal['run_id']);
+    $node->setPublished(FALSE);
     $node->save();
     return $node;
   }

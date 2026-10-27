@@ -19,6 +19,13 @@ function sdc_agent_update_10001(): void {
 }
 
 /**
+ * Adds the stable execution key used to update an existing draft idempotently.
+ */
+function sdc_agent_update_10002(): void {
+  sdc_agent_ensure_run_id_field();
+}
+
+/**
  * Creates the minimal fields and displays required by the POC.
  */
 function sdc_agent_ensure_landing_type(): void {
@@ -49,6 +56,7 @@ function sdc_agent_ensure_landing_type(): void {
       'required' => FALSE,
     ])->save();
   }
+  sdc_agent_ensure_run_id_field();
 
   $formDisplayStorage = \Drupal::entityTypeManager()->getStorage('entity_form_display');
   if (!$formDisplayStorage->load('node.landing.default')) {
@@ -73,6 +81,45 @@ function sdc_agent_ensure_landing_type(): void {
       'type' => 'text_default',
       'label' => 'hidden',
       'weight' => 0,
+    ])->save();
+  }
+  $formDisplay = $formDisplayStorage->load('node.landing.default');
+  if ($formDisplay && $formDisplay->getComponent('field_agent_run_id') === NULL) {
+    $formDisplay->setComponent('field_agent_run_id', [
+      'type' => 'string_textfield',
+      'weight' => 2,
+    ])->save();
+  }
+  $viewDisplay = $viewDisplayStorage->load('node.landing.default');
+  if ($viewDisplay && $viewDisplay->getComponent('field_agent_run_id') === NULL) {
+    $viewDisplay->setComponent('field_agent_run_id', [
+      'label' => 'hidden',
+      'type' => 'string',
+      'weight' => 10,
+    ])->save();
+  }
+}
+
+/**
+ * Ensures each imported landing has an idempotency key from the agent run.
+ */
+function sdc_agent_ensure_run_id_field(): void {
+  if (!FieldStorageConfig::loadByName('node', 'field_agent_run_id')) {
+    FieldStorageConfig::create([
+      'field_name' => 'field_agent_run_id',
+      'entity_type' => 'node',
+      'type' => 'string',
+      'cardinality' => 1,
+      'settings' => ['max_length' => 255],
+    ])->save();
+  }
+  if (!FieldConfig::loadByName('node', 'landing', 'field_agent_run_id')) {
+    FieldConfig::create([
+      'field_name' => 'field_agent_run_id',
+      'entity_type' => 'node',
+      'bundle' => 'landing',
+      'label' => 'Agent run ID',
+      'required' => FALSE,
     ])->save();
   }
 }

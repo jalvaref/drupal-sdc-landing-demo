@@ -25,7 +25,7 @@ final class SdcAgentCommands extends DrushCommands {
    */
   public function importDraft(string $proposal_file, array $options = ['title' => NULL]): void {
     $node = $this->importer->import($proposal_file, $options['title'] ?: NULL);
-    $this->logger()->success(sprintf('Draft creado: node/%d.', $node->id()));
+    $this->logger()->success(sprintf('Draft creado o actualizado: node/%d.', $node->id()));
   }
 
 }
