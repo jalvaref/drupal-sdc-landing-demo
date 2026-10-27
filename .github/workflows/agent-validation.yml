@@ -1,0 +1,56 @@
+name: Agent validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate agent scripts
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check agent/bin/run-agent.mjs
+          node --check agent/bin/generate-preview.mjs
+          node --check agent/bin/validate-run.mjs
+          node --check agent/bin/approve-run.mjs
+          node --check agent/bin/generate-sdc-package.mjs
+          node --check agent/bin/prepare-pull-request.mjs
+
+      - name: Generate and validate MVP1 preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          node agent/bin/run-agent.mjs agent/examples/energia-move-brief.json --out "$RUNNER_TEMP/energia-move"
+          node agent/bin/validate-run.mjs "$RUNNER_TEMP/energia-move"
+
+      - name: Validate MVP2 approval and package
+        shell: bash
+        run: |
+          set -euo pipefail
+          node agent/bin/approve-run.mjs "$RUNNER_TEMP/energia-move" --to visual_approved
+          node agent/bin/approve-run.mjs "$RUNNER_TEMP/energia-move" --to html_approved
+          node agent/bin/generate-sdc-package.mjs "$RUNNER_TEMP/energia-move"
+          test -f "$RUNNER_TEMP/energia-move/sdc-package/package-manifest.json"
+
+      - name: Validate JSON contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          node -e "for (const file of ['agent/contracts/brief.schema.json','agent/contracts/landing-proposal.schema.json']) JSON.parse(require('fs').readFileSync(file, 'utf8'));"
+
+      - name: Validate Drupal module PHP
+        shell: bash
+        run: php -l web/modules/custom/sdc_agent/src/Commands/SdcAgentCommands.php
