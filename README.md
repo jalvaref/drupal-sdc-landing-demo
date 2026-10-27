@@ -34,8 +34,13 @@ Para ejecutar el generador local del MVP1 con el briefing de ejemplo:
 ```bash
 node agent/bin/generate-preview.mjs agent/examples/energia-move-brief.json --out agent/examples/energia-move
 node agent/bin/validate-run.mjs agent/examples/energia-move
+node agent/bin/approve-run.mjs agent/examples/energia-move --to visual_approved
+node agent/bin/approve-run.mjs agent/examples/energia-move --to html_approved
+node agent/bin/generate-sdc-package.mjs agent/examples/energia-move
+# Requiere working tree limpio y, para crear la PR automáticamente, GITHUB_TOKEN
+node agent/bin/prepare-pull-request.mjs agent/examples/energia-move
 ```
 
-El resultado incluye `proposal.json`, diseños SVG desktop/mobile, un HTML responsive con inspector y un informe de trazabilidad.
+El resultado incluye `proposal.json`, diseños SVG desktop/mobile, un HTML responsive con inspector, un informe de trazabilidad y un paquete técnico SDC para componentes candidatos.
 
 El precio aparece como `[PRECIO PENDIENTE]`; no se inventan cifras ni condiciones. Los logos e imágenes son placeholders explícitos.

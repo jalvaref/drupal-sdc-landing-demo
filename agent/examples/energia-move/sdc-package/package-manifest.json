@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "run_id": "energia-en-movimiento-20261027124555",
+  "source_proposal": "../proposal.json",
+  "status": "draft",
+  "reused_components": [
+    "C00",
+    "C01",
+    "C10",
+    "C03",
+    "C05",
+    "C09",
+    "C99"
+  ],
+  "candidate_components": [],
+  "drupal_target": "draft"
+}
