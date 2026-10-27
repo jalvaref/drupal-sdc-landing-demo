@@ -3,10 +3,11 @@
 import { readFile } from 'node:fs/promises';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
-import { resolve } from 'node:path';
+import { relative, resolve } from 'node:path';
 
 const run = promisify(execFile);
 const runPath = resolve(process.argv[2] || 'agent/examples/energia-move');
+const dryRun = process.argv.includes('--dry-run');
 const proposal = JSON.parse(await readFile(resolve(runPath, 'proposal.json'), 'utf8'));
 if (proposal.status !== 'sdc_approved') {
   console.error(`[ERROR] La propuesta debe estar en sdc_approved antes de preparar la pull request. Estado actual: ${proposal.status}.`);
@@ -20,12 +21,20 @@ const body = `## Resumen\n\n- Ejecución: \`${proposal.run_id}\`\n- Estado: \`${
 const status = await git('status', '--porcelain');
 const unrelated = status.split(/\r?\n/).filter(Boolean).filter((line) => {
   const path = line.slice(3).replace(/^"|"$/g, '').replaceAll('\\', '/');
-  const target = runPath.replaceAll('\\', '/').replace(/\/$/, '');
+  const target = relative(process.cwd(), runPath).replaceAll('\\', '/').replace(/\/$/, '');
   return !(path === target || path.startsWith(`${target}/`));
 });
 if (unrelated.length) {
   console.error('[ERROR] El repositorio tiene cambios no relacionados con la ejecución:\n' + unrelated.join('\n'));
   process.exit(1);
+}
+const remote = (await git('remote', 'get-url', 'origin')).trim();
+const match = remote.match(/github\.com[/:]([^/]+)\/([^/.]+?)(?:\.git)?$/i);
+const githubToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+const base = await githubBaseBranch();
+if (dryRun) {
+  console.log(JSON.stringify({ branch, base, remote, would_create_pull_request: Boolean(match && githubToken), message: 'Dry run: no se ha creado rama, commit, push ni pull request.' }, null, 2));
+  process.exit(0);
 }
 if (await gitSucceeds('rev-parse', '--verify', branch)) {
   await git('switch', branch);
@@ -38,10 +47,6 @@ await git('add', runPath);
 if (!(await gitSucceeds('diff', '--cached', '--quiet'))) await git('commit', '-m', title);
 await git('push', '--set-upstream', 'origin', branch);
 
-const remote = (await git('remote', 'get-url', 'origin')).trim();
-const match = remote.match(/github\.com[/:]([^/]+)\/([^/.]+?)(?:\.git)?$/i);
-const githubToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
-const base = await githubBaseBranch();
 if (!match || !githubToken) {
   console.log(JSON.stringify({ branch, pushed: true, pull_request: null, message: 'Rama publicada. Falta GITHUB_TOKEN para crear la pull request automáticamente.' }, null, 2));
   process.exit(0);

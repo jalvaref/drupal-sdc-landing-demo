@@ -43,6 +43,8 @@ node agent/bin/approve-run.mjs agent/examples/energia-move --to sdc_approved
 node agent/bin/prepare-pull-request.mjs agent/examples/energia-move
 ```
 
+Puedes inspeccionar la rama y la pull request prevista sin modificar GitHub con `--dry-run`.
+
 El resultado incluye `proposal.json`, diseños SVG desktop/mobile, un HTML responsive con inspector, un informe de trazabilidad y un paquete técnico SDC para componentes candidatos.
 
 Con el módulo `sdc_agent` habilitado en Drupal, una propuesta aprobada puede importarse como draft:
