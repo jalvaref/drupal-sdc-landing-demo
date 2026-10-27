@@ -6,15 +6,21 @@
 $settings['container_yamls'][] = __DIR__ . '/services.yml';
 
 /**
- * Include the Pantheon-specific settings file.
- *
- * n.b. The settings.pantheon.php file makes some changes
- *      that affect all environments that this site
- *      exists in.  Always include this file, even in
- *      a local development environment, to ensure that
- *      the site settings remain consistent.
+ * Load Pantheon-specific services and settings from the Composer package.
+ * This avoids the legacy scaffolded settings file, whose installer redirect
+ * detection is not reliable behind Pantheon's reverse proxy.
  */
-include __DIR__ . "/settings.pantheon.php";
+$pantheon_services_file = __DIR__ . '/services.pantheon.preproduction.yml';
+if (
+  isset($_ENV['PANTHEON_ENVIRONMENT']) &&
+  (($_ENV['PANTHEON_ENVIRONMENT'] === 'live') || ($_ENV['PANTHEON_ENVIRONMENT'] === 'test'))
+) {
+  $pantheon_services_file = __DIR__ . '/services.pantheon.production.yml';
+}
+if (file_exists($pantheon_services_file)) {
+  $settings['container_yamls'][] = $pantheon_services_file;
+}
+include \Pantheon\Integrations\Assets::dir() . '/settings.pantheon.php';
 
 /**
  * Skipping permissions hardening will make scaffolding
