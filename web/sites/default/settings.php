@@ -7,6 +7,12 @@ if (strpos($request_path, '/core/install.php') === 0) {
   $_SERVER['SCRIPT_NAME'] = '/core/install.php';
 }
 
+// Allow the Drupal installer to render on a new Pantheon environment instead
+// of being redirected repeatedly while the database is still empty.
+if (($_SERVER['PANTHEON_DATABASE_STATE'] ?? '') === 'empty') {
+  $_SERVER['PANTHEON_DATABASE_STATE'] = 'installing';
+}
+
 /**
  * Load services definition file.
  */
