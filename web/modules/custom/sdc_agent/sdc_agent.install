@@ -1,7 +1,5 @@
 <?php
 
-use Drupal\Core\Entity\EntityEntityFormDisplay;
-use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\node\Entity\NodeType;
@@ -52,8 +50,9 @@ function sdc_agent_ensure_landing_type(): void {
     ])->save();
   }
 
-  if (!EntityFormDisplay::load('node.landing.default')) {
-    EntityFormDisplay::create([
+  $formDisplayStorage = \Drupal::entityTypeManager()->getStorage('entity_form_display');
+  if (!$formDisplayStorage->load('node.landing.default')) {
+    $formDisplayStorage->create([
       'targetEntityType' => 'node',
       'bundle' => 'landing',
       'mode' => 'default',
@@ -63,8 +62,9 @@ function sdc_agent_ensure_landing_type(): void {
       'weight' => 1,
     ])->save();
   }
-  if (!EntityViewDisplay::load('node.landing.default')) {
-    EntityViewDisplay::create([
+  $viewDisplayStorage = \Drupal::entityTypeManager()->getStorage('entity_view_display');
+  if (!$viewDisplayStorage->load('node.landing.default')) {
+    $viewDisplayStorage->create([
       'targetEntityType' => 'node',
       'bundle' => 'landing',
       'mode' => 'default',
