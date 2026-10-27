@@ -1,0 +1,7 @@
+sdc_agent.import_draft:
+  path: '/admin/config/sdc-agent/import-draft'
+  defaults:
+    _form: '\Drupal\sdc_agent\Form\ImportDraftForm'
+    _title: 'Importar landing como draft'
+  requirements:
+    _permission: 'administer sdc agent'

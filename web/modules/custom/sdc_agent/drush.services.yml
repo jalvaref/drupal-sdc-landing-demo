@@ -1,6 +1,9 @@
 services:
+  sdc_agent.importer:
+    class: Drupal\sdc_agent\Service\DraftImporter
+    arguments: ['@entity_type.manager', '@current_user']
   sdc_agent.commands:
     class: Drupal\sdc_agent\Commands\SdcAgentCommands
-    arguments: ['@entity_type.manager', '@current_user']
+    arguments: ['@sdc_agent.importer']
     tags:
       - { name: drush.command }

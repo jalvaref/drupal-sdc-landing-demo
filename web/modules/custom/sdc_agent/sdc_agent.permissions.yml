@@ -1,0 +1,3 @@
+administer sdc agent:
+  title: 'Administrar importaciones del agente SDC'
+  description: 'Crear landings en estado draft desde propuestas aprobadas.'
