@@ -60,6 +60,8 @@ final class DraftImporter {
     $node->setTitle($nodeTitle);
     $node->set('body', ['value' => $body, 'format' => $format]);
     $node->set('field_agent_run_id', $proposal['run_id']);
+    $node->set('status', 0);
+    $node->setUnpublished();
     $node->setPublished(FALSE);
     $node->save();
     return $node;
