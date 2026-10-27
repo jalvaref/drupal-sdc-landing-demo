@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 
 const runPath = resolve(process.argv[2] || 'agent/examples/energia-move');
@@ -15,6 +15,7 @@ if (proposal.status !== 'html_approved' && proposal.status !== 'sdc_approved') {
 
 const candidates = proposal.components.filter((component) => component.status === 'candidate' || component.status === 'experimental');
 await mkdir(outPath, { recursive: true });
+await rm(join(outPath, 'components'), { recursive: true, force: true });
 await writeFile(join(outPath, 'package-manifest.json'), JSON.stringify({
   schema_version: '1.0',
   run_id: proposal.run_id,
