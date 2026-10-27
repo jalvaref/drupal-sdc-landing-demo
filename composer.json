@@ -11,6 +11,7 @@
   "extra": {
     "drupal-scaffold": {
       "locations": { "web-root": "./web" },
+      "allowed-packages": ["drupal/core"],
       "file-mapping": {
         "[project-root]/.editorconfig": false,
         "[project-root]/pantheon.upstream.yml": false,
