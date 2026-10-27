@@ -1,6 +1,6 @@
 # Contratos del agente
 
-Esta carpeta contiene los contratos de datos y el orquestador de la POC de generación de landings. El flujo puede ejecutarse de forma reproducible con el proveedor `deterministic` o generar una dirección visual y una composición con el proveedor `openai`.
+Esta carpeta contiene los contratos de datos y los validadores de la POC de generación de landings. El camino principal de generación es el agente de ChatGPT `TotalEnergies SDC Copilot`, documentado en `agent/chatgpt-agent/INSTRUCTIONS.md`. El proveedor `deterministic` se conserva para pruebas reproducibles y `openai` como fallback técnico de integración.
 
 El punto de entrada es `bin/run-agent.mjs`. En ambos casos el resultado se valida automáticamente contra el contrato antes de quedar en `awaiting_visual_approval`.
 

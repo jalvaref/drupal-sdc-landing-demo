@@ -29,6 +29,8 @@ Con la integración GitHub de Pantheon, conecta este repositorio como repositori
 
 El flujo de la POC está definido en [docs/agent-mvp-roadmap.md](docs/agent-mvp-roadmap.md). El agente debe generar primero la propuesta visual, después el HTML autocontenido y, tras la aprobación del usuario, el paquete SDC. GitHub se utiliza para ramas y pull requests; Drupal recibe la landing en estado draft y la publicación requiere aprobación de un administrador o editor.
 
+La generación creativa se realiza desde el agente de ChatGPT `TotalEnergies SDC Copilot`. Consulta la [guía de integración del agente](docs/chatgpt-agent-integration.md) y sus [instrucciones operativas](agent/chatgpt-agent/INSTRUCTIONS.md). Los scripts de `agent/bin` validan y ejecutan las fases aprobadas.
+
 Para ejecutar el generador local del MVP1 con el briefing de ejemplo:
 
 ```bash
