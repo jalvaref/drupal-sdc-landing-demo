@@ -1,0 +1,29 @@
+{
+  "campaign_name": "Energía en Movimiento",
+  "slug": "energia-en-movimiento",
+  "objective": "Captar nuevos clientes para contratación online y reducir dudas sobre precio, permanencia y recarga.",
+  "audience": {
+    "description": "Personas de 35 a 55 años en España con vehículo eléctrico o intención de adquirirlo.",
+    "age_range": "35-55",
+    "location": "España, zonas urbanas y metropolitanas",
+    "needs": ["Precio claro", "Estabilidad", "Transparencia", "Recarga pública"]
+  },
+  "offer": {
+    "name": "Tarifa Luz Move Siempre",
+    "description": "Una propuesta sencilla para quienes quieren entender su tarifa y avanzar hacia una movilidad eléctrica más cómoda.",
+    "price": "0,1099 €/kWh durante 12 meses",
+    "conditions": ["Mismo precio las 24 horas", "Sin permanencia", "150 € de saldo para recarga pública"],
+    "benefits": ["Precio sencillo de entender", "Condiciones visibles", "Saldo para recarga pública"]
+  },
+  "ctas": [
+    { "label": "Quiero contratar", "goal": "Iniciar contratación", "priority": "primary" },
+    { "label": "Quiero que me llaméis", "goal": "Solicitar llamada", "priority": "secondary" },
+    { "label": "Ver cómo funciona la promoción", "goal": "Consultar información", "priority": "informational" }
+  ],
+  "kpis": ["Contrataciones iniciadas", "Solicitudes de llamada", "Dudas sobre la oferta"],
+  "duration": "12 meses",
+  "brand_guidance": ["Tono profesional, sencillo y transparente", "Priorizar lectura mobile"],
+  "assets": ["Placeholder de visual de movilidad eléctrica"],
+  "constraints": ["WCAG AA", "Landing responsive", "Contenido ficticio para demo"],
+  "content_policy": { "allow_fictional_content": true, "tone": "professional" }
+}

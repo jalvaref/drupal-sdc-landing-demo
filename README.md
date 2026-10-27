@@ -29,4 +29,13 @@ Con la integración GitHub de Pantheon, conecta este repositorio como repositori
 
 El flujo de la POC está definido en [docs/agent-mvp-roadmap.md](docs/agent-mvp-roadmap.md). El agente debe generar primero la propuesta visual, después el HTML autocontenido y, tras la aprobación del usuario, el paquete SDC. GitHub se utiliza para ramas y pull requests; Drupal recibe la landing en estado draft y la publicación requiere aprobación de un administrador o editor.
 
+Para ejecutar el generador local del MVP1 con el briefing de ejemplo:
+
+```bash
+node agent/bin/generate-preview.mjs agent/examples/energia-move-brief.json --out agent/examples/energia-move
+node agent/bin/validate-run.mjs agent/examples/energia-move
+```
+
+El resultado incluye `proposal.json`, diseños SVG desktop/mobile, un HTML responsive con inspector y un informe de trazabilidad.
+
 El precio aparece como `[PRECIO PENDIENTE]`; no se inventan cifras ni condiciones. Los logos e imágenes son placeholders explícitos.

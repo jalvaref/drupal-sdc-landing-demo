@@ -1,0 +1,182 @@
+{
+  "run_id": "energia-en-movimiento-20261027124555",
+  "briefing_ref": "agent/examples/energia-move-brief.json",
+  "status": "visual_draft",
+  "visuals": {
+    "desktop": "design/desktop.svg",
+    "mobile": "design/mobile.svg"
+  },
+  "components": [
+    {
+      "component_id": "C00",
+      "name": "SiteHeader",
+      "variant": "Utility",
+      "props": {
+        "brand_name": "Energía en Movimiento",
+        "utility_label": "Ver ofertas",
+        "utility_url": "#offers-title",
+        "phone_label": "Te llamamos",
+        "phone_url": "#contact"
+      },
+      "status": "catalog",
+      "justification": "Identifica la marca y ofrece acceso a la acción principal.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Validación del usuario"
+      ]
+    },
+    {
+      "component_id": "C01",
+      "name": "HeroPromotional",
+      "variant": "Partner",
+      "props": {
+        "eyebrow": "Propuesta de demo",
+        "title": "Tarifa Luz Move Siempre",
+        "description": "Una propuesta sencilla para quienes quieren entender su tarifa y avanzar hacia una movilidad eléctrica más cómoda.",
+        "benefits": [
+          "Precio sencillo de entender",
+          "Condiciones visibles",
+          "Saldo para recarga pública"
+        ],
+        "primary_label": "Quiero contratar",
+        "primary_url": "#offers-title",
+        "secondary_label": "Quiero que me llaméis",
+        "secondary_url": "#contact",
+        "visual_label": "Ilustración de movilidad eléctrica"
+      },
+      "status": "catalog",
+      "justification": "Presenta la propuesta de valor y dirige a la conversión.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Validación del usuario"
+      ]
+    },
+    {
+      "component_id": "C10",
+      "name": "TrustStrip",
+      "variant": "PendingValidation",
+      "props": {
+        "label": "Dato destacado",
+        "value": "Contenido de demo pendiente de validación",
+        "source": "Briefing ficticio de la POC"
+      },
+      "status": "catalog",
+      "justification": "Hace visible el estado de validación de un claim.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Validación del usuario"
+      ]
+    },
+    {
+      "component_id": "C03",
+      "name": "OfferCard",
+      "variant": "Luz",
+      "props": {
+        "title": "Tarifa Luz Move Siempre",
+        "description": "Una propuesta sencilla para quienes quieren entender su tarifa y avanzar hacia una movilidad eléctrica más cómoda.",
+        "price": "0,1099 €/kWh durante 12 meses",
+        "price_note": "Mismo precio las 24 horas Sin permanencia 150 € de saldo para recarga pública",
+        "cta_label": "Quiero contratar",
+        "cta_url": "#contact",
+        "badge": "Demo"
+      },
+      "status": "catalog",
+      "justification": "Presenta la oferta principal sin ocultar datos pendientes.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Validación del usuario"
+      ]
+    },
+    {
+      "component_id": "C05",
+      "name": "BenefitsGrid",
+      "variant": "3-up",
+      "props": {
+        "title": "Por qué puede encajarte",
+        "items": [
+          {
+            "title": "Beneficio 1",
+            "text": "Precio sencillo de entender"
+          },
+          {
+            "title": "Beneficio 2",
+            "text": "Condiciones visibles"
+          },
+          {
+            "title": "Beneficio 3",
+            "text": "Saldo para recarga pública"
+          }
+        ]
+      },
+      "status": "catalog",
+      "justification": "Resume beneficios en bloques fáciles de escanear.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Validación del usuario"
+      ]
+    },
+    {
+      "component_id": "C09",
+      "name": "FaqAccordion",
+      "variant": "Default",
+      "props": {
+        "title": "Preguntas frecuentes",
+        "items": [
+          {
+            "question": "¿Qué incluye la propuesta?",
+            "answer": "Una propuesta sencilla para quienes quieren entender su tarifa y avanzar hacia una movilidad eléctrica más cómoda."
+          },
+          {
+            "question": "¿Qué condiciones debo conocer?",
+            "answer": "Mismo precio las 24 horas Sin permanencia 150 € de saldo para recarga pública"
+          },
+          {
+            "question": "¿Cómo puedo solicitar información?",
+            "answer": "Puedes utilizar el formulario o pedir que te llamemos."
+          }
+        ]
+      },
+      "status": "catalog",
+      "justification": "Resuelve objeciones y deja visibles las preguntas pendientes.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Validación del usuario"
+      ]
+    },
+    {
+      "component_id": "C99",
+      "name": "SiteFooter",
+      "variant": "Default",
+      "props": {
+        "legal_label": "Contenido ficticio para demostración. Revisar antes de publicar."
+      },
+      "status": "catalog",
+      "justification": "Cierra la página y diferencia la demo del contenido publicable.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Validación del usuario"
+      ]
+    }
+  ],
+  "html_artifact": "preview/index.html",
+  "traceability_artifact": "traceability.md",
+  "assumptions": [
+    "El contenido de la demo puede ser ficticio y debe validarse antes de publicar.",
+    "Se utiliza el catálogo actual de sdc_landing sin proponer componentes nuevos para esta primera ejecución."
+  ],
+  "open_questions": [
+    "¿Qué condiciones comerciales definitivas deben sustituir al contenido de demo?",
+    "¿Qué activos visuales aprobados deben sustituir a los placeholders?"
+  ],
+  "blockers": [],
+  "approval": {
+    "approved": false
+  }
+}
