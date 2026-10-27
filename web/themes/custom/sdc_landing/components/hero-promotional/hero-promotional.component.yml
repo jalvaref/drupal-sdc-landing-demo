@@ -9,5 +9,7 @@ props:
     description: { type: string }
     benefits: { type: array, items: { type: string } }
     primary_label: { type: string }
+    primary_url: { type: string, default: '#offers-title' }
     secondary_label: { type: string }
+    secondary_url: { type: string, default: '#faq-title' }
     visual_label: { type: string }

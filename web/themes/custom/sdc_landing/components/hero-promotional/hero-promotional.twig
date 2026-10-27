@@ -1,1 +1,19 @@
-<section class="hero" aria-labelledby="hero-title"><div class="hero__content"><p class="demo-kicker">{{ eyebrow }}</p><h1 id="hero-title">{{ title }}</h1><p class="hero__description">{{ description }}</p><ul class="hero__benefits">{% for benefit in benefits %}<li>{{ benefit }}</li>{% endfor %}</ul><div class="hero__actions"><a class="button button--primary" href="#offers-title">{{ primary_label }}</a><a class="button button--secondary" href="#faq-title">{{ secondary_label }}</a></div></div><div class="hero__visual" role="img" aria-label="{{ visual_label }}"><span>VISUAL<br>PLACEHOLDER</span></div></section>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="landing-container hero__inner">
+    <div class="hero__content">
+      <p class="demo-kicker">{{ eyebrow }}</p>
+      <h1 id="hero-title">{{ title }}</h1>
+      <p class="hero__description">{{ description }}</p>
+      {% if benefits %}
+        <ul class="hero__benefits">
+          {% for benefit in benefits %}<li>{{ benefit }}</li>{% endfor %}
+        </ul>
+      {% endif %}
+      <div class="hero__actions">
+        <a class="button button--primary" href="{{ primary_url|default('#offers-title') }}">{{ primary_label }}</a>
+        <a class="button button--secondary" href="{{ secondary_url|default('#faq-title') }}">{{ secondary_label }}</a>
+      </div>
+    </div>
+    <div class="hero__visual" role="img" aria-label="{{ visual_label }}"><span class="hero__visual-label">Visual<br>placeholder</span></div>
+  </div>
+</section>

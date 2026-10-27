@@ -1,1 +1,8 @@
-<article class="offer-card"><span class="offer-card__badge">{{ badge }}</span><h3>{{ title }}</h3><p>{{ description }}</p><div class="offer-card__price"><span>Desde</span><strong>{{ price }}</strong></div><p class="offer-card__note">{{ price_note }}</p><a class="button button--primary" href="#faq-title">{{ cta_label }}</a></article>
+<article class="offer-card">
+  {% if badge %}<span class="offer-card__badge">{{ badge }}</span>{% endif %}
+  <h3>{{ title }}</h3>
+  <p class="offer-card__description">{{ description }}</p>
+  <div class="offer-card__price"><span class="offer-card__price-label">Desde</span><strong class="offer-card__price-value">{{ price }}</strong></div>
+  <p class="offer-card__note">{{ price_note }}</p>
+  <a class="button button--primary" href="{{ cta_url|default('#faq-title') }}">{{ cta_label }}</a>
+</article>

@@ -9,4 +9,5 @@ props:
     price: { type: string }
     price_note: { type: string }
     cta_label: { type: string }
+    cta_url: { type: string, title: CTA URL, default: '#faq-title' }
     badge: { type: string }

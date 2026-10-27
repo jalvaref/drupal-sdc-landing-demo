@@ -4,6 +4,9 @@ status: stable
 props:
   type: object
   properties:
-    brand_name: { type: string }
-    utility_label: { type: string }
-    phone_label: { type: string }
+    brand_name: { type: string, title: Brand name }
+    brand_url: { type: string, title: Brand URL, default: '/' }
+    utility_label: { type: string, title: Utility link label }
+    utility_url: { type: string, title: Utility link URL, default: '#offers-title' }
+    phone_label: { type: string, title: Phone label }
+    phone_url: { type: string, title: Phone URL, default: 'tel:900000000' }

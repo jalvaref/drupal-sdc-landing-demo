@@ -1,4 +1,4 @@
 global:
   css:
     theme:
-      css/global.css: {}
+      css/global.css: { minified: false }

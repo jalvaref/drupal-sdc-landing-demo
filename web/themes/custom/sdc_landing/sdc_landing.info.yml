@@ -1,7 +1,7 @@
-name: SDC Landing Demo
+name: SDC Landing System
 type: theme
 base theme: false
-description: 'Tema demo para composición de landings con Single Directory Components.'
+description: 'Sistema visual para la PoC de generación de landings con Single Directory Components.'
 core_version_requirement: '^10.3 || ^11'
 libraries:
   - sdc_landing/global
