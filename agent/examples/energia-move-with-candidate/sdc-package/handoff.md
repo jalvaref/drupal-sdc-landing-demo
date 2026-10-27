@@ -1,7 +1,7 @@
 # SDC handoff
 
 - Run: `energia-en-movimiento-contacto-1793105727345`
-- Estado: `html_approved`
+- Estado: `sdc_approved`
 - Componentes reutilizados: C00, C01, C10, C03, C05, C09, C99
 - Componentes candidatos: C11
 - Destino Drupal: draft

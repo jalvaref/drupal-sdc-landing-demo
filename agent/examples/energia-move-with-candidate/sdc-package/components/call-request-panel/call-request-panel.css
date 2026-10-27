@@ -1,0 +1,6 @@
+.call-request-panel {
+  padding: var(--sdc-space-6, 2rem);
+  border: 1px solid var(--sdc-line, #d9e2ec);
+  border-radius: var(--sdc-radius-lg, 1rem);
+  background: var(--sdc-surface, #f5f7fa);
+}

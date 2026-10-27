@@ -1,0 +1,15 @@
+{
+  "component_id": "C11",
+  "name": "CallRequestPanel",
+  "variant": "Experimental",
+  "props": {
+    "title": "¿Prefieres que te llamemos?",
+    "description": "Déjanos tus datos y un asesor te ayudará con la oferta.",
+    "fields": [
+      "Nombre",
+      "Teléfono"
+    ],
+    "submit_label": "Quiero que me llaméis"
+  },
+  "status": "experimental"
+}

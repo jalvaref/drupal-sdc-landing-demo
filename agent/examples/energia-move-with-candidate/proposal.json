@@ -1,7 +1,7 @@
 {
   "run_id": "energia-en-movimiento-contacto-1793105727345",
   "briefing_ref": "C:\\Users\\jalvaref\\OneDrive - NTT DATA EMEAL\\Documents\\ChatGPT\\POC Gobierno IA SDC\\drupal-demo\\agent\\examples\\energia-move-with-candidate-brief.json",
-  "status": "html_approved",
+  "status": "sdc_approved",
   "visuals": {
     "desktop": "design/desktop.svg",
     "mobile": "design/mobile.svg"
@@ -201,6 +201,7 @@
     "approved": true,
     "approved_by": "jalvaref",
     "approved_at": "2026-10-27T12:55:28.233Z",
-    "comment": "Aprobado para continuar a la siguiente fase."
+    "phase": "sdc_approved",
+    "comment": "Paquete SDC aprobado para continuar con la integración."
   }
 }

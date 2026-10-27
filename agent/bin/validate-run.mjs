@@ -11,7 +11,7 @@ try { runManifest = JSON.parse(await readFile(join(runPath, 'run-manifest.json')
 const requiredIds = ['C00', 'C01', 'C03', 'C05', 'C09', 'C10', 'C99'];
 const errors = [];
 
-if (!['visual_draft', 'visual_approved', 'html_draft', 'html_approved', 'sdc_approved'].includes(proposal.status)) errors.push(`Estado de ejecución no reconocido: ${proposal.status}.`);
+if (!['visual_draft', 'visual_approved', 'html_draft', 'html_approved', 'sdc_package_draft', 'sdc_approved'].includes(proposal.status)) errors.push(`Estado de ejecución no reconocido: ${proposal.status}.`);
 if (proposal.components.length < requiredIds.length) errors.push('La propuesta debe contener los siete componentes catalogados.');
 for (const id of requiredIds) {
   const item = proposal.components.find((component) => component.component_id === id);

@@ -25,8 +25,8 @@ final class DraftImporter {
     }
 
     $proposal = json_decode((string) file_get_contents($path), TRUE, 512, JSON_THROW_ON_ERROR);
-    if (!in_array($proposal['status'] ?? NULL, ['sdc_approved', 'html_approved'], TRUE)) {
-      throw new \InvalidArgumentException('La propuesta debe estar en html_approved o sdc_approved.');
+    if (($proposal['status'] ?? NULL) !== 'sdc_approved') {
+      throw new \InvalidArgumentException('La propuesta debe estar en sdc_approved antes de importarla en Drupal.');
     }
     if (empty($proposal['run_id'])) {
       throw new \InvalidArgumentException('La propuesta no contiene run_id.');

@@ -2,7 +2,7 @@
 
 - Ejecución: `energia-en-movimiento-20261027124555`
 - Campaña: Energía en Movimiento
-- Estado: `visual_draft`
+- Estado: `sdc_approved`
 - Briefing: `agent/examples/energia-move-brief.json`
 
 ## Decisiones de composición

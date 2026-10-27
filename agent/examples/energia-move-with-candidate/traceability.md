@@ -2,7 +2,7 @@
 
 - Ejecución: `energia-en-movimiento-contacto-1793105727345`
 - Campaña: Energía en Movimiento con contacto
-- Estado: `visual_draft`
+- Estado: `sdc_approved`
 - Briefing: `C:\Users\jalvaref\OneDrive - NTT DATA EMEAL\Documents\ChatGPT\POC Gobierno IA SDC\drupal-demo\agent\examples\energia-move-with-candidate-brief.json`
 
 ## Decisiones de composición

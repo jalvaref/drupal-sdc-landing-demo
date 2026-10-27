@@ -21,7 +21,7 @@ const transitions = {
   visual_draft: 'visual_approved',
   visual_approved: 'html_approved',
   html_draft: 'html_approved',
-  html_approved: 'sdc_approved'
+  sdc_package_draft: 'sdc_approved'
 };
 if (transitions[proposal.status] !== nextStatus) {
   console.error(`[ERROR] Transición no válida: ${proposal.status} -> ${nextStatus}.`);
@@ -53,4 +53,15 @@ try {
   manifest.artifacts = [...new Set([...(manifest.artifacts || []), 'approval.json'])];
   await writeFile(manifestFile, JSON.stringify(manifest, null, 2) + '\n');
 } catch { /* Example artifacts may not have an orchestration manifest. */ }
+if (nextStatus === 'sdc_approved') {
+  try {
+    const packageManifestFile = join(runPath, 'sdc-package', 'package-manifest.json');
+    const packageManifest = JSON.parse(await readFile(packageManifestFile, 'utf8'));
+    packageManifest.status = 'approved';
+    await writeFile(packageManifestFile, JSON.stringify(packageManifest, null, 2) + '\n');
+    const handoffFile = join(runPath, 'sdc-package', 'handoff.md');
+    const handoff = await readFile(handoffFile, 'utf8');
+    await writeFile(handoffFile, handoff.replace(/- Estado: `[^`]+`/, '- Estado: `sdc_approved`'));
+  } catch { /* The package is optional for earlier run examples. */ }
+}
 console.log(`[OK] ${proposal.run_id}: ${nextStatus}`);

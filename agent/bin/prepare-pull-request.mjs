@@ -8,6 +8,10 @@ import { resolve } from 'node:path';
 const run = promisify(execFile);
 const runPath = resolve(process.argv[2] || 'agent/examples/energia-move');
 const proposal = JSON.parse(await readFile(resolve(runPath, 'proposal.json'), 'utf8'));
+if (proposal.status !== 'sdc_approved') {
+  console.error(`[ERROR] La propuesta debe estar en sdc_approved antes de preparar la pull request. Estado actual: ${proposal.status}.`);
+  process.exit(1);
+}
 const slug = process.argv.includes('--slug') ? process.argv[process.argv.indexOf('--slug') + 1] : proposal.run_id.split('-').slice(0, -1).join('-');
 const branch = `codex/landing-${slug}`;
 const title = `Landing: ${proposal.run_id}`;

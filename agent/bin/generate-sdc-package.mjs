@@ -8,9 +8,14 @@ const outputFlag = process.argv.indexOf('--out');
 const outPath = resolve(outputFlag >= 0 && process.argv[outputFlag + 1] ? process.argv[outputFlag + 1] : join(runPath, 'sdc-package'));
 const proposal = JSON.parse(await readFile(join(runPath, 'proposal.json'), 'utf8'));
 
-if (proposal.status !== 'html_approved' && proposal.status !== 'sdc_approved') {
+if (proposal.status !== 'html_approved' && proposal.status !== 'sdc_approved' && proposal.status !== 'sdc_package_draft') {
   console.error(`[ERROR] El HTML debe estar aprobado antes de generar SDC. Estado actual: ${proposal.status}.`);
   process.exit(1);
+}
+if (proposal.status === 'html_approved') {
+  proposal.status = 'sdc_package_draft';
+  proposal.approval = { approved: false };
+  await writeFile(join(runPath, 'proposal.json'), JSON.stringify(proposal, null, 2) + '\n');
 }
 
 const candidates = proposal.components.filter((component) => component.status === 'candidate' || component.status === 'experimental');

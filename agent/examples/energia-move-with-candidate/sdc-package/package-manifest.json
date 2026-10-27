@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "run_id": "energia-en-movimiento-contacto-1793105727345",
   "source_proposal": "../proposal.json",
-  "status": "draft",
+  "status": "approved",
   "reused_components": [
     "C00",
     "C01",

@@ -1,7 +1,7 @@
 {
   "run_id": "energia-en-movimiento-20261027124555",
   "briefing_ref": "agent/examples/energia-move-brief.json",
-  "status": "html_approved",
+  "status": "sdc_approved",
   "visuals": {
     "desktop": "design/desktop.svg",
     "mobile": "design/mobile.svg"
@@ -180,6 +180,7 @@
     "approved": true,
     "approved_by": "jalvaref",
     "approved_at": "2026-10-27T12:47:21.374Z",
-    "comment": "HTML aprobado para preparar el handoff SDC."
+    "phase": "sdc_approved",
+    "comment": "Paquete SDC aprobado para continuar con la integración."
   }
 }
