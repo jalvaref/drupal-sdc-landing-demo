@@ -55,7 +55,8 @@ $settings['file_private_path'] = 'sites/default/files/private';
 $request_path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '';
 $is_installer_url = (
   strpos($_SERVER['SCRIPT_NAME'] ?? '', '/core/install.php') === 0 ||
-  strpos($request_path, '/core/install.php') === 0
+  strpos($request_path, '/core/install.php') === 0 ||
+  isset($_GET['pantheon_install'])
 );
 
 /**
