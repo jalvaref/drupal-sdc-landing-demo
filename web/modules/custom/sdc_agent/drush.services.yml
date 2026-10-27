@@ -1,7 +1,7 @@
 services:
   sdc_agent.importer:
     class: Drupal\sdc_agent\Service\DraftImporter
-    arguments: ['@entity_type.manager', '@current_user']
+    arguments: ['@entity_type.manager', '@current_user', '@database']
   sdc_agent.commands:
     class: Drupal\sdc_agent\Commands\SdcAgentCommands
     arguments: ['@sdc_agent.importer']

@@ -3,6 +3,7 @@
 namespace Drupal\sdc_agent\Service;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Node\NodeInterface;
 
@@ -14,6 +15,7 @@ final class DraftImporter {
   public function __construct(
     private readonly EntityTypeManagerInterface $entityTypeManager,
     private readonly AccountInterface $currentUser,
+    private readonly Connection $database,
   ) {}
 
   public function import(string $proposalFile, ?string $title = NULL): NodeInterface {
@@ -64,6 +66,17 @@ final class DraftImporter {
     $node->setUnpublished();
     $node->setPublished(FALSE);
     $node->save();
+    // Keep the POC's safety invariant even if another presave handler or
+    // workflow restores the entity's publication flag during save.
+    $this->database->update('node_field_data')
+      ->fields(['status' => 0])
+      ->condition('nid', $node->id())
+      ->execute();
+    $nodeStorage->resetCache([$node->id()]);
+    $node = $nodeStorage->load($node->id());
+    if (!$node || $node->isPublished()) {
+      throw new \RuntimeException('La landing no se pudo dejar en estado draft.');
+    }
     return $node;
   }
 
