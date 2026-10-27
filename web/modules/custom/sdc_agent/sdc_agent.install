@@ -1,0 +1,78 @@
+<?php
+
+use Drupal\Core\Entity\EntityEntityFormDisplay;
+use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\node\Entity\NodeType;
+
+/**
+ * Creates the landing content type used by the agent import flow.
+ */
+function sdc_agent_install(): void {
+  sdc_agent_ensure_landing_type();
+}
+
+/**
+ * Ensures the landing type exists after an update or a reinstatement.
+ */
+function sdc_agent_update_10001(): void {
+  sdc_agent_ensure_landing_type();
+}
+
+/**
+ * Creates the minimal fields and displays required by the POC.
+ */
+function sdc_agent_ensure_landing_type(): void {
+  $nodeTypeStorage = \Drupal::entityTypeManager()->getStorage('node_type');
+  if (!$nodeTypeStorage->load('landing')) {
+    NodeType::create([
+      'type' => 'landing',
+      'name' => 'Landing generada por agente',
+      'description' => 'Landing importada desde una propuesta aprobada del agente SDC.',
+      'display_submitted' => FALSE,
+    ])->save();
+  }
+
+  if (!FieldStorageConfig::loadByName('node', 'body')) {
+    FieldStorageConfig::create([
+      'field_name' => 'body',
+      'entity_type' => 'node',
+      'type' => 'text_with_summary',
+      'cardinality' => 1,
+    ])->save();
+  }
+  if (!FieldConfig::loadByName('node', 'landing', 'body')) {
+    FieldConfig::create([
+      'field_name' => 'body',
+      'entity_type' => 'node',
+      'bundle' => 'landing',
+      'label' => 'Contenido de la landing',
+      'required' => FALSE,
+    ])->save();
+  }
+
+  if (!EntityFormDisplay::load('node.landing.default')) {
+    EntityFormDisplay::create([
+      'targetEntityType' => 'node',
+      'bundle' => 'landing',
+      'mode' => 'default',
+      'status' => TRUE,
+    ])->setComponent('body', [
+      'type' => 'text_textarea_with_summary',
+      'weight' => 1,
+    ])->save();
+  }
+  if (!EntityViewDisplay::load('node.landing.default')) {
+    EntityViewDisplay::create([
+      'targetEntityType' => 'node',
+      'bundle' => 'landing',
+      'mode' => 'default',
+      'status' => TRUE,
+    ])->setComponent('body', [
+      'type' => 'text_default',
+      'label' => 'hidden',
+      'weight' => 0,
+    ])->save();
+  }
+}

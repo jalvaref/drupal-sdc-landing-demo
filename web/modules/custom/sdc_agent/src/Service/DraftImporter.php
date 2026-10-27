@@ -39,7 +39,7 @@ final class DraftImporter {
     $format = $this->entityTypeManager->getStorage('filter_format')->load('full_html') ? 'full_html' : 'basic_html';
 
     $node = $this->entityTypeManager->getStorage('node')->create([
-      'type' => 'page',
+      'type' => 'landing',
       'title' => $nodeTitle,
       'body' => ['value' => $body, 'format' => $format],
       'uid' => $this->currentUser->id() ?: 1,
