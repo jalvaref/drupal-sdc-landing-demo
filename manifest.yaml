@@ -1,11 +1,19 @@
 schema_version: "1.0"
 package:
   name: "energia-demo-sdc-components"
-  version: "0.1.0"
+  version: "0.2.0"
   status: "prototype"
   source_html: "web/themes/custom/sdc_landing/templates/page--front.html.twig"
   target_stack: "Drupal 11 + SDC"
+knowledge:
+  catalog_version: "1.0.0"
+  catalog_yaml: "knowledge/component-catalog.yaml"
+  catalog_markdown: "knowledge/component-catalog.md"
+  source_of_truth: "knowledge/component-catalog.yaml"
 components:
+  - id: "C00"
+    name: "SiteHeader"
+    path: "web/themes/custom/sdc_landing/components/site-header"
   - id: "C01"
     name: "HeroPromotional"
     path: "web/themes/custom/sdc_landing/components/hero-promotional"
@@ -21,8 +29,11 @@ components:
   - id: "C10"
     name: "TrustStrip"
     path: "web/themes/custom/sdc_landing/components/trust-strip"
+  - id: "C99"
+    name: "SiteFooter"
+    path: "web/themes/custom/sdc_landing/components/site-footer"
 validation:
-  yaml_schema: "pending"
+  yaml_schema: "knowledge/component-catalog.yaml"
   commands: ["drush theme:enable sdc_landing", "drush cr"]
 approvals:
   design: false

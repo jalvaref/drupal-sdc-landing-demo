@@ -1,4 +1,6 @@
 schema_version: "1.0"
+catalog_version: "1.0.0"
+catalog_source: "knowledge/component-catalog.yaml"
 campaign: "energia-demo-mobility"
 source_html: "web/themes/custom/sdc_landing/templates/page--front.html.twig"
 components:

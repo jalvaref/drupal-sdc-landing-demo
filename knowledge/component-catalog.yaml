@@ -1,0 +1,254 @@
+schema_version: "1.0"
+catalog:
+  id: "sdc-landing-system"
+  version: "1.0.0"
+  language: "es"
+  status: "prototype"
+  purpose: "Base de conocimiento para seleccionar y componer componentes SDC en landings de la POC."
+  target_stack:
+    cms: "Drupal"
+    cms_version: "11"
+    rendering: "Single Directory Components"
+    theme: "sdc_landing"
+  source_of_truth:
+    theme_path: "web/themes/custom/sdc_landing"
+    manifest: "manifest.yaml"
+    inventory: "component-inventory.yaml"
+  agent_contract:
+    objective: "Generar una composición de landing usando únicamente componentes catalogados y props compatibles."
+    required_output_fields:
+      - "component_id"
+      - "props"
+      - "content_status"
+      - "source_requirements"
+    selection_rules:
+      - "Preferir un componente existente antes de proponer uno nuevo."
+      - "Mantener el orden recomendado salvo que exista una razón explícita."
+      - "Usar un único HeroPromotional y un único h1 por landing."
+      - "Incluir SiteFooter como último componente."
+      - "No usar OfferCard si no existe una oferta o decisión que comparar."
+      - "Usar TrustStrip únicamente cuando el dato tenga fuente, fecha o estado de validación."
+    governance_rules:
+      - "No inventar precios, porcentajes, ahorros, claims, teléfonos, logos, partners o condiciones comerciales."
+      - "Los datos no respaldados deben marcarse como pending_validation y no presentarse como hechos."
+      - "Si falta información obligatoria para una decisión, devolver una pregunta abierta en lugar de completar con una suposición."
+      - "Conservar siempre las etiquetas y URLs de CTA de forma explícita."
+    content_statuses:
+      - id: "validated"
+        meaning: "Contenido aprobado o respaldado por una fuente vigente."
+        publishable: true
+      - id: "pending_validation"
+        meaning: "Contenido útil para la maqueta, pero pendiente de validación humana o de negocio."
+        publishable: false
+      - id: "blocked"
+        meaning: "No se puede generar o publicar porque falta un dato necesario o existe un conflicto."
+        publishable: false
+  composition:
+    recommended_order: ["C00", "C01", "C10", "C03", "C05", "C09", "C99"]
+    required: ["C01", "C99"]
+    conditional: ["C00", "C10", "C03", "C05", "C09"]
+  components:
+    - id: "C00"
+      name: "SiteHeader"
+      label: "Cabecera del sitio"
+      slug: "site-header"
+      include: "sdc_landing:site-header"
+      path: "web/themes/custom/sdc_landing/components/site-header"
+      selector: ".site-header"
+      category: "navigation"
+      role: "foundation"
+      status: "stable"
+      purpose: "Identifica la marca y ofrece navegación o contacto principal."
+      use_when:
+        - "La landing necesita identidad de marca y acceso a una acción global."
+        - "Existe un teléfono o enlace de utilidad validado."
+      avoid_when:
+        - "La página se integra dentro de una cabecera global ya proporcionada por el sitio."
+      variants: ["Utility"]
+      props:
+        - { name: "brand_name", type: "string", required: false, default: null, description: "Nombre visible de la marca." }
+        - { name: "brand_url", type: "string", required: false, default: "/", description: "URL del enlace de marca." }
+        - { name: "utility_label", type: "string", required: false, default: null, description: "Texto del enlace de utilidad." }
+        - { name: "utility_url", type: "string", required: false, default: "#offers-title", description: "Destino del enlace de utilidad." }
+        - { name: "phone_label", type: "string", required: false, default: null, description: "Texto visible del teléfono." }
+        - { name: "phone_url", type: "string", required: false, default: "tel:900000000", description: "Enlace telefónico." }
+      accessibility:
+        - "Debe conservar el landmark header y la navegación semántica del template."
+        - "El texto de enlaces debe describir el destino."
+      content_governance:
+        - "No mostrar un teléfono por defecto en una landing real sin validarlo."
+
+    - id: "C01"
+      name: "HeroPromotional"
+      label: "Hero promocional"
+      slug: "hero-promotional"
+      include: "sdc_landing:hero-promotional"
+      path: "web/themes/custom/sdc_landing/components/hero-promotional"
+      selector: ".hero"
+      category: "conversion"
+      role: "primary"
+      status: "stable"
+      purpose: "Explica la propuesta de valor principal y dirige a la acción prioritaria."
+      use_when:
+        - "Toda landing necesita un mensaje principal y una acción primaria."
+      avoid_when:
+        - "Ya existe un hero proporcionado por el layout o por otro componente global."
+      variants: ["Partner", "Default"]
+      constraints:
+        - "Usar como máximo una vez por landing."
+        - "title es el único h1 de la página."
+        - "No afirmar beneficios cuantitativos sin fuente."
+      props:
+        - { name: "eyebrow", type: "string", required: false, default: null, description: "Contexto breve sobre el mensaje." }
+        - { name: "title", type: "string", required: false, default: null, description: "Titular principal; se renderiza como h1." }
+        - { name: "description", type: "string", required: false, default: null, description: "Descripción de la propuesta de valor." }
+        - { name: "benefits", type: "array<string>", required: false, default: [], description: "Beneficios breves que apoyan el mensaje." }
+        - { name: "primary_label", type: "string", required: false, default: null, description: "Etiqueta del CTA primario." }
+        - { name: "primary_url", type: "string", required: false, default: "#offers-title", description: "Destino del CTA primario." }
+        - { name: "secondary_label", type: "string", required: false, default: null, description: "Etiqueta del CTA secundario." }
+        - { name: "secondary_url", type: "string", required: false, default: "#faq-title", description: "Destino del CTA secundario." }
+        - { name: "visual_label", type: "string", required: false, default: null, description: "Texto alternativo o etiqueta del visual." }
+      accessibility:
+        - "Debe existir un solo h1."
+        - "El visual debe tener una alternativa textual significativa."
+        - "Los CTAs deben ser accionables y tener foco visible."
+      content_governance:
+        - "Si faltan datos de negocio, usar una formulación neutra y marcar pending_validation."
+
+    - id: "C10"
+      name: "TrustStrip"
+      label: "Franja de confianza"
+      slug: "trust-strip"
+      include: "sdc_landing:trust-strip"
+      path: "web/themes/custom/sdc_landing/components/trust-strip"
+      selector: ".trust-strip"
+      category: "evidence"
+      role: "supporting"
+      status: "stable"
+      purpose: "Presenta un dato, señal o evidencia que refuerza la propuesta de valor."
+      use_when:
+        - "Existe una métrica, certificación, fuente o señal de confianza que se pueda citar."
+      avoid_when:
+        - "El dato es una estimación del agente o no tiene procedencia identificable."
+      variants: ["PendingValidation", "Default"]
+      constraints:
+        - "source debe ser visible cuando el contenido sea un claim o una métrica."
+      props:
+        - { name: "label", type: "string", required: false, default: null, description: "Contexto del dato." }
+        - { name: "value", type: "string", required: false, default: null, description: "Valor o mensaje destacado." }
+        - { name: "source", type: "string", required: false, default: null, description: "Fuente, fecha o estado de validación." }
+      accessibility:
+        - "La relación entre label y value debe ser comprensible sin depender del color."
+      content_governance:
+        - "Sin fuente verificable, usar content_status pending_validation."
+
+    - id: "C03"
+      name: "OfferCard"
+      label: "Tarjeta de oferta"
+      slug: "offer-card"
+      include: "sdc_landing:offer-card"
+      path: "web/themes/custom/sdc_landing/components/offer-card"
+      selector: ".offer-card"
+      category: "conversion"
+      role: "supporting"
+      status: "stable"
+      purpose: "Compara o presenta una oferta, plan, producto o siguiente acción."
+      use_when:
+        - "La landing presenta una oferta concreta o varias alternativas comparables."
+      avoid_when:
+        - "No existe precio, condición o decisión comercial validada."
+      variants: ["Luz", "ConPartner", "Default"]
+      props:
+        - { name: "title", type: "string", required: false, default: null, description: "Nombre de la oferta." }
+        - { name: "description", type: "string", required: false, default: null, description: "Resumen de la oferta." }
+        - { name: "price", type: "string", required: false, default: null, description: "Precio o fórmula de precio." }
+        - { name: "price_note", type: "string", required: false, default: null, description: "Condiciones o aclaración del precio." }
+        - { name: "cta_label", type: "string", required: false, default: null, description: "Etiqueta de la acción." }
+        - { name: "cta_url", type: "string", required: false, default: "#faq-title", description: "Destino de la acción." }
+        - { name: "badge", type: "string", required: false, default: null, description: "Etiqueta breve de la oferta." }
+      accessibility:
+        - "La tarjeta debe seguir siendo comprensible sin depender del badge o del color."
+        - "El CTA debe tener un objetivo táctil suficiente."
+      content_governance:
+        - "No inventar precio, descuento, permanencia, ahorro ni condiciones."
+
+    - id: "C05"
+      name: "BenefitsGrid"
+      label: "Rejilla de beneficios"
+      slug: "benefits-grid"
+      include: "sdc_landing:benefits-grid"
+      path: "web/themes/custom/sdc_landing/components/benefits-grid"
+      selector: ".benefits"
+      category: "content"
+      role: "supporting"
+      status: "stable"
+      purpose: "Organiza varios beneficios o argumentos de valor en bloques escaneables."
+      use_when:
+        - "Hay entre dos y cuatro beneficios diferenciados que explicar."
+      avoid_when:
+        - "Solo existe un beneficio; en ese caso debe vivir en el hero o en una sección editorial."
+      variants: ["3-up", "Default"]
+      constraints:
+        - "La variante 3-up es la composición de referencia de la POC."
+      props:
+        - { name: "title", type: "string", required: false, default: null, description: "Título de la sección." }
+        - { name: "items", type: "array<object>", required: false, default: [], description: "Elementos con title y text." }
+      item_schema:
+        - { name: "title", type: "string", required: false, description: "Título del beneficio." }
+        - { name: "text", type: "string", required: false, description: "Explicación del beneficio." }
+      accessibility:
+        - "Los iconos decorativos deben tener un equivalente textual."
+        - "La jerarquía de títulos debe seguir el nivel de la sección."
+      content_governance:
+        - "Los beneficios deben derivarse de documentación de producto o negocio."
+
+    - id: "C09"
+      name: "FaqAccordion"
+      label: "Acordeón de preguntas frecuentes"
+      slug: "faq-accordion"
+      include: "sdc_landing:faq-accordion"
+      path: "web/themes/custom/sdc_landing/components/faq-accordion"
+      selector: ".faq"
+      category: "content"
+      role: "supporting"
+      status: "stable"
+      purpose: "Responde objeciones y dudas frecuentes al final de la landing."
+      use_when:
+        - "Hay preguntas recurrentes que ayudan a decidir o completar la acción."
+      avoid_when:
+        - "Las respuestas no están aprobadas o requieren asesoramiento regulado sin revisión."
+      variants: ["Default"]
+      props:
+        - { name: "title", type: "string", required: false, default: null, description: "Título de la sección." }
+        - { name: "items", type: "array<object>", required: false, default: [], description: "Preguntas y respuestas." }
+      item_schema:
+        - { name: "question", type: "string", required: false, description: "Pregunta visible en summary." }
+        - { name: "answer", type: "string", required: false, description: "Respuesta de la pregunta." }
+      accessibility:
+        - "Usa details/summary y debe poder operarse con teclado."
+        - "La pregunta debe ser comprensible fuera de contexto."
+      content_governance:
+        - "Las respuestas deben estar respaldadas por una fuente aprobada."
+
+    - id: "C99"
+      name: "SiteFooter"
+      label: "Pie de página"
+      slug: "site-footer"
+      include: "sdc_landing:site-footer"
+      path: "web/themes/custom/sdc_landing/components/site-footer"
+      selector: ".site-footer"
+      category: "navigation"
+      role: "foundation"
+      status: "stable"
+      purpose: "Cierra la página y muestra la información legal mínima de la POC."
+      use_when:
+        - "Siempre, como último bloque de la landing."
+      avoid_when:
+        - "Solo cuando el host ya proporciona un footer global equivalente."
+      variants: ["Default"]
+      props:
+        - { name: "legal_label", type: "string", required: false, default: null, description: "Texto legal o de demostración." }
+      accessibility:
+        - "Debe conservar el landmark footer y un orden de lectura lógico."
+      content_governance:
+        - "Diferenciar claramente texto legal real de texto de demostración."
