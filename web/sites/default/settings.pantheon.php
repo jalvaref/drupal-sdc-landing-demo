@@ -53,10 +53,17 @@ $settings['file_private_path'] = 'sites/default/files/private';
 // can expose the installer through index.php, so SCRIPT_NAME alone is not
 // reliable here.
 $request_path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '';
+$empty_dev_database = (
+  isset($_ENV['PANTHEON_ENVIRONMENT']) &&
+  $_ENV['PANTHEON_ENVIRONMENT'] === 'dev' &&
+  isset($_SERVER['PANTHEON_DATABASE_STATE']) &&
+  $_SERVER['PANTHEON_DATABASE_STATE'] === 'empty'
+);
 $is_installer_url = (
   strpos($_SERVER['SCRIPT_NAME'] ?? '', '/core/install.php') === 0 ||
   strpos($request_path, '/core/install.php') === 0 ||
-  isset($_GET['pantheon_install'])
+  isset($_GET['pantheon_install']) ||
+  $empty_dev_database
 );
 
 /**
