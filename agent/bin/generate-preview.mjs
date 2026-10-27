@@ -10,6 +10,8 @@ const outPath = outFlag >= 0 && rest[outFlag + 1]
   : resolve('agent/runs/preview');
 const runIdFlag = rest.indexOf('--run-id');
 const requestedRunId = runIdFlag >= 0 ? rest[runIdFlag + 1] : null;
+const componentsFlag = rest.indexOf('--components-file');
+const componentsPath = componentsFlag >= 0 ? rest[componentsFlag + 1] : null;
 
 if (!briefPath) {
   console.error('Uso: node agent/bin/generate-preview.mjs <brief.json> [--out <directorio>]');
@@ -19,7 +21,9 @@ if (!briefPath) {
 const brief = JSON.parse(await readFile(resolve(briefPath), 'utf8'));
 const slug = brief.slug || slugify(brief.campaign_name);
 const runId = requestedRunId || `${slug}-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
-const components = buildComponents(brief);
+const llmPayload = componentsPath ? JSON.parse(await readFile(resolve(componentsPath), 'utf8')) : null;
+const components = buildComponents(brief, llmPayload?.generated?.components || llmPayload?.components || []);
+const designDirection = llmPayload?.generated?.design_direction || llmPayload?.design_direction || null;
 const proposal = {
   run_id: runId,
   briefing_ref: briefPath,
@@ -31,9 +35,12 @@ const proposal = {
   components,
   html_artifact: 'preview/index.html',
   traceability_artifact: 'traceability.md',
+  ...(designDirection ? { design_direction: designDirection } : {}),
   assumptions: [
     'El contenido de la demo puede ser ficticio y debe validarse antes de publicar.',
-    'Se utiliza el catálogo actual de sdc_landing sin proponer componentes nuevos para esta primera ejecución.'
+    ...(designDirection
+      ? ['La dirección visual y la composición han sido generadas por el proveedor LLM usando el catálogo como base de conocimiento.']
+      : ['Se utiliza el catálogo actual de sdc_landing sin proponer componentes nuevos para esta primera ejecución.'])
   ],
   open_questions: [
     '¿Qué condiciones comerciales definitivas deben sustituir al contenido de demo?',
@@ -53,9 +60,9 @@ await writeFile(join(outPath, 'traceability.md'), renderTraceability(brief, prop
 
 console.log(JSON.stringify({ run_id: runId, status: proposal.status, output: outPath, components: components.length }, null, 2));
 
-function buildComponents(briefing) {
+function buildComponents(briefing, generatedComponents = []) {
   const offer = briefing.offer || {};
-  return [
+  const baseComponents = [
     component('C00', 'SiteHeader', 'Utility', {
       brand_name: 'Energía en Movimiento',
       utility_label: 'Ver ofertas',
@@ -115,6 +122,35 @@ function buildComponents(briefing) {
       legal_label: 'Contenido ficticio para demostración. Revisar antes de publicar.'
     }, 'Cierra la página y diferencia la demo del contenido publicable.')
   ];
+  const generatedById = new Map(generatedComponents.map((item) => [item.component_id, item]));
+  const merged = baseComponents.map((item) => mergeComponent(item, generatedById.get(item.component_id)));
+  const requiredCatalogIds = new Set(['C00', 'C01', 'C03', 'C05', 'C09', 'C10', 'C99']);
+  for (const item of merged) {
+    if (requiredCatalogIds.has(item.component_id)) item.status = 'catalog';
+  }
+  const catalogIds = new Set(merged.map((item) => item.component_id));
+  for (const item of generatedComponents) {
+    if (!catalogIds.has(item.component_id) && ['candidate', 'experimental'].includes(item.status)) {
+      merged.splice(merged.length - 1, 0, item);
+    }
+  }
+  return merged;
+}
+
+function mergeComponent(fallback, generated) {
+  if (!generated) return fallback;
+  const mergedProps = { ...fallback.props, ...(generated.props || {}) };
+  if (fallback.component_id === 'C01' && !Array.isArray(mergedProps.benefits)) mergedProps.benefits = fallback.props.benefits;
+  if (fallback.component_id === 'C05' && !Array.isArray(mergedProps.items)) mergedProps.items = fallback.props.items;
+  if (fallback.component_id === 'C09' && !Array.isArray(mergedProps.items)) mergedProps.items = fallback.props.items;
+  return {
+    ...fallback,
+    ...generated,
+    props: mergedProps,
+    status: generated.status || fallback.status,
+    content_status: generated.content_status || fallback.content_status,
+    source_requirements: generated.source_requirements || fallback.source_requirements
+  };
 }
 
 function component(componentId, name, variant, props, justification, status = 'catalog') {
@@ -186,7 +222,10 @@ function renderDesign(briefing, mobile) {
 }
 
 function renderTraceability(briefing, proposal) {
-  return `# Trazabilidad de la propuesta\n\n- Ejecución: \`${proposal.run_id}\`\n- Campaña: ${briefing.campaign_name}\n- Estado: \`${proposal.status}\`\n- Briefing: \`${proposal.briefing_ref}\`\n\n## Decisiones de composición\n\n| ID | Componente | Variante | Justificación | Estado de contenido |\n| --- | --- | --- | --- | --- |\n${proposal.components.map((item) => `| ${item.component_id} | ${item.name} | ${item.variant} | ${item.justification} | ${item.content_status} |`).join('\n')}\n\n## Supuestos\n\n${proposal.assumptions.map((item) => `- ${item}`).join('\n')}\n\n## Preguntas abiertas\n\n${proposal.open_questions.map((item) => `- ${item}`).join('\n')}\n`;
+  const direction = proposal.design_direction
+    ? `## Dirección visual generada\n\n- Paleta: ${proposal.design_direction.palette}\n- Layout: ${proposal.design_direction.layout}\n- Racional: ${proposal.design_direction.visual_rationale}\n\n`
+    : '';
+  return `# Trazabilidad de la propuesta\n\n- Ejecución: \`${proposal.run_id}\`\n- Campaña: ${briefing.campaign_name}\n- Estado: \`${proposal.status}\`\n- Briefing: \`${proposal.briefing_ref}\`\n\n${direction}## Decisiones de composición\n\n| ID | Componente | Variante | Justificación | Estado de contenido |\n| --- | --- | --- | --- | --- |\n${proposal.components.map((item) => `| ${item.component_id} | ${item.name} | ${item.variant} | ${item.justification} | ${item.content_status} |`).join('\n')}\n\n## Supuestos\n\n${proposal.assumptions.map((item) => `- ${item}`).join('\n')}\n\n## Preguntas abiertas\n\n${proposal.open_questions.map((item) => `- ${item}`).join('\n')}\n`;
 }
 
 function cta(briefing, priority, fallback) {

@@ -13,11 +13,11 @@ const output = resolve(outFlag >= 0 && args[outFlag + 1] ? args[outFlag + 1] : j
 const provider = providerFlag >= 0 && args[providerFlag + 1] ? args[providerFlag + 1] : 'deterministic';
 
 if (!briefPath) {
-  console.error('Uso: node agent/bin/run-agent.mjs <brief.json> [--out <directorio>] [--provider deterministic]');
+  console.error('Uso: node agent/bin/run-agent.mjs <brief.json> [--out <directorio>] [--provider deterministic|openai]');
   process.exit(1);
 }
-if (provider !== 'deterministic') {
-  console.error(`[ERROR] Proveedor no disponible en esta POC: ${provider}. Usa deterministic o implementa el adaptador del proveedor.`);
+if (!['deterministic', 'openai'].includes(provider)) {
+  console.error(`[ERROR] Proveedor no disponible: ${provider}. Usa deterministic u openai.`);
   process.exit(1);
 }
 
@@ -39,7 +39,21 @@ await saveManifest();
 manifest.stage = 'visual_generation';
 await saveManifest();
 const generator = resolve('agent/bin/generate-preview.mjs');
-await exec(process.execPath, [generator, resolve(briefPath), '--out', output, '--run-id', manifest.run_id], { cwd: process.cwd(), encoding: 'utf8' });
+let componentsPath;
+if (provider === 'openai') {
+  componentsPath = join(output, 'llm-components.json');
+  const llmGenerator = resolve('agent/bin/generate-llm-components.mjs');
+  await exec(process.execPath, [llmGenerator, resolve(briefPath), '--out', componentsPath], { cwd: process.cwd(), encoding: 'utf8' });
+  manifest.artifacts.push('llm-components.json');
+  manifest.stage = 'visual_generation';
+  await saveManifest();
+}
+const generatorArgs = [generator, resolve(briefPath), '--out', output, '--run-id', manifest.run_id];
+if (componentsPath) generatorArgs.push('--components-file', componentsPath);
+await exec(process.execPath, generatorArgs, { cwd: process.cwd(), encoding: 'utf8' });
+
+const validator = resolve('agent/bin/validate-run.mjs');
+await exec(process.execPath, [validator, output], { cwd: process.cwd(), encoding: 'utf8' });
 
 manifest.status = 'awaiting_visual_approval';
 manifest.stage = 'visual';
@@ -50,6 +64,7 @@ manifest.artifacts = [
   'design/mobile.svg',
   'traceability.md'
 ];
+if (provider === 'openai') manifest.artifacts.push('llm-components.json');
 manifest.completed_at = new Date().toISOString();
 await saveManifest();
 console.log(JSON.stringify({ run_id: manifest.run_id, status: manifest.status, output, next: 'approve visual proposal before generating the SDC package' }, null, 2));

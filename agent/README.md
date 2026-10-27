@@ -1,8 +1,8 @@
 # Contratos del agente
 
-Esta carpeta contiene los contratos de datos que debe cumplir el agente de generación de landings. No implementa todavía un proveedor LLM concreto; permite conectar el agente a una interfaz web, un asistente corporativo o un proceso CI/CD sin cambiar el modelo de datos.
+Esta carpeta contiene los contratos de datos y el orquestador de la POC de generación de landings. El flujo puede ejecutarse de forma reproducible con el proveedor `deterministic` o generar una dirección visual y una composición con el proveedor `openai`.
 
-El punto de entrada de la POC es `bin/run-agent.mjs`. El proveedor `deterministic` genera una propuesta reproducible a partir del briefing y permite validar el flujo completo sin credenciales externas. En una siguiente iteración se puede sustituir por un adaptador LLM que devuelva los mismos contratos.
+El punto de entrada es `bin/run-agent.mjs`. En ambos casos el resultado se valida automáticamente contra el contrato antes de quedar en `awaiting_visual_approval`.
 
 ## Contratos
 
@@ -15,6 +15,16 @@ El punto de entrada de la POC es `bin/run-agent.mjs`. El proveedor `deterministi
 node agent/bin/run-agent.mjs agent/examples/energia-move-brief.json --out agent/runs/energia-move
 node agent/bin/validate-run.mjs agent/runs/energia-move
 ```
+
+Para usar el proveedor OpenAI, configura la clave únicamente en el entorno local o en el gestor de secretos del pipeline; no la incluyas en el repositorio:
+
+```powershell
+$env:OPENAI_API_KEY = "<clave-local>"
+$env:OPENAI_MODEL = "gpt-5.1" # opcional
+node agent/bin/run-agent.mjs agent/examples/energia-move-brief.json --provider openai --out agent/runs/energia-move-openai
+```
+
+El proveedor OpenAI genera `llm-components.json`, `design_direction` dentro de `proposal.json` y la trazabilidad correspondiente. Si no se dispone de credenciales, `deterministic` permite demostrar el flujo completo de la POC.
 
 El agente termina en `awaiting_visual_approval`. La aprobación debe realizarse explícitamente antes de generar el paquete SDC.
 

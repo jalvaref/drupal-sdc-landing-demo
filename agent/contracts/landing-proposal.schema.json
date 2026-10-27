@@ -41,6 +41,16 @@
     },
     "html_artifact": { "type": "string" },
     "traceability_artifact": { "type": "string" },
+    "design_direction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["palette", "layout", "visual_rationale"],
+      "properties": {
+        "palette": { "type": "string" },
+        "layout": { "type": "string" },
+        "visual_rationale": { "type": "string" }
+      }
+    },
     "assumptions": { "type": "array", "items": { "type": "string" } },
     "open_questions": { "type": "array", "items": { "type": "string" } },
     "blockers": { "type": "array", "items": { "type": "string" } },
