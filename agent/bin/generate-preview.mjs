@@ -8,6 +8,8 @@ const outFlag = rest.indexOf('--out');
 const outPath = outFlag >= 0 && rest[outFlag + 1]
   ? resolve(rest[outFlag + 1])
   : resolve('agent/runs/preview');
+const runIdFlag = rest.indexOf('--run-id');
+const requestedRunId = runIdFlag >= 0 ? rest[runIdFlag + 1] : null;
 
 if (!briefPath) {
   console.error('Uso: node agent/bin/generate-preview.mjs <brief.json> [--out <directorio>]');
@@ -16,7 +18,7 @@ if (!briefPath) {
 
 const brief = JSON.parse(await readFile(resolve(briefPath), 'utf8'));
 const slug = brief.slug || slugify(brief.campaign_name);
-const runId = `${slug}-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
+const runId = requestedRunId || `${slug}-${new Date().toISOString().replace(/[-:.TZ]/g, '').slice(0, 14)}`;
 const components = buildComponents(brief);
 const proposal = {
   run_id: runId,
@@ -101,19 +103,27 @@ function buildComponents(briefing) {
         { question: '¿Cómo puedo solicitar información?', answer: 'Puedes utilizar el formulario o pedir que te llamemos.' }
       ]
     }, 'Resuelve objeciones y deja visibles las preguntas pendientes.'),
+    ...(briefing.candidate_components || []).map((candidate) => component(
+      candidate.id,
+      candidate.name,
+      candidate.variant || 'Experimental',
+      candidate.props || {},
+      candidate.justification || 'Necesidad no cubierta por el catálogo actual.',
+      'candidate'
+    )),
     component('C99', 'SiteFooter', 'Default', {
       legal_label: 'Contenido ficticio para demostración. Revisar antes de publicar.'
     }, 'Cierra la página y diferencia la demo del contenido publicable.')
   ];
 }
 
-function component(componentId, name, variant, props, justification) {
+function component(componentId, name, variant, props, justification, status = 'catalog') {
   return {
     component_id: componentId,
     name,
     variant,
     props,
-    status: 'catalog',
+    status,
     justification,
     content_status: 'pending_validation',
     source_requirements: ['Briefing de campaña', 'Validación del usuario']
@@ -128,6 +138,7 @@ function renderHtml(briefing, items) {
   const trust = items.find((item) => item.component_id === 'C10');
   const header = items.find((item) => item.component_id === 'C00');
   const footer = items.find((item) => item.component_id === 'C99');
+  const candidates = items.filter((item) => item.status === 'candidate' || item.status === 'experimental');
   const metadata = (item) => `data-component-id="${item.component_id}" data-component-name="${item.name}" data-variant="${item.variant}" data-content-status="${item.content_status}"`;
   return `<!doctype html>
 <html lang="es">
@@ -149,11 +160,17 @@ function renderHtml(briefing, items) {
     <section class="offers" id="offers-title" ${metadata(offer)}><div class="container"><h2 class="section-title">La propuesta</h2><article class="offer-card"><span class="badge">${esc(offer.props.badge)}</span><h3>${esc(offer.props.title)}</h3><p>${esc(offer.props.description)}</p><div class="price">${esc(offer.props.price)}</div><p class="price-note">${esc(offer.props.price_note)}</p><a class="button" href="${esc(offer.props.cta_url)}">${esc(offer.props.cta_label)}</a></article></div></section>
     <section ${metadata(benefits)}><div class="container"><h2 class="section-title">${esc(benefits.props.title)}</h2><div class="benefits-grid">${benefits.props.items.map((item) => `<article class="benefit"><h3>${esc(item.title)}</h3><p>${esc(item.text)}</p></article>`).join('')}</div></div></section>
     <section class="faq" id="faq-title" ${metadata(faq)}><div class="container"><h2 class="section-title">${esc(faq.props.title)}</h2>${faq.props.items.map((item) => `<details><summary>${esc(item.question)}</summary><p>${esc(item.answer)}</p></details>`).join('')}</div></section>
+    ${candidates.map((candidate) => renderCandidate(candidate, metadata)).join('')}
   </main>
   <footer class="site-footer" id="contact" ${metadata(footer)}><div class="container">${esc(footer.props.legal_label)}</div></footer>
   <button class="inspector" type="button" onclick="document.body.classList.toggle('inspector-on');this.textContent=document.body.classList.contains('inspector-on')?'Ocultar inspector':'Mostrar inspector'">Mostrar inspector</button>
 </body>
 </html>`;
+}
+
+function renderCandidate(candidate, metadata) {
+  const fields = Array.isArray(candidate.props.fields) ? candidate.props.fields : ['Nombre', 'Teléfono'];
+  return `<section class="candidate-panel" ${metadata(candidate)}><div class="container"><h2 class="section-title">${esc(candidate.props.title || candidate.name)}</h2><p>${esc(candidate.props.description || 'Componente experimental generado para la POC.')}</p><form>${fields.map((field) => `<label>${esc(field)}<input type="text" name="${slugify(field)}"></label>`).join('')}<button class="button" type="button">${esc(candidate.props.submit_label || 'Enviar solicitud')}</button></form></div></section>`;
 }
 
 function renderDesign(briefing, mobile) {

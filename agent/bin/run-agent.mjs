@@ -39,7 +39,7 @@ await saveManifest();
 manifest.stage = 'visual_generation';
 await saveManifest();
 const generator = resolve('agent/bin/generate-preview.mjs');
-await exec(process.execPath, [generator, resolve(briefPath), '--out', output], { cwd: process.cwd(), encoding: 'utf8' });
+await exec(process.execPath, [generator, resolve(briefPath), '--out', output, '--run-id', manifest.run_id], { cwd: process.cwd(), encoding: 'utf8' });
 
 manifest.status = 'awaiting_visual_approval';
 manifest.stage = 'visual';

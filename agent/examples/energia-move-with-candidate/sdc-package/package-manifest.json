@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "run_id": "energia-en-movimiento-contacto-1793105727345",
+  "source_proposal": "../proposal.json",
+  "status": "draft",
+  "reused_components": [
+    "C00",
+    "C01",
+    "C10",
+    "C03",
+    "C05",
+    "C09",
+    "C99"
+  ],
+  "candidate_components": [
+    "C11"
+  ],
+  "drupal_target": "draft"
+}

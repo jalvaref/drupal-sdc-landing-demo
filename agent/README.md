@@ -18,6 +18,8 @@ node agent/bin/validate-run.mjs agent/runs/energia-move
 
 El agente termina en `awaiting_visual_approval`. La aprobación debe realizarse explícitamente antes de generar el paquete SDC.
 
+El ejemplo `agent/examples/energia-move-with-candidate-brief.json` demuestra la ruta MVP2: añade `C11` como componente candidato, lo representa en el preview y genera su paquete experimental en `sdc-package/components`.
+
 ## Principios
 
 - El agente puede generar contenido ficticio para la POC.

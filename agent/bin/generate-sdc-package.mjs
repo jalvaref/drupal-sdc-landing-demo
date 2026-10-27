@@ -24,15 +24,29 @@ await writeFile(join(outPath, 'package-manifest.json'), JSON.stringify({
   candidate_components: candidates.map((component) => component.component_id),
   drupal_target: 'draft'
 }, null, 2) + '\n');
+await writeFile(join(outPath, 'catalog-extension.yaml'), candidates.length
+  ? `schema_version: "1.0"\ncomponents:\n${candidates.map((candidate) => `  - id: "${candidate.component_id}"\n    name: "${candidate.name}"\n    status: "experimental"\n    variant: "${candidate.variant}"\n    path: "components/${slugify(candidate.name)}"\n    source_run: "${proposal.run_id}"\n    props: [${Object.keys(candidate.props || {}).map((prop) => `"${prop}"`).join(', ')}]\n`).join('')}`
+  : 'schema_version: "1.0"\ncomponents: []\n');
 
 for (const candidate of candidates) {
-  const slug = candidate.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const slug = slugify(candidate.name);
   const componentDir = join(outPath, 'components', slug);
   await mkdir(componentDir, { recursive: true });
-  await writeFile(join(componentDir, `${slug}.component.yml`), `$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json\nname: ${candidate.name}\nstatus: experimental\nprops:\n  type: object\n  properties: {}\n`);
+  await writeFile(join(componentDir, `${slug}.component.yml`), `$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json\nname: ${candidate.name}\nstatus: experimental\nprops:\n  type: object\n  properties:\n${propsToYaml(candidate.props)}`);
   await writeFile(join(componentDir, `${slug}.twig`), `<section class="${slug}" data-component-id="${candidate.component_id}">\n  {# Candidate generated from approved HTML. Complete props before cataloguing. #}\n</section>\n`);
   await writeFile(join(componentDir, 'README.md'), `# ${candidate.name}\n\nEstado: experimental.\n\nJustificación: ${candidate.justification}\n\nLa anatomía y los props deben completarse antes de incorporar el componente al catálogo.\n`);
 }
 
 await writeFile(join(outPath, 'handoff.md'), `# SDC handoff\n\n- Run: \`${proposal.run_id}\`\n- Estado: \`${proposal.status}\`\n- Componentes reutilizados: ${proposal.components.filter((component) => component.status === 'catalog').map((component) => component.component_id).join(', ') || 'ninguno'}\n- Componentes candidatos: ${candidates.map((component) => component.component_id).join(', ') || 'ninguno'}\n- Destino Drupal: draft\n\n## Decisión\n\nEl paquete solo contiene componentes candidatos o experimentales. Los componentes catalogados se consumen desde el tema existente.\n`);
 console.log(JSON.stringify({ run_id: proposal.run_id, status: proposal.status, output: outPath, candidates: candidates.length }, null, 2));
+
+function slugify(value) {
+  return String(value).replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function propsToYaml(props = {}) {
+  const entries = Object.entries(props);
+  return entries.length
+    ? entries.map(([name, value]) => `    ${name}: { type: ${Array.isArray(value) ? 'array' : 'string'} }`).join('\n') + '\n'
+    : '    # Props pendientes de especificación\n';
+}

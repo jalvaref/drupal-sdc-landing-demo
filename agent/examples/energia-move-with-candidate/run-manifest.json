@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "run_id": "energia-en-movimiento-contacto-1793105727345",
+  "provider": "deterministic",
+  "source_brief": "C:\\Users\\jalvaref\\OneDrive - NTT DATA EMEAL\\Documents\\ChatGPT\\POC Gobierno IA SDC\\drupal-demo\\agent\\examples\\energia-move-with-candidate-brief.json",
+  "status": "awaiting_visual_approval",
+  "stage": "visual",
+  "started_at": "2026-10-27T12:55:27.333Z",
+  "artifacts": [
+    "proposal.json",
+    "preview/index.html",
+    "design/desktop.svg",
+    "design/mobile.svg",
+    "traceability.md"
+  ],
+  "completed_at": "2026-10-27T12:55:27.538Z"
+}

@@ -45,6 +45,18 @@ jobs:
           node agent/bin/generate-sdc-package.mjs "$RUNNER_TEMP/energia-move"
           test -f "$RUNNER_TEMP/energia-move/sdc-package/package-manifest.json"
 
+      - name: Validate experimental candidate path
+        shell: bash
+        run: |
+          set -euo pipefail
+          node agent/bin/run-agent.mjs agent/examples/energia-move-with-candidate-brief.json --out "$RUNNER_TEMP/energia-move-candidate"
+          node agent/bin/validate-run.mjs "$RUNNER_TEMP/energia-move-candidate"
+          node agent/bin/approve-run.mjs "$RUNNER_TEMP/energia-move-candidate" --to visual_approved
+          node agent/bin/approve-run.mjs "$RUNNER_TEMP/energia-move-candidate" --to html_approved
+          node agent/bin/generate-sdc-package.mjs "$RUNNER_TEMP/energia-move-candidate"
+          test -f "$RUNNER_TEMP/energia-move-candidate/sdc-package/components/call-request-panel/call-request-panel.component.yml"
+          test -f "$RUNNER_TEMP/energia-move-candidate/sdc-package/catalog-extension.yaml"
+
       - name: Validate JSON contracts
         shell: bash
         run: |
