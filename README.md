@@ -22,5 +22,11 @@ Con la integración GitHub de Pantheon, conecta este repositorio como repositori
 - Tema `sdc_landing` con componentes SDC auto-contenidos.
 - Header, hero promocional, franja de confianza, tarjeta de oferta, grid de beneficios, FAQ y footer.
 - Inventario y manifest de handoff alineados con `C01–C10`.
+- Contratos de briefing y propuesta para el agente en `agent/contracts`.
+- Roadmap y criterios de aceptación de MVP1 y MVP2 en `docs/agent-mvp-roadmap.md`.
+
+## Agente de generación
+
+El flujo de la POC está definido en [docs/agent-mvp-roadmap.md](docs/agent-mvp-roadmap.md). El agente debe generar primero la propuesta visual, después el HTML autocontenido y, tras la aprobación del usuario, el paquete SDC. GitHub se utiliza para ramas y pull requests; Drupal recibe la landing en estado draft y la publicación requiere aprobación de un administrador o editor.
 
 El precio aparece como `[PRECIO PENDIENTE]`; no se inventan cifras ni condiciones. Los logos e imágenes son placeholders explícitos.
