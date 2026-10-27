@@ -1,5 +1,12 @@
 <?php
 
+// Pantheon's reverse proxy can expose the installer through index.php. Keep
+// the original request path available to legacy Pantheon settings as well.
+$request_path = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '';
+if (strpos($request_path, '/core/install.php') === 0) {
+  $_SERVER['SCRIPT_NAME'] = '/core/install.php';
+}
+
 /**
  * Load services definition file.
  */
