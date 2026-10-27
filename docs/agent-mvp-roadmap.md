@@ -95,6 +95,8 @@ Drupal añade una aprobación separada: un administrador o editor revisa la land
 - Informe de validación.
 - Landing Drupal en draft.
 
+La primera integración Drupal vive en `web/modules/custom/sdc_agent`. Su comando `sdc-agent:import-draft` exige una propuesta aprobada y crea una página `page` con `status: 0`; no publica automáticamente.
+
 ## Reglas de aprobación
 
 | Fase | Aprueba | Criterio mínimo |

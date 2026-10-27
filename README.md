@@ -43,4 +43,11 @@ node agent/bin/prepare-pull-request.mjs agent/examples/energia-move
 
 El resultado incluye `proposal.json`, diseños SVG desktop/mobile, un HTML responsive con inspector, un informe de trazabilidad y un paquete técnico SDC para componentes candidatos.
 
+Con el módulo `sdc_agent` habilitado en Drupal, una propuesta aprobada puede importarse como draft:
+
+```bash
+drush en sdc_agent -y
+drush sdc-agent:import-draft agent/examples/energia-move/proposal.json
+```
+
 El precio aparece como `[PRECIO PENDIENTE]`; no se inventan cifras ni condiciones. Los logos e imágenes son placeholders explícitos.

@@ -1,0 +1,6 @@
+services:
+  sdc_agent.commands:
+    class: Drupal\sdc_agent\Commands\SdcAgentCommands
+    arguments: ['@entity_type.manager', '@current_user']
+    tags:
+      - { name: drush.command }

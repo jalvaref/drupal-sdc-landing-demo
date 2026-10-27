@@ -1,0 +1,7 @@
+name: SDC Agent Draft Import
+type: module
+description: 'Importa propuestas aprobadas por el agente como páginas Drupal en estado draft.'
+package: Custom
+core_version_requirement: '^10.3 || ^11'
+dependencies:
+  - drupal:node
