@@ -51,7 +51,7 @@ final class ImportDraftForm extends FormBase {
         $form_state->getValue('title') ?: NULL,
       );
       $this->messenger()->addStatus($this->t('Draft creado: node/@id.', ['@id' => $node->id()]));
-      $form_state->setRedirect('entity.node.canonical', ['node' => $node->id()]);
+      $form_state->setRedirect('entity.node.edit_form', ['node' => $node->id()]);
     }
     catch (\Throwable $exception) {
       $this->messenger()->addError($this->t('No se pudo crear el draft: @message', ['@message' => $exception->getMessage()]));
