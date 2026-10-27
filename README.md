@@ -32,7 +32,7 @@ El flujo de la POC está definido en [docs/agent-mvp-roadmap.md](docs/agent-mvp-
 Para ejecutar el generador local del MVP1 con el briefing de ejemplo:
 
 ```bash
-node agent/bin/generate-preview.mjs agent/examples/energia-move-brief.json --out agent/examples/energia-move
+node agent/bin/run-agent.mjs agent/examples/energia-move-brief.json --out agent/examples/energia-move
 node agent/bin/validate-run.mjs agent/examples/energia-move
 node agent/bin/approve-run.mjs agent/examples/energia-move --to visual_approved
 node agent/bin/approve-run.mjs agent/examples/energia-move --to html_approved

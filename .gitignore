@@ -7,5 +7,6 @@
 /web/sites/*/services.pantheon.*.yml
 /.env
 /.terminus-php/
+/agent/runs/
 /.editorconfig
 /.gitattributes
