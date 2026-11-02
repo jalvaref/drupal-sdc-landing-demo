@@ -1,0 +1,14 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Quote
+status: stable
+props:
+  type: object
+  required: [quote]
+  properties:
+    quote: { type: string, minLength: 1 }
+    author: { type: string }
+    role: { type: string }
+    organization: { type: string }
+    image: { type: object, properties: { src: { type: string }, alt: { type: string } } }
+    source: { type: string }
+    variant: { type: string, enum: [standard, highlighted, with-image], default: highlighted }

@@ -20,17 +20,33 @@ Los tokens globales viven en `css/global.css` como variables `--sdc-*`:
 - Espaciado: escala `space-2` a `space-8`.
 - Layout: `content-width`.
 
-## Catálogo inicial
+## Catálogo canónico para Drupal Canvas
 
 | ID | Componente | Uso en la PoC | Estado |
 | --- | --- | --- | --- |
-| C00 | `site-header` | Marca, navegación de utilidad y teléfono | Catalogado |
-| C01 | `hero-promotional` | Propuesta de valor y CTAs principales | Catalogado |
-| C03 | `offer-card` | Comparación de ofertas o tarifas | Catalogado |
-| C05 | `benefits-grid` | Argumentos de valor escaneables | Catalogado |
-| C09 | `faq-accordion` | Resolución de objeciones | Catalogado |
-| C10 | `trust-strip` | Datos de confianza con fuente pendiente | Catalogado |
-| C99 | `site-footer` | Legal, estado de la demo y retorno | Catalogado |
+| C00 | `site-header` | Marca y navegación global | Implementado |
+| C01 | `hero` | Propuesta de valor y CTAs principales | Implementado |
+| C02 | `rich-text` | Contenido editorial | Implementado |
+| C03 | `image-text` | Imagen y explicación editorial | Implementado |
+| C04 | `feature-grid` | Beneficios o capacidades | Implementado |
+| C05 | `card-grid` | Soluciones o contenidos navegables | Implementado |
+| C06 | `stats` | Métricas y datos destacados | Implementado |
+| C07 | `steps` | Procesos y fases | Implementado |
+| C08 | `quote` | Cita o testimonio | Implementado |
+| C09 | `accordion` | Preguntas frecuentes | Implementado |
+| C10 | `cta-banner` | Llamada a la acción | Implementado |
+| C99 | `site-footer` | Navegación secundaria y legal | Implementado |
+
+Los componentes antiguos (`hero-promotional`, `offer-card`, `benefits-grid`, `faq-accordion` y `trust-strip`) se mantienen como compatibilidad con la demo anterior, pero no forman parte de la API canónica para nuevas landings.
+
+## Compatibilidad con Drupal Canvas
+
+- El tema activa `enforce_prop_schemas: true`.
+- Cada componente canónico tiene un fichero `.component.yml` con JSON Schema.
+- Las variantes son enumeraciones cerradas, no componentes duplicados.
+- Los arrays declaran límites `minItems`/`maxItems` para facilitar formularios de Canvas.
+- El agente debe reutilizar props y componentes existentes antes de proponer extensiones.
+- Las páginas Canvas deben ensamblarse con el árbol de componentes; header y footer permanecen globales del tema.
 
 ## Contrato para generación de landings
 

@@ -1,0 +1,11 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Card grid
+status: stable
+props:
+  type: object
+  required: [cards]
+  properties:
+    title: { type: string }
+    description: { type: string }
+    cards: { type: array, minItems: 2, maxItems: 6, items: { type: object, required: [title, link], properties: { image: { type: object, properties: { src: { type: string }, alt: { type: string } } }, eyebrow: { type: string }, title: { type: string }, text: { type: string }, tag: { type: string }, link: { type: object, required: [label, url], properties: { label: { type: string }, url: { type: string } } } } } }
+    variant: { type: string, enum: [three-columns, two-columns, featured-card, horizontal], default: three-columns }

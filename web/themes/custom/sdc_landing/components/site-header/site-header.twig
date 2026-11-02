@@ -1,9 +1,12 @@
-<header class="site-header">
+<header class="site-header site-header--{{ variant|default('standard') }}">
   <div class="landing-container site-header__inner">
     <a class="site-header__brand" href="{{ brand_url|default('/') }}" aria-label="{{ brand_name }} · inicio">{{ brand_name }}</a>
-    <nav class="site-header__nav" aria-label="Utilidades">
-      <a href="{{ utility_url|default('#offers-title') }}">{{ utility_label }}</a>
-      <a href="{{ phone_url|default('tel:900000000') }}">{{ phone_label }}</a>
+    <button class="site-header__toggle" type="button" aria-expanded="false" aria-controls="site-header-navigation">
+      <span class="visually-hidden">Abrir menú</span><span aria-hidden="true">☰</span>
+    </button>
+    <nav id="site-header-navigation" class="site-header__nav" aria-label="Navegación principal">
+      {% for item in navigation %}<a{% if item.active %} aria-current="page"{% endif %} href="{{ item.url }}">{{ item.label }}</a>{% endfor %}
+      {% if primary_cta.label %}<a class="button button--outline" href="{{ primary_cta.url }}">{{ primary_cta.label }}</a>{% endif %}
     </nav>
   </div>
 </header>

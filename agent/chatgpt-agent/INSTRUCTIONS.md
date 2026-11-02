@@ -29,7 +29,8 @@ Si una fuente no está disponible, decláralo como bloqueo y no inventes compone
 
 - Genera directamente una propuesta visual desktop y mobile.
 - Define `design_direction` con paleta, layout y justificación visual.
-- Selecciona primero componentes del catálogo; crea candidatos solo cuando no exista una pieza adecuada.
+- Prioriza siempre los componentes y variantes existentes del catálogo; solo propón un componente o variante nuevo si la necesidad no puede cubrirse razonablemente con los elementos existentes. Explica la carencia y solicita aprobación antes de incorporarlo.
+- Prioriza utilizar los campos existentes. Si un campo no encaja exactamente pero conserva el significado, reutilízalo; si hace falta un campo nuevo, propónlo y justifica por qué los existentes no son suficientes.
 - Mantén una jerarquía clara con un único `h1` y CTA principal.
 - Produce `proposal.json`, `preview/index.html`, `design/desktop.svg`, `design/mobile.svg` y `traceability.md`.
 - Muestra el preview al usuario y detente en `awaiting_visual_approval`.
@@ -54,6 +55,26 @@ Si una fuente no está disponible, decláralo como bloqueo y no inventes compone
 - Tras la aprobación SDC, prepara una rama idempotente `codex/landing-<slug>` y una pull request con resumen, decisiones, supuestos y validaciones.
 - Importa la propuesta en Drupal como draft.
 - Nunca publiques automáticamente en Drupal.
+
+#### Datos de handoff de la POC
+
+Usa estos valores por defecto cuando el usuario no indique otros:
+
+- Repositorio GitHub: `https://github.com/jalvaref/drupal-sdc-landing-demo.git`.
+- Rama base de GitHub: `main`.
+- Repositorio Git de Pantheon: `ssh://codeserver.dev.08184da0-c752-4551-acb6-bbf48103a1e5@codeserver.dev.08184da0-c752-4551-acb6-bbf48103a1e5.drush.in:2222/~/repository.git`.
+- Rama de Pantheon: `master`.
+- Pantheon site: `sdc-landing-demo`.
+- Pantheon environment: `dev`.
+- URL de Dev: `https://dev-sdc-landing-demo.pantheonsite.io/`.
+- Workflow autorizado: sincronización del código de `main` de GitHub hacia Pantheon Dev mediante la integración GitHub/Pantheon; verificar el workflow antes de continuar.
+- Drupal: ejecutar en el entorno Dev, con el módulo `sdc_agent` habilitado, `drush sdc-agent:import-draft <run>/proposal.json`. La importación debe crear o actualizar la landing como no publicada (`draft`, `status: 0`).
+
+No solicites de nuevo estos datos salvo que la ejecución devuelva una evidencia de que han cambiado. No inventes una URL de administración de Drupal, usuario, token o credencial: si son necesarios, solicita únicamente el acceso o procedimiento que falte. La publicación posterior requiere aprobación de un administrador o editor de Drupal.
+
+### Gateway de despliegue
+
+Cuando esté conectado el custom MCP de despliegue, usa únicamente estas herramientas y respeta sus puertas: `validate_landing_run`, `create_github_pull_request`, `deploy_pantheon_dev` e `import_drupal_draft`. Valida siempre antes de escribir; exige aprobación explícita antes de crear rama/PR, desplegar Pantheon o importar en Drupal; conserva Drupal como draft; y comunica las evidencias devueltas por cada herramienta. Si el MCP no está disponible, informa del bloqueo y no simules ninguna operación.
 
 ## Reglas de seguridad y calidad
 

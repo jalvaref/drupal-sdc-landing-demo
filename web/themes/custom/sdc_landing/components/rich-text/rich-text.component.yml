@@ -1,0 +1,12 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Rich text
+status: stable
+props:
+  type: object
+  required: [body]
+  properties:
+    eyebrow: { type: string }
+    title: { type: string }
+    body: { type: string, minLength: 1 }
+    alignment: { type: string, enum: [left, center], default: left }
+    width: { type: string, enum: [narrow, medium, wide], default: medium }

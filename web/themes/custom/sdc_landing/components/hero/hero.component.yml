@@ -1,0 +1,15 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Hero
+status: stable
+props:
+  type: object
+  required: [title]
+  properties:
+    eyebrow: { type: string }
+    title: { type: string, minLength: 1 }
+    description: { type: string }
+    image: { type: object, properties: { src: { type: string }, alt: { type: string } } }
+    primary_cta: { type: object, properties: { label: { type: string }, url: { type: string } } }
+    secondary_cta: { type: object, properties: { label: { type: string }, url: { type: string } } }
+    variant: { type: string, enum: [default, split, centered], default: split }
+    theme: { type: string, enum: [light, dark, brand], default: light }

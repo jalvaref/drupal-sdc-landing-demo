@@ -1,0 +1,11 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Steps
+status: stable
+props:
+  type: object
+  required: [items]
+  properties:
+    title: { type: string }
+    description: { type: string }
+    items: { type: array, minItems: 3, maxItems: 6, items: { type: object, required: [title, text], properties: { title: { type: string }, text: { type: string }, icon: { type: string } } } }
+    variant: { type: string, enum: [vertical, horizontal, numbered, timeline], default: numbered }

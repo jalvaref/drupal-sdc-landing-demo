@@ -1,12 +1,35 @@
 $schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
 name: Site header
 status: stable
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once
 props:
   type: object
+  required:
+    - brand_name
+    - navigation
   properties:
-    brand_name: { type: string, title: Brand name }
+    brand_name: { type: string, title: Brand name, minLength: 1 }
     brand_url: { type: string, title: Brand URL, default: '/' }
-    utility_label: { type: string, title: Utility link label }
-    utility_url: { type: string, title: Utility link URL, default: '#offers-title' }
-    phone_label: { type: string, title: Phone label }
-    phone_url: { type: string, title: Phone URL, default: 'tel:900000000' }
+    navigation:
+      type: array
+      minItems: 1
+      maxItems: 6
+      items:
+        type: object
+        required: [label, url]
+        properties:
+          label: { type: string, minLength: 1 }
+          url: { type: string, minLength: 1 }
+          active: { type: boolean, default: false }
+    primary_cta:
+      type: object
+      properties:
+        label: { type: string }
+        url: { type: string }
+    variant:
+      type: string
+      enum: [standard, transparent, dark]
+      default: standard

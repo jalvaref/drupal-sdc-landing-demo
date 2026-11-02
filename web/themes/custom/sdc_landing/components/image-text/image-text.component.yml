@@ -1,0 +1,14 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Image and text
+status: stable
+props:
+  type: object
+  required: [title]
+  properties:
+    eyebrow: { type: string }
+    title: { type: string, minLength: 1 }
+    description: { type: string }
+    image: { type: object, required: [src, alt], properties: { src: { type: string }, alt: { type: string } } }
+    cta: { type: object, properties: { label: { type: string }, url: { type: string } } }
+    image_position: { type: string, enum: [left, right], default: left }
+    theme: { type: string, enum: [light, dark, brand], default: light }

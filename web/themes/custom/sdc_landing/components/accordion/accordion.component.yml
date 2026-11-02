@@ -1,0 +1,11 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Accordion
+status: stable
+props:
+  type: object
+  required: [items]
+  properties:
+    title: { type: string }
+    items: { type: array, minItems: 2, maxItems: 8, items: { type: object, required: [question, answer], properties: { question: { type: string }, answer: { type: string } } } }
+    default_open: { type: integer, minimum: 0, maximum: 0 }
+    variant: { type: string, enum: [faq, standard, bordered], default: faq }

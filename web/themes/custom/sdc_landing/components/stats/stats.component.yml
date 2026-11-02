@@ -1,0 +1,11 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Statistics
+status: stable
+props:
+  type: object
+  required: [items]
+  properties:
+    title: { type: string }
+    description: { type: string }
+    items: { type: array, minItems: 2, maxItems: 4, items: { type: object, required: [value, label], properties: { value: { type: string }, label: { type: string }, context: { type: string } } } }
+    variant: { type: string, enum: [horizontal, grid, highlighted], default: highlighted }

@@ -1,0 +1,15 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: CTA banner
+status: stable
+props:
+  type: object
+  required: [title, primary_cta]
+  properties:
+    eyebrow: { type: string }
+    title: { type: string, minLength: 1 }
+    description: { type: string }
+    image: { type: object, properties: { src: { type: string }, alt: { type: string } } }
+    primary_cta: { type: object, required: [label, url], properties: { label: { type: string }, url: { type: string } } }
+    secondary_cta: { type: object, properties: { label: { type: string }, url: { type: string } } }
+    theme: { type: string, enum: [light, dark, brand], default: dark }
+    variant: { type: string, enum: [standard, with-image], default: standard }

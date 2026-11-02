@@ -1,0 +1,13 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Feature grid
+status: stable
+props:
+  type: object
+  required: [items]
+  properties:
+    title: { type: string }
+    description: { type: string }
+    items: { type: array, minItems: 3, maxItems: 6, items: { type: object, required: [title, text], properties: { icon: { type: string }, title: { type: string }, text: { type: string } } } }
+    columns: { type: integer, enum: [3, 4], default: 3 }
+    variant: { type: string, enum: [standard, with-icons, with-numbers], default: with-icons }
+    theme: { type: string, enum: [light, dark, brand], default: light }

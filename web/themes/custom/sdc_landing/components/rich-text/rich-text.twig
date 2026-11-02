@@ -1,0 +1,1 @@
+<section class="sdc-rich-text sdc-rich-text--{{ alignment|default('left') }} sdc-rich-text--{{ width|default('medium') }}" aria-labelledby="{{ title|clean_class }}">{% if eyebrow %}<p class="sdc-kicker">{{ eyebrow }}</p>{% endif %}{% if title %}<h2 id="{{ title|clean_class }}">{{ title }}</h2>{% endif %}<div class="sdc-rich-text__body">{{ body|raw }}</div></section>

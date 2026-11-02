@@ -3,6 +3,7 @@ type: theme
 base theme: false
 description: 'Sistema visual para la PoC de generación de landings con Single Directory Components.'
 core_version_requirement: '^10.3 || ^11'
+enforce_prop_schemas: true
 libraries:
   - sdc_landing/global
 regions:
