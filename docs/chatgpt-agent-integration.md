@@ -13,7 +13,7 @@ En el Agent Builder:
    - `agent/contracts/brief.schema.json`.
    - `agent/contracts/landing-proposal.schema.json`.
    - `docs/agent-mvp-roadmap.md`.
-3. Habilita generación de imágenes para las referencias visuales desktop/mobile.
+3. Habilita generación de imágenes para generar las referencias visuales desktop/mobile en JPG.
 4. Conecta GitHub únicamente al repositorio `jalvaref/drupal-sdc-landing-demo`.
 5. Para acciones de escritura, usa un MCP o acción propia con permisos mínimos para crear ramas y pull requests. El conector GitHub estándar puede leer el repositorio, pero no debe considerarse suficiente para hacer push.
 6. Si se quiere iniciar ejecuciones desde otro sistema, añade el canal API del Workspace Agent y protege el token fuera del repositorio.
@@ -25,8 +25,8 @@ El agente debe producir una carpeta de ejecución con:
 ```text
 proposal.json
 preview/index.html
-design/desktop.svg
-design/mobile.svg
+design/desktop.jpg
+design/mobile.jpg
 traceability.md
 approval.json
 sdc-package/                 # solo después de aprobar el HTML

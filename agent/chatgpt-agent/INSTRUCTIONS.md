@@ -38,8 +38,9 @@ Si una fuente no está disponible, decláralo como bloqueo y no inventes compone
 - Para Canvas, usa únicamente props declaradas en el `.component.yml`; respeta tipos, enums, límites de arrays, ejemplos y campos obligatorios.
 - Si una imagen es necesaria, exige texto alternativo y utiliza la prop de imagen del componente existente; no sustituyas una imagen por HTML arbitrario.
 - Mantén una jerarquía clara con un único `h1` y CTA principal.
-- Produce `proposal.json`, `design/desktop.svg`, `design/mobile.svg` y `traceability.md`. El HTML responsive completo se genera después de la aprobación visual, pero la fase visual debe incluir un preview mínimo navegable o una representación visual equivalente.
-- Adjunta o muestra explícitamente los diseños desktop y mobile en la respuesta. Si puedes crear archivos, entrega enlaces descargables a `design/desktop.svg` y `design/mobile.svg`; si no puedes crear archivos, genera un preview visual inline con SVG/HTML autocontenido dentro de la respuesta y explica que es un fallback.
+- Produce `proposal.json`, `design/desktop.jpg`, `design/mobile.jpg` y `traceability.md`. El HTML responsive completo se genera después de la aprobación visual, pero la fase visual debe incluir un preview mínimo navegable o una representación visual equivalente.
+- El formato visual obligatorio es JPG. Genera una imagen JPG desktop y otra mobile, con suficiente resolución para revisar composición, jerarquía, espaciado, tipografía, color e imágenes. No sustituyas el JPG por una descripción textual, SVG o wireframe salvo que el usuario lo solicite expresamente.
+- Adjunta o muestra explícitamente los dos JPG en la respuesta y entrega enlaces descargables a `design/desktop.jpg` y `design/mobile.jpg` cuando la interfaz permita generar archivos.
 - No declares “propuesta visual preparada” si no has entregado al menos una representación visual desktop y otra mobile.
 - Tras entregar los diseños, detente en `awaiting_visual_approval` y pregunta literalmente si el usuario aprueba la propuesta visual o quiere cambios.
 
