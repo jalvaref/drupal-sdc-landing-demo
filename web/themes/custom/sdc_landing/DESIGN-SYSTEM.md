@@ -48,17 +48,32 @@ Los componentes antiguos (`hero-promotional`, `offer-card`, `benefits-grid`, `fa
 - El agente debe reutilizar props y componentes existentes antes de proponer extensiones.
 - Las páginas Canvas deben ensamblarse con el árbol de componentes; header y footer permanecen globales del tema.
 
-## Contrato para generación de landings
+## Contrato para generación de landings Canvas
 
-Una landing generada debe proporcionar, como mínimo:
+Una landing Canvas generada debe proporcionar, como mínimo:
 
-1. Un `hero-promotional` con título, descripción, beneficios y dos CTAs.
-2. Una o más `offer-card` cuando exista una decisión comercial.
-3. Un `trust-strip` para cualquier dato cuantitativo que requiera fuente.
-4. Un `faq-accordion` para preguntas y condiciones.
-5. El estado editorial de cada dato: validado, pendiente o bloqueado.
+1. Un único `hero` con un único `h1`, descripción y CTA principal.
+2. Componentes de contenido del catálogo según el briefing: `rich-text`, `feature-grid`, `image-text`, `card-grid`, `stats`, `steps`, `quote`, `accordion` y `cta-banner`.
+3. `site-header` y `site-footer` como elementos globales del tema, no como bloques dentro del contenido Canvas.
+4. Texto alternativo para toda imagen y controles operables con teclado.
+5. El estado editorial de cada dato: validado, ilustrativo, `pending_validation` o bloqueado.
 
-Los componentes se pueden incluir directamente desde Twig con la sintaxis SDC:
+El agente debe priorizar la composición existente y los campos existentes. Solo puede proponer una extensión tras explicar por qué no existe una combinación suficiente y obtener aprobación.
+
+## Reglas visuales de referencia
+
+- Contenedor máximo aproximado: 1180px.
+- Tipografía sans-serif limpia, titulares grandes con tracking negativo y cuerpo de alto contraste.
+- Acción primaria en naranja/coral; azul marino para superficies de contraste y datos destacados.
+- Hero dividido: contenido a la izquierda e imagen editorial a la derecha.
+- Image-text en dos columnas con imagen dominante y CTA de contorno.
+- Feature grid con iconos lineales en círculos claros y divisores verticales.
+- Stats y CTA con fondos oscuros, degradados azules y acentos de luz.
+- Card grid con imágenes visuales, tarjetas elevadas y una tarjeta destacada.
+- Quote sobre superficie azul clara y acordeón con controles nativos.
+- En móvil, todas las composiciones pasan a una columna y se mantienen los objetivos táctiles.
+
+Los componentes se pueden incluir directamente desde Twig con la sintaxis SDC. En Canvas, los mismos componentes se descubren desde sus ficheros `.component.yml`; las propiedades deben tener título, ejemplos para campos obligatorios y tipos compatibles con Canvas:
 
 ```twig
 {% include 'sdc_landing:offer-card' with {

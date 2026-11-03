@@ -1,7 +1,7 @@
 schema_version: "1.0"
 catalog:
   id: "sdc-landing-system"
-  version: "2.0.0"
+  version: "2.1.0"
   language: "es"
   status: "prototype"
   purpose: "Base de conocimiento para seleccionar y componer landings SDC editables con Drupal Canvas."
@@ -32,8 +32,13 @@ catalog:
       - "Drupal debe recibir la landing como draft; la publicación es manual."
       - "Las variantes se implementan como props enum, no como componentes duplicados."
   composition:
-    recommended_order: ["C00", "C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C99"]
+    recommended_order: ["C01", "C02", "C04", "C03", "C06", "C07", "C05", "C08", "C09", "C10"]
     required: ["C00", "C01", "C99"]
+    canvas_rules:
+      - "C00 and C99 are global theme elements and must not be duplicated inside Canvas page content unless a full page template explicitly requires them."
+      - "Use only props declared in the component metadata files."
+      - "Save imported Drupal pages as draft with status 0."
+      - "After composition, verify that the components are visible in the Canvas library and that their props can be edited."
   components:
     - { id: "C00", name: "SiteHeader", label: "Cabecera", slug: "site-header", include: "sdc_landing:site-header", path: "web/themes/custom/sdc_landing/components/site-header", category: "navigation", role: "foundation", variants: ["standard", "transparent", "dark"], props: ["brand_name", "brand_url", "navigation", "primary_cta", "variant"], constraints: ["Una vez por landing", "Global del tema", "Navegación accesible"] }
     - { id: "C01", name: "Hero", label: "Hero", slug: "hero", include: "sdc_landing:hero", path: "web/themes/custom/sdc_landing/components/hero", category: "conversion", role: "primary", variants: ["default", "split", "centered"], props: ["eyebrow", "title", "description", "image", "primary_cta", "secondary_cta", "variant", "theme"], constraints: ["Una vez por landing", "title es el único h1", "No afirmar beneficios sin fuente"] }

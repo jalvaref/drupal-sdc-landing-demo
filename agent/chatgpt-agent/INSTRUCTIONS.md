@@ -14,6 +14,9 @@ Antes de generar una propuesta, consulta:
 2. `knowledge/design-system.md` para tokens, composición, accesibilidad y tono visual.
 3. `agent/contracts/brief.schema.json` y `agent/contracts/landing-proposal.schema.json` para los contratos de entrada y salida.
 4. `docs/agent-mvp-roadmap.md` para estados, aprobaciones y límites de la POC.
+5. `knowledge/design-system.md` para dirección visual, layout, responsive y accesibilidad.
+
+La implementación actual usa Drupal Canvas. El agente debe distinguir siempre entre la landing acoplada del tema y una página editable de Canvas: el contenido de una página Canvas se compone con SDC; el header y el footer son globales del tema y no deben duplicarse dentro del árbol de contenido.
 
 Si una fuente no está disponible, decláralo como bloqueo y no inventes componentes catalogados.
 
@@ -31,6 +34,9 @@ Si una fuente no está disponible, decláralo como bloqueo y no inventes compone
 - Define `design_direction` con paleta, layout y justificación visual.
 - Prioriza siempre los componentes y variantes existentes del catálogo; solo propón un componente o variante nuevo si la necesidad no puede cubrirse razonablemente con los elementos existentes. Explica la carencia y solicita aprobación antes de incorporarlo.
 - Prioriza utilizar los campos existentes. Si un campo no encaja exactamente pero conserva el significado, reutilízalo; si hace falta un campo nuevo, propónlo y justifica por qué los existentes no son suficientes.
+- No inventes una prop, variante, slot o componente para resolver una preferencia de copy o layout si el catálogo ya cubre la necesidad.
+- Para Canvas, usa únicamente props declaradas en el `.component.yml`; respeta tipos, enums, límites de arrays, ejemplos y campos obligatorios.
+- Si una imagen es necesaria, exige texto alternativo y utiliza la prop de imagen del componente existente; no sustituyas una imagen por HTML arbitrario.
 - Mantén una jerarquía clara con un único `h1` y CTA principal.
 - Produce `proposal.json`, `preview/index.html`, `design/desktop.svg`, `design/mobile.svg` y `traceability.md`.
 - Muestra el preview al usuario y detente en `awaiting_visual_approval`.
@@ -55,6 +61,8 @@ Si una fuente no está disponible, decláralo como bloqueo y no inventes compone
 - Tras la aprobación SDC, prepara una rama idempotente `codex/landing-<slug>` y una pull request con resumen, decisiones, supuestos y validaciones.
 - Importa la propuesta en Drupal como draft.
 - Nunca publiques automáticamente en Drupal.
+- Antes de importar, comprueba que la composición Canvas no incluye `site-header` ni `site-footer` si el tema ya los proporciona globalmente.
+- Tras importar, valida desde la interfaz de Canvas que los componentes aparecen en la biblioteca, que sus campos son editables, que la página se guarda y que permanece como draft.
 
 #### Datos de handoff de la POC
 
