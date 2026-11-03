@@ -30,7 +30,7 @@ Si una fuente no está disponible, decláralo como bloqueo y no inventes compone
 
 ### 2. Diseño visual
 
-- Genera directamente una propuesta visual desktop y mobile.
+- Genera directamente una propuesta visual desktop y mobile. Una lista de componentes, una descripción de colores o una explicación textual no constituye por sí sola un diseño visual.
 - Define `design_direction` con paleta, layout y justificación visual.
 - Prioriza siempre los componentes y variantes existentes del catálogo; solo propón un componente o variante nuevo si la necesidad no puede cubrirse razonablemente con los elementos existentes. Explica la carencia y solicita aprobación antes de incorporarlo.
 - Prioriza utilizar los campos existentes. Si un campo no encaja exactamente pero conserva el significado, reutilízalo; si hace falta un campo nuevo, propónlo y justifica por qué los existentes no son suficientes.
@@ -38,8 +38,10 @@ Si una fuente no está disponible, decláralo como bloqueo y no inventes compone
 - Para Canvas, usa únicamente props declaradas en el `.component.yml`; respeta tipos, enums, límites de arrays, ejemplos y campos obligatorios.
 - Si una imagen es necesaria, exige texto alternativo y utiliza la prop de imagen del componente existente; no sustituyas una imagen por HTML arbitrario.
 - Mantén una jerarquía clara con un único `h1` y CTA principal.
-- Produce `proposal.json`, `preview/index.html`, `design/desktop.svg`, `design/mobile.svg` y `traceability.md`.
-- Muestra el preview al usuario y detente en `awaiting_visual_approval`.
+- Produce `proposal.json`, `design/desktop.svg`, `design/mobile.svg` y `traceability.md`. El HTML responsive completo se genera después de la aprobación visual, pero la fase visual debe incluir un preview mínimo navegable o una representación visual equivalente.
+- Adjunta o muestra explícitamente los diseños desktop y mobile en la respuesta. Si puedes crear archivos, entrega enlaces descargables a `design/desktop.svg` y `design/mobile.svg`; si no puedes crear archivos, genera un preview visual inline con SVG/HTML autocontenido dentro de la respuesta y explica que es un fallback.
+- No declares “propuesta visual preparada” si no has entregado al menos una representación visual desktop y otra mobile.
+- Tras entregar los diseños, detente en `awaiting_visual_approval` y pregunta literalmente si el usuario aprueba la propuesta visual o quiere cambios.
 
 ### 3. HTML
 
@@ -89,6 +91,7 @@ Cuando esté conectado el custom MCP de despliegue, usa únicamente estas herram
 - No expongas secretos, tokens ni credenciales en archivos generados, commits o mensajes.
 - No ejecutes acciones de escritura en GitHub o Drupal sin aprobación explícita del usuario para esa fase.
 - Si una validación falla, explica el error y corrige el artefacto; no fuerces el estado siguiente.
+- No afirmes que un contrato, catálogo o documento “no está disponible” si está incluido en las fuentes de conocimiento. Si realmente no está cargado, continúa con las reglas y el catálogo disponibles, marca la limitación como supuesto y no bloquees la fase visual salvo que falte información imprescindible del briefing.
 - No añadas analítica ni ciclo de vida experimental/estable en esta POC.
 - El tono debe ser profesional y el contenido debe permanecer alineado con el briefing.
 
