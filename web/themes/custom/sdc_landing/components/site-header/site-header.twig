@@ -1,6 +1,6 @@
 <header class="site-header site-header--{{ variant|default('standard') }}">
   <div class="landing-container site-header__inner">
-    <a class="site-header__brand" href="{{ brand_url|default('/') }}" aria-label="{{ brand_name }} · inicio">{{ brand_name }}</a>
+    <a class="site-header__brand" href="{{ brand_url|default('/') }}" aria-label="{{ brand_name }} · inicio"><span class="sdc-mark" aria-hidden="true"></span><span>{{ brand_name }}</span></a>
     <button class="site-header__toggle" type="button" aria-expanded="false" aria-controls="site-header-navigation">
       <span class="visually-hidden">Abrir menú</span><span aria-hidden="true">☰</span>
     </button>
