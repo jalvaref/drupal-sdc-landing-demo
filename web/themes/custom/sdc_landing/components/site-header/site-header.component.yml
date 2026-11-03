@@ -12,9 +12,10 @@ props:
     - navigation
   properties:
     brand_name: { type: string, title: Brand name, minLength: 1, examples: ['SDC Demo'] }
-    brand_url: { type: string, title: Brand URL, default: '/' }
+    brand_url: { type: string, title: Brand URL, default: '/', format: uri-reference, examples: ['/'] }
     navigation:
       type: array
+      title: Navigation
       examples: [[{ label: 'Soluciones', url: '#soluciones' }, { label: 'Gobierno de IA', url: '#gobierno-ia' }]]
       minItems: 1
       maxItems: 6
@@ -24,13 +25,15 @@ props:
         properties:
           label: { type: string, minLength: 1, examples: ['Soluciones'] }
           url: { type: string, format: uri-reference, minLength: 1, examples: ['#soluciones'] }
-          active: { type: boolean, default: false }
+          active: { type: boolean, title: Active, default: false, examples: [false] }
     primary_cta:
+      title: Primary CTA
       type: object
       properties:
-        label: { type: string }
-        url: { type: string }
+        label: { type: string, title: Label }
+        url: { type: string, title: URL, format: uri-reference }
     variant:
       type: string
+      title: Variant
       enum: [standard, transparent, dark]
       default: standard

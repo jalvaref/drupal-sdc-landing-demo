@@ -5,7 +5,7 @@ props:
   type: object
   required: [items]
   properties:
-    title: { type: string }
-    items: { type: array, minItems: 2, maxItems: 8, examples: [[{ question: '¿Qué es el gobierno de IA?', answer: '<p>Es el conjunto de políticas, procesos y controles para un uso responsable.</p>' }, { question: '¿Qué beneficios aporta?', answer: '<p>Aporta claridad, control y capacidad de escalar.</p>' }]], items: { type: object, required: [question, answer], properties: { question: { type: string, examples: ['¿Qué es el gobierno de IA?'] }, answer: { type: string, contentMediaType: text/html, x-formatting-context: block, examples: ['<p>Es el conjunto de políticas y controles.</p>'] } } } }
-    default_open: { type: integer, minimum: 0, maximum: 0 }
-    variant: { type: string, enum: [faq, standard, bordered], default: faq }
+    title: { type: string, title: 'Título', examples: ['Preguntas frecuentes'] }
+    items: { type: array, title: 'Preguntas', minItems: 2, maxItems: 8, examples: [[{ question: '¿Qué es el gobierno de IA?', answer: '<p>Es el conjunto de políticas, procesos y controles para un uso responsable.</p>' }, { question: '¿Qué beneficios aporta?', answer: '<p>Aporta claridad, control y capacidad de escalar.</p>' }]], items: { type: object, required: [question, answer], properties: { question: { type: string, title: 'Pregunta', examples: ['¿Qué es el gobierno de IA?'] }, answer: { type: string, title: 'Respuesta', contentMediaType: text/html, x-formatting-context: block, examples: ['<p>Es el conjunto de políticas y controles.</p>'] } } } }
+    default_open: { type: integer, title: 'Pregunta abierta', minimum: 0, maximum: 0, examples: [0] }
+    variant: { type: string, title: 'Variante', enum: [faq, standard, bordered], default: faq, examples: ['faq'] }

@@ -5,8 +5,8 @@ props:
   type: object
   required: [body]
   properties:
-    eyebrow: { type: string }
-    title: { type: string }
-    body: { type: string, minLength: 1, contentMediaType: text/html, x-formatting-context: block, examples: ['<p>Contenido editorial de ejemplo.</p>'] }
-    alignment: { type: string, enum: [left, center], default: left }
-    width: { type: string, enum: [narrow, medium, wide], default: medium }
+    eyebrow: { type: string, title: 'Antetítulo' }
+    title: { type: string, title: 'Título', examples: ['Una estrategia de IA necesita una base común'] }
+    body: { type: string, title: 'Contenido', minLength: 1, contentMediaType: text/html, x-formatting-context: block, examples: ['<p>Contenido editorial de ejemplo.</p>'] }
+    alignment: { type: string, title: 'Alineación', enum: [left, center], default: left, examples: ['left'] }
+    width: { type: string, title: 'Anchura', enum: [narrow, medium, wide], default: medium, examples: ['medium'] }

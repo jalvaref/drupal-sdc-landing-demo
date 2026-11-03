@@ -5,9 +5,9 @@ props:
   type: object
   required: [items]
   properties:
-    title: { type: string }
-    description: { type: string }
-    items: { type: array, minItems: 3, maxItems: 6, examples: [[{ icon: 'governance', title: 'Gobierno', text: 'Estructura, roles y procesos claros.' }, { icon: 'security', title: 'Seguridad', text: 'Protección integral de datos y servicios.' }, { icon: 'scale', title: 'Escalabilidad', text: 'Una plataforma flexible y preparada.' }]], items: { type: object, required: [title, text], properties: { icon: { type: string, examples: ['governance'] }, title: { type: string, examples: ['Gobierno'] }, text: { type: string, examples: ['Estructura, roles y procesos claros.'] } } } }
-    columns: { type: integer, enum: [3, 4], default: 3 }
-    variant: { type: string, enum: [standard, with-icons, with-numbers], default: with-icons }
-    theme: { type: string, enum: [light, dark, brand], default: light }
+    title: { type: string, title: 'Título', examples: ['Capacidades para avanzar con confianza'] }
+    description: { type: string, title: 'Descripción' }
+    items: { type: array, title: 'Capacidades', minItems: 3, maxItems: 6, examples: [[{ icon: 'governance', title: 'Gobierno', text: 'Estructura, roles y procesos claros.' }, { icon: 'security', title: 'Seguridad', text: 'Protección integral de datos y servicios.' }, { icon: 'scale', title: 'Escalabilidad', text: 'Una plataforma flexible y preparada.' }]], items: { type: object, required: [title, text], properties: { icon: { type: string, title: 'Icono', examples: ['governance'] }, title: { type: string, title: 'Título', examples: ['Gobierno'] }, text: { type: string, title: 'Texto', examples: ['Estructura, roles y procesos claros.'] } } } }
+    columns: { type: integer, title: 'Columnas', enum: [3, 4], default: 3, examples: [3] }
+    variant: { type: string, title: 'Variante', enum: [standard, with-icons, with-numbers], default: with-icons, examples: ['with-icons'] }
+    theme: { type: string, title: 'Tema', enum: [light, dark, brand], default: light, examples: ['light'] }

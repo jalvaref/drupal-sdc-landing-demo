@@ -5,10 +5,10 @@ props:
   type: object
   required: [quote]
   properties:
-    quote: { type: string, minLength: 1, examples: ['La confianza se diseña desde el principio.'] }
-    author: { type: string }
-    role: { type: string }
-    organization: { type: string }
-    image: { type: object, properties: { src: { type: string }, alt: { type: string } } }
-    source: { type: string }
-    variant: { type: string, enum: [standard, highlighted, with-image], default: highlighted }
+    quote: { type: string, title: 'Cita', minLength: 1, examples: ['La confianza se diseña desde el principio.'] }
+    author: { type: string, title: 'Autor', examples: ['María García'] }
+    role: { type: string, title: 'Cargo', examples: ['Directora de Innovación'] }
+    organization: { type: string, title: 'Organización' }
+    image: { type: object, title: 'Imagen', $ref: 'json-schema-definitions://canvas.module/image' }
+    source: { type: string, title: 'Fuente' }
+    variant: { type: string, title: 'Variante', enum: [standard, highlighted, with-image], default: highlighted, examples: ['highlighted'] }

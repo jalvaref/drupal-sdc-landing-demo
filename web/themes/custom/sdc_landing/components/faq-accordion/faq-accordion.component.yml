@@ -4,5 +4,5 @@ status: stable
 props:
   type: object
   properties:
-    title: { type: string }
-    items: { type: array, items: { type: object, properties: { question: { type: string }, answer: { type: string } } } }
+    title: { type: string, title: 'Título', examples: ['Preguntas frecuentes'] }
+    items: { type: array, title: 'Preguntas', items: { type: object, properties: { question: { type: string, title: 'Pregunta' }, answer: { type: string, title: 'Respuesta', contentMediaType: text/html, x-formatting-context: block } } } }

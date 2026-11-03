@@ -4,10 +4,10 @@ status: stable
 props:
   type: object
   properties:
-    title: { type: string }
-    description: { type: string }
-    price: { type: string }
-    price_note: { type: string }
-    cta_label: { type: string }
-    cta_url: { type: string, title: CTA URL, default: '#faq-title' }
-    badge: { type: string }
+    title: { type: string, title: 'Título', examples: ['Plan de adopción'] }
+    description: { type: string, title: 'Descripción' }
+    price: { type: string, title: 'Precio' }
+    price_note: { type: string, title: 'Nota de precio' }
+    cta_label: { type: string, title: 'Texto CTA' }
+    cta_url: { type: string, title: CTA URL, format: uri-reference, default: '#faq-title', examples: ['#faq-title'] }
+    badge: { type: string, title: 'Etiqueta' }

@@ -5,11 +5,11 @@ props:
   type: object
   required: [title]
   properties:
-    eyebrow: { type: string }
-    title: { type: string, minLength: 1, examples: ['Convierte la IA en una capacidad empresarial'] }
-    description: { type: string }
-    image: { type: object, $ref: 'json-schema-definitions://canvas.module/image', examples: [{ src: '/themes/custom/sdc_landing/images/hero-energy.jpg', alt: 'Paisaje energético' }] }
-    primary_cta: { type: object, properties: { label: { type: string }, url: { type: string } } }
-    secondary_cta: { type: object, properties: { label: { type: string }, url: { type: string } } }
-    variant: { type: string, enum: [default, split, centered], default: split }
-    theme: { type: string, enum: [light, dark, brand], default: light }
+    eyebrow: { type: string, title: 'Antetítulo' }
+    title: { type: string, title: 'Título', minLength: 1, examples: ['Convierte la IA en una capacidad empresarial'] }
+    description: { type: string, title: 'Descripción' }
+    image: { type: object, title: 'Imagen', $ref: 'json-schema-definitions://canvas.module/image', examples: [{ src: '/themes/custom/sdc_landing/images/hero-energy.jpg', alt: 'Paisaje energético' }] }
+    primary_cta: { type: object, title: 'CTA principal', properties: { label: { type: string, title: 'Texto' }, url: { type: string, title: 'URL', format: uri-reference } } }
+    secondary_cta: { type: object, title: 'CTA secundaria', properties: { label: { type: string, title: 'Texto' }, url: { type: string, title: 'URL', format: uri-reference } } }
+    variant: { type: string, title: 'Variante', enum: [default, split, centered], default: split, examples: ['split'] }
+    theme: { type: string, title: 'Tema', enum: [light, dark, brand], default: light, examples: ['light'] }

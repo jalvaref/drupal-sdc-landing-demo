@@ -4,5 +4,5 @@ status: stable
 props:
   type: object
   properties:
-    title: { type: string }
-    items: { type: array, items: { type: object, properties: { title: { type: string }, text: { type: string } } } }
+    title: { type: string, title: 'Título', examples: ['Beneficios'] }
+    items: { type: array, title: 'Beneficios', items: { type: object, properties: { title: { type: string, title: 'Título' }, text: { type: string, title: 'Texto' } } } }

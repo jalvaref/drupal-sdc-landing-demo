@@ -4,6 +4,6 @@ status: stable
 props:
   type: object
   properties:
-    label: { type: string }
-    value: { type: string }
-    source: { type: string }
+    label: { type: string, title: 'Etiqueta' }
+    value: { type: string, title: 'Valor', examples: ['40%'] }
+    source: { type: string, title: 'Fuente' }

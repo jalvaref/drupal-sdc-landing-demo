@@ -5,10 +5,10 @@ props:
   type: object
   required: [title]
   properties:
-    eyebrow: { type: string }
-    title: { type: string, minLength: 1, examples: ['Diseñar con control desde el principio'] }
-    description: { type: string }
-    image: { type: object, $ref: 'json-schema-definitions://canvas.module/image', examples: [{ src: '/themes/custom/sdc_landing/images/control-room.jpg', alt: 'Centro de control energético' }] }
-    cta: { type: object, properties: { label: { type: string }, url: { type: string } } }
-    image_position: { type: string, enum: [left, right], default: left }
-    theme: { type: string, enum: [light, dark, brand], default: light }
+    eyebrow: { type: string, title: 'Antetítulo' }
+    title: { type: string, title: 'Título', minLength: 1, examples: ['Diseñar con control desde el principio'] }
+    description: { type: string, title: 'Descripción' }
+    image: { type: object, title: 'Imagen', $ref: 'json-schema-definitions://canvas.module/image', examples: [{ src: '/themes/custom/sdc_landing/images/control-room.jpg', alt: 'Centro de control energético' }] }
+    cta: { type: object, title: 'CTA', properties: { label: { type: string, title: 'Texto' }, url: { type: string, title: 'URL', format: uri-reference } } }
+    image_position: { type: string, title: 'Posición de la imagen', enum: [left, right], default: left, examples: ['left'] }
+    theme: { type: string, title: 'Tema', enum: [light, dark, brand], default: light, examples: ['light'] }
