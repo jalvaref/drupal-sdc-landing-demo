@@ -5,7 +5,7 @@ props:
   type: object
   required: [quote]
   properties:
-    quote: { type: string, minLength: 1 }
+    quote: { type: string, minLength: 1, examples: ['La confianza se diseña desde el principio.'] }
     author: { type: string }
     role: { type: string }
     organization: { type: string }

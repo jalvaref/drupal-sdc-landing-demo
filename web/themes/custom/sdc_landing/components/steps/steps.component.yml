@@ -7,5 +7,5 @@ props:
   properties:
     title: { type: string }
     description: { type: string }
-    items: { type: array, minItems: 3, maxItems: 6, items: { type: object, required: [title, text], properties: { title: { type: string }, text: { type: string }, icon: { type: string } } } }
+    items: { type: array, minItems: 3, maxItems: 6, examples: [[{ title: 'Diagnóstico', text: 'Analizamos tu situación actual.', icon: 'diagnosis' }, { title: 'Diseño', text: 'Definimos la solución adecuada.', icon: 'design' }, { title: 'Implementación', text: 'Ponemos la solución en marcha.', icon: 'implementation' }]], items: { type: object, required: [title, text], properties: { title: { type: string, examples: ['Diagnóstico'] }, text: { type: string, examples: ['Analizamos tu situación actual.'] }, icon: { type: string, examples: ['diagnosis'] } } } }
     variant: { type: string, enum: [vertical, horizontal, numbered, timeline], default: numbered }

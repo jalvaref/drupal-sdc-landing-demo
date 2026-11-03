@@ -10,12 +10,13 @@ props:
       type: array
       minItems: 1
       maxItems: 4
+      examples: [[{ title: 'Soluciones', links: [{ label: 'Tecnología', url: '#' }] }]]
       items:
         type: object
         required: [title, links]
         properties:
-          title: { type: string }
-          links: { type: array, minItems: 1, items: { type: object, required: [label, url], properties: { label: { type: string }, url: { type: string } } } }
-    legal_links: { type: array, minItems: 1, items: { type: object, required: [label, url], properties: { label: { type: string }, url: { type: string } } } }
+          title: { type: string, examples: ['Soluciones'] }
+          links: { type: array, minItems: 1, examples: [[{ label: 'Tecnología', url: '#' }]], items: { type: object, required: [label, url], properties: { label: { type: string, examples: ['Tecnología'] }, url: { type: string, format: uri-reference, examples: ['#'] } } } }
+    legal_links: { type: array, minItems: 1, examples: [[{ label: 'Privacidad', url: '#' }]], items: { type: object, required: [label, url], properties: { label: { type: string, examples: ['Privacidad'] }, url: { type: string, format: uri-reference, examples: ['#'] } } } }
     social_links: { type: array, items: { type: object, required: [label, url], properties: { label: { type: string }, url: { type: string } } } }
     copyright: { type: string }

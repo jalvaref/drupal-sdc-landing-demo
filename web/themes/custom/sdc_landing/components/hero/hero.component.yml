@@ -6,9 +6,9 @@ props:
   required: [title]
   properties:
     eyebrow: { type: string }
-    title: { type: string, minLength: 1 }
+    title: { type: string, minLength: 1, examples: ['Convierte la IA en una capacidad empresarial'] }
     description: { type: string }
-    image: { type: object, properties: { src: { type: string }, alt: { type: string } } }
+    image: { type: object, $ref: 'json-schema-definitions://canvas.module/image', examples: [{ src: '/themes/custom/sdc_landing/images/hero-energy.jpg', alt: 'Paisaje energético' }] }
     primary_cta: { type: object, properties: { label: { type: string }, url: { type: string } } }
     secondary_cta: { type: object, properties: { label: { type: string }, url: { type: string } } }
     variant: { type: string, enum: [default, split, centered], default: split }

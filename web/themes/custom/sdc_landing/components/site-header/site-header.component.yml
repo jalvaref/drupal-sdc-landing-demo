@@ -11,18 +11,19 @@ props:
     - brand_name
     - navigation
   properties:
-    brand_name: { type: string, title: Brand name, minLength: 1 }
+    brand_name: { type: string, title: Brand name, minLength: 1, examples: ['SDC Demo'] }
     brand_url: { type: string, title: Brand URL, default: '/' }
     navigation:
       type: array
+      examples: [[{ label: 'Soluciones', url: '#soluciones' }, { label: 'Gobierno de IA', url: '#gobierno-ia' }]]
       minItems: 1
       maxItems: 6
       items:
         type: object
         required: [label, url]
         properties:
-          label: { type: string, minLength: 1 }
-          url: { type: string, minLength: 1 }
+          label: { type: string, minLength: 1, examples: ['Soluciones'] }
+          url: { type: string, format: uri-reference, minLength: 1, examples: ['#soluciones'] }
           active: { type: boolean, default: false }
     primary_cta:
       type: object

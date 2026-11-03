@@ -7,6 +7,6 @@ props:
   properties:
     eyebrow: { type: string }
     title: { type: string }
-    body: { type: string, minLength: 1 }
+    body: { type: string, minLength: 1, contentMediaType: text/html, x-formatting-context: block, examples: ['<p>Contenido editorial de ejemplo.</p>'] }
     alignment: { type: string, enum: [left, center], default: left }
     width: { type: string, enum: [narrow, medium, wide], default: medium }

@@ -7,5 +7,5 @@ props:
   properties:
     title: { type: string }
     description: { type: string }
-    items: { type: array, minItems: 2, maxItems: 4, items: { type: object, required: [value, label], properties: { value: { type: string }, label: { type: string }, context: { type: string } } } }
+    items: { type: array, minItems: 2, maxItems: 4, examples: [[{ value: '40%', label: 'Mayor eficiencia operativa' }, { value: '3x', label: 'Más velocidad de entrega' }]], items: { type: object, required: [value, label], properties: { value: { type: string, examples: ['40%'] }, label: { type: string, examples: ['Mayor eficiencia operativa'] }, context: { type: string } } } }
     variant: { type: string, enum: [horizontal, grid, highlighted], default: highlighted }

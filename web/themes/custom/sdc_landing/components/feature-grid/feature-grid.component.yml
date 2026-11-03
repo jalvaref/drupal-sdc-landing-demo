@@ -7,7 +7,7 @@ props:
   properties:
     title: { type: string }
     description: { type: string }
-    items: { type: array, minItems: 3, maxItems: 6, items: { type: object, required: [title, text], properties: { icon: { type: string }, title: { type: string }, text: { type: string } } } }
+    items: { type: array, minItems: 3, maxItems: 6, examples: [[{ icon: 'governance', title: 'Gobierno', text: 'Estructura, roles y procesos claros.' }, { icon: 'security', title: 'Seguridad', text: 'Protección integral de datos y servicios.' }, { icon: 'scale', title: 'Escalabilidad', text: 'Una plataforma flexible y preparada.' }]], items: { type: object, required: [title, text], properties: { icon: { type: string, examples: ['governance'] }, title: { type: string, examples: ['Gobierno'] }, text: { type: string, examples: ['Estructura, roles y procesos claros.'] } } } }
     columns: { type: integer, enum: [3, 4], default: 3 }
     variant: { type: string, enum: [standard, with-icons, with-numbers], default: with-icons }
     theme: { type: string, enum: [light, dark, brand], default: light }

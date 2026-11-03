@@ -6,10 +6,10 @@ props:
   required: [title, primary_cta]
   properties:
     eyebrow: { type: string }
-    title: { type: string, minLength: 1 }
+    title: { type: string, minLength: 1, examples: ['Construyamos una IA preparada para el futuro'] }
     description: { type: string }
     image: { type: object, properties: { src: { type: string }, alt: { type: string } } }
-    primary_cta: { type: object, required: [label, url], properties: { label: { type: string }, url: { type: string } } }
+    primary_cta: { type: object, required: [label, url], examples: [{ label: 'Hablemos', url: '#contacto' }], properties: { label: { type: string, examples: ['Hablemos'] }, url: { type: string, format: uri-reference, examples: ['#contacto'] } } }
     secondary_cta: { type: object, properties: { label: { type: string }, url: { type: string } } }
     theme: { type: string, enum: [light, dark, brand], default: dark }
     variant: { type: string, enum: [standard, with-image], default: standard }
