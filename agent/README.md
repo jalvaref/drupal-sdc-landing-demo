@@ -44,6 +44,8 @@ La fuente de verdad del comportamiento del agente está en el repositorio. Al ac
 4. `knowledge/design-system.md` — dirección visual, tokens, composición, responsive y accesibilidad.
 5. `web/themes/custom/sdc_landing/DESIGN-SYSTEM.md` — contrato técnico del tema y de los SDC.
 6. `docs/agent-mvp-roadmap.md` — alcance MVP1/MVP2 y fases del flujo.
+7. `knowledge/operational-runbook.md` — preflight, contratos críticos y comportamiento cuando el MCP no está conectado.
+8. Los cinco contratos SDC utilizados (`hero.component.yml`, `rich-text.component.yml`, `feature-grid.component.yml`, `stats.component.yml` y `cta-banner.component.yml`) — estructuras exactas de props para Canvas.
 
 Después de sincronizar, valida el agente con un briefing de prueba y comprueba que:
 

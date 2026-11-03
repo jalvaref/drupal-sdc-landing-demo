@@ -47,4 +47,14 @@ No todos los bloques son obligatorios: la composición depende del briefing.
 
 Cada componente debe usar únicamente las props declaradas en su `.component.yml`. Los campos obligatorios tienen ejemplos para que Canvas pueda inicializar el formulario. Las variantes son enums cerrados y los arrays tienen límites de cardinalidad.
 
+### Contratos anidados críticos
+
+- `C01 Hero`: los CTA son objetos con `label` y `url`; `image` debe seguir exactamente el objeto de imagen definido por Canvas.
+- `C02 RichText`: `body` es HTML filtrado; para párrafos debe utilizarse, por ejemplo, `<p>Texto editorial.</p>`.
+- `C04 FeatureGrid`: cada item usa `title` y `text`. `description` es la descripción del componente, no el texto interno del item.
+- `C06 Stats`: cada item usa `value` y `label`; las cifras ficticias deben marcarse como ilustrativas.
+- `C10 CtaBanner`: `primary_cta` requiere `label` y `url`; `secondary_cta` es opcional y no debe declararse si no aparece en el diseño aprobado.
+
+Estos ejemplos son reglas de control para evitar errores de composición; la validación final siempre debe hacerse contra el `.component.yml` real cargado como fuente de conocimiento.
+
 Tras generar una landing, el agente debe comprobar que los componentes aparecen en la biblioteca, que sus props se editan, que la página se guarda y que el estado queda como draft.

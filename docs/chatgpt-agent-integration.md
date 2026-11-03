@@ -9,14 +9,19 @@ En el Agent Builder:
 1. Carga `agent/chatgpt-agent/INSTRUCTIONS.md` como instrucciones principales.
 2. Añade como archivos de conocimiento:
    - `knowledge/component-catalog.yaml`.
+   - `knowledge/component-catalog.md`.
    - `knowledge/design-system.md`.
    - `agent/contracts/brief.schema.json`.
    - `agent/contracts/landing-proposal.schema.json`.
    - `docs/agent-mvp-roadmap.md`.
+   - `knowledge/operational-runbook.md`.
+   - Los contratos reales de los SDC utilizados: `hero.component.yml`, `rich-text.component.yml`, `feature-grid.component.yml`, `stats.component.yml` y `cta-banner.component.yml`.
 3. Habilita generación de imágenes para generar las referencias visuales desktop/mobile en JPG.
 4. Conecta GitHub únicamente al repositorio `jalvaref/drupal-sdc-landing-demo`.
 5. Para acciones de escritura, usa un MCP o acción propia con permisos mínimos para crear ramas y pull requests. El conector GitHub estándar puede leer el repositorio, pero no debe considerarse suficiente para hacer push.
 6. Si se quiere iniciar ejecuciones desde otro sistema, añade el canal API del Workspace Agent y protege el token fuera del repositorio.
+
+Si el MCP de despliegue no está conectado, el agente debe limitarse a generar y validar artefactos. No debe simular ramas, pull requests, pushes, despliegues ni importaciones Drupal.
 
 ## Contrato de salida del agente
 
