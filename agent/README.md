@@ -1,6 +1,6 @@
 # Contratos del agente
 
-Esta carpeta contiene los contratos de datos y los validadores de la POC de generación de landings. El camino principal de generación es el agente de ChatGPT `TotalEnergies SDC Copilot`, documentado en `agent/chatgpt-agent/INSTRUCTIONS.md`. El proveedor `deterministic` se conserva para pruebas reproducibles y `openai` como fallback técnico de integración.
+Esta carpeta contiene los contratos de datos y los validadores de la POC de generación de landings. El camino principal de generación es el agente de ChatGPT `SDC Copilot`, documentado en `agent/chatgpt-agent/INSTRUCTIONS.md`. El proveedor `deterministic` se conserva para pruebas reproducibles y `openai` como fallback técnico de integración.
 
 El punto de entrada es `bin/run-agent.mjs`. En ambos casos el resultado se valida automáticamente contra el contrato antes de quedar en `awaiting_visual_approval`.
 
@@ -29,6 +29,10 @@ El proveedor OpenAI genera `llm-components.json`, `design_direction` dentro de `
 El agente termina en `awaiting_visual_approval`. La aprobación debe realizarse explícitamente antes de generar el paquete SDC.
 
 El ejemplo `agent/examples/energia-move-with-candidate-brief.json` demuestra la ruta MVP2: añade `C11` como componente candidato, lo representa en el preview y genera su paquete experimental en `sdc-package/components`.
+
+## Gateway de despliegue
+
+`agent/deployment-gateway` contiene el MVP para conectar el agente con la validación, GitHub, Pantheon Dev y la importación de drafts en Drupal. Arranca en modo `dry-run`, restringe el repositorio de la POC y no incluye ninguna operación de publicación. Antes de conectarlo a ChatGPT debe publicarse detrás de HTTPS como custom MCP, configurar autenticación y mantener las acciones de escritura con confirmación.
 
 ## Principios
 

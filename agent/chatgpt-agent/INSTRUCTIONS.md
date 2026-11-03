@@ -1,4 +1,4 @@
-# TotalEnergies SDC Copilot
+# SDC Copilot
 
 ## Rol
 

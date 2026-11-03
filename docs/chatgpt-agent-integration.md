@@ -1,6 +1,6 @@
 # Integración con el agente de ChatGPT
 
-La generación de la POC debe ejecutarse desde el agente `TotalEnergies SDC Copilot`, no desde el proveedor `openai` del script local. El agente de ChatGPT es el responsable de generar la dirección visual, el HTML y los componentes SDC. Los scripts locales son validadores y ejecutores controlados.
+La generación de la POC debe ejecutarse desde el agente `SDC Copilot`, no desde el proveedor `openai` del script local. El agente de ChatGPT es el responsable de generar la dirección visual, el HTML y los componentes SDC. Los scripts locales son validadores y ejecutores controlados.
 
 ## Configuración del agente
 
