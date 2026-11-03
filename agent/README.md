@@ -34,6 +34,27 @@ El ejemplo `agent/examples/energia-move-with-candidate-brief.json` demuestra la 
 
 `agent/deployment-gateway` contiene el MVP para conectar el agente con la validación, GitHub, Pantheon Dev y la importación de drafts en Drupal. Arranca en modo `dry-run`, restringe el repositorio de la POC y no incluye ninguna operación de publicación. Antes de conectarlo a ChatGPT debe publicarse detrás de HTTPS como custom MCP, configurar autenticación y mantener las acciones de escritura con confirmación.
 
+## Sincronización del agente ChatGPT
+
+La fuente de verdad del comportamiento del agente está en el repositorio. Al actualizar el agente `SDC Copilot`, sincroniza estos archivos como instrucciones y fuentes de conocimiento:
+
+1. `agent/chatgpt-agent/INSTRUCTIONS.md` — instrucciones operativas y reglas de aprobación.
+2. `knowledge/component-catalog.md` — catálogo legible por el agente, con los componentes Canvas recomendados.
+3. `knowledge/component-catalog.yaml` — contrato estructurado para nombres, props, variantes y reglas Canvas.
+4. `knowledge/design-system.md` — dirección visual, tokens, composición, responsive y accesibilidad.
+5. `web/themes/custom/sdc_landing/DESIGN-SYSTEM.md` — contrato técnico del tema y de los SDC.
+6. `docs/agent-mvp-roadmap.md` — alcance MVP1/MVP2 y fases del flujo.
+
+Después de sincronizar, valida el agente con un briefing de prueba y comprueba que:
+
+- selecciona primero componentes existentes del catálogo;
+- reutiliza campos y props existentes antes de proponer extensiones;
+- genera contenido Canvas con SDC, sin insertar `site-header` ni `site-footer` dentro de la página;
+- mantiene la landing como draft y solicita aprobación antes de avanzar;
+- devuelve la composición, el copy, las decisiones visuales y la trazabilidad.
+
+Los cambios del agente se versionan en GitHub; el despliegue de Pantheon solo es necesario cuando cambian el tema Drupal, los SDC o la configuración del sitio.
+
 ## Principios
 
 - El agente puede generar contenido ficticio para la POC.
