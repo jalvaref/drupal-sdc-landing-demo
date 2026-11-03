@@ -153,6 +153,8 @@ La integración con GitHub debe ser idempotente: si se reintenta una ejecución,
 ### P1
 
 - Añadir inspector visual.
+- Evolucionar el inspector a una capa superpuesta sobre cada componente: al activar el modo inspector debe resaltar el componente en el HTML y mostrar junto a él su ID, nombre, variante, estado (`catalog`, `candidate` o `experimental`), props utilizadas, justificación de uso y referencia al catálogo.
+- Mantener el inspector accesible: botón de activación, cierre con Escape, foco gestionado, lectura compatible con teclado y alternativa de panel lateral cuando la superposición no tenga espacio suficiente.
 - Generar informe de trazabilidad.
 - Generar paquete SDC desde HTML aprobado.
 - Actualizar inventario y catálogo.
