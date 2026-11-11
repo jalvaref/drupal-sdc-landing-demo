@@ -33,6 +33,15 @@ jobs:
           if [ -d "agent/runs/${{ inputs.run_id }}/sdc-package" ]; then
             node agent/bin/validate-sdc-package.mjs "agent/runs/${{ inputs.run_id }}/sdc-package"
           fi
+      - name: Comprobar artefactos no vacíos
+        shell: bash
+        run: |
+          run_dir="agent/runs/${{ inputs.run_id }}"
+          test -s "$run_dir/proposal.json"
+          test -s "$run_dir/preview/index.html"
+          test -s "$run_dir/design/desktop.jpg"
+          test -s "$run_dir/design/mobile.jpg"
+          node -e "const p=require('./$run_dir/proposal.json'); if(p.status!=='sdc_approved') throw new Error('proposal no está sdc_approved'); if(p.run_id!=='${{ inputs.run_id }}') throw new Error('run_id no coincide');"
 
   pantheon:
     if: ${{ inputs.action == 'deploy_pantheon_dev' }}

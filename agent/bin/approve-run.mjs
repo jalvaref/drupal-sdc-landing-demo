@@ -37,7 +37,6 @@ const approval = {
   comment: comment || 'Aprobado para continuar a la siguiente fase.'
 };
 proposal.approval = approval;
-proposal.approval_history = [...(proposal.approval_history || []), approval];
 await writeFile(proposalFile, JSON.stringify(proposal, null, 2) + '\n');
 await writeFile(join(runPath, 'approval.json'), JSON.stringify(approval, null, 2) + '\n');
 try {
