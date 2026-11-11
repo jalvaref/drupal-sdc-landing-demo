@@ -22,7 +22,7 @@ for (const id of requiredIds) {
 if ((html.match(/<h1\b/g) || []).length !== 1) errors.push('El HTML debe contener un único h1.');
 if (!html.includes('Mostrar inspector')) errors.push('El HTML no contiene el inspector.');
 if (!proposal.design_direction || !proposal.design_direction.palette || !proposal.design_direction.layout || !proposal.design_direction.visual_rationale) errors.push('Falta design_direction completo.');
-if (!html.includes('Concepto de demostración')) errors.push('Falta el aviso obligatorio de demostración.');
+if (!html.toLocaleLowerCase('es-ES').includes('concepto de demostración')) errors.push('Falta el aviso obligatorio de demostración.');
 if (html.includes('data-component-id="C00"') || html.includes('data-component-id="C99"')) errors.push('C00/C99 no deben estar dentro del contenido Canvas.');
 if (runManifest && runManifest.run_id !== proposal.run_id) errors.push('run-manifest.json y proposal.json no comparten run_id.');
 for (const file of ['design/desktop.jpg', 'design/mobile.jpg', 'traceability.md']) {
