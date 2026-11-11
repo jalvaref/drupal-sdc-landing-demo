@@ -11,6 +11,7 @@ Configurar en `jalvaref/drupal-sdc-landing-demo` los siguientes secretos del rep
 - `PANTHEON_DEPLOY_COMMAND`: comando que ejecutará el runner después de configurar el remote SSH. Para el procedimiento actual usa exactamente `git push pantheon HEAD:master`.
 - `PANTHEON_GIT_REMOTE`: remote SSH de Codeserver de `sdc-landing-demo.dev`, por ejemplo el que muestra Pantheon como `ssh://...@codeserver.dev....drush.in:2222/~/repository.git`.
 - `PANTHEON_SSH_PRIVATE_KEY`: clave privada SSH de despliegue autorizada para ese Codeserver. No es la clave pública ni el machine token de Terminus.
+- `PANTHEON_MACHINE_TOKEN`: machine token de Pantheon para autenticar Terminus durante la importación Drupal. Debe tener permisos sobre `sdc-landing-demo.dev`.
 - `DRUPAL_IMPORT_COMMAND`: procedimiento autorizado para ejecutar `sdc-agent:import-draft` contra el entorno Drupal Dev. Debe contener `<run>` para referenciar `agent/runs/<run>/proposal.json`.
 
 Los secretos no deben incluirse en `workflow`, `proposal.json`, el gateway ni el repositorio. El workflow aborta si falta cualquiera de ellos, si la salida no confirma `draft` o si detecta una indicación de publicación.

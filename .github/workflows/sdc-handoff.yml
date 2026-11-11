@@ -93,6 +93,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Preparar Terminus
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+      - name: Instalar y autenticar Terminus
+        env:
+          PANTHEON_MACHINE_TOKEN: ${{ secrets.PANTHEON_MACHINE_TOKEN }}
+        shell: bash
+        run: |
+          if [ -z "$PANTHEON_MACHINE_TOKEN" ]; then
+            echo "::error::Falta el secreto PANTHEON_MACHINE_TOKEN; no se ejecuta la importación Drupal.";
+            exit 1;
+          fi
+          curl --fail --silent --show-error --location \
+            https://github.com/pantheon-systems/terminus/releases/latest/download/terminus.phar \
+            --output "$RUNNER_TEMP/terminus"
+          chmod +x "$RUNNER_TEMP/terminus"
+          echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
+          "$RUNNER_TEMP/terminus" auth:login --machine-token="$PANTHEON_MACHINE_TOKEN"
       - name: Importar landing como draft mediante el procedimiento autorizado
         env:
           DRUPAL_IMPORT_COMMAND: ${{ secrets.DRUPAL_IMPORT_COMMAND }}
