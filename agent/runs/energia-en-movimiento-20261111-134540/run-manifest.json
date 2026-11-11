@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "run_id": "energia-en-movimiento-20261111-134540",
+  "provider": "codex",
+  "status": "blocked",
+  "stage": "transport_validation",
+  "artifacts": [],
+  "blockers": [
+    "Los artefactos del run remoto tienen tamaño cero.",
+    "No se permite desplegar ni importar una propuesta vacía.",
+    "Debe regenerarse una ejecución limpia antes del handoff."
+  ],
+  "diagnostic": "diagnostic-report.md"
+}
