@@ -8,7 +8,7 @@ const toFlag = process.argv.indexOf('--to');
 const commentFlag = process.argv.indexOf('--comment');
 const nextStatus = toFlag >= 0 ? process.argv[toFlag + 1] : '';
 const comment = commentFlag >= 0 ? process.argv[commentFlag + 1] || '' : '';
-const allowed = ['visual_approved', 'html_approved', 'sdc_approved'];
+const allowed = ['visual_approved', 'html_draft', 'html_approved', 'sdc_package_draft', 'sdc_approved'];
 const proposalFile = resolve(runPath, 'proposal.json');
 const proposal = JSON.parse(await readFile(proposalFile, 'utf8'));
 
@@ -19,8 +19,9 @@ if (!allowed.includes(nextStatus)) {
 
 const transitions = {
   visual_draft: 'visual_approved',
-  visual_approved: 'html_approved',
+  visual_approved: 'html_draft',
   html_draft: 'html_approved',
+  html_approved: 'sdc_package_draft',
   sdc_package_draft: 'sdc_approved'
 };
 if (transitions[proposal.status] !== nextStatus) {
