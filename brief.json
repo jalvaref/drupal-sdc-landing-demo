@@ -1,0 +1,100 @@
+{
+  "campaign_name": "Energía en Movimiento",
+  "slug": "energia-en-movimiento",
+  "objective": "Captar nuevos clientes particulares para iniciar la contratación online de una tarifa de luz vinculada a una ventaja promocional de movilidad eléctrica. La landing debe explicar la oferta con claridad, reducir dudas y transmitir sencillez, transparencia y acompañamiento humano.",
+  "audience": {
+    "description": "Personas con vivienda habitual en España que tienen un vehículo eléctrico o híbrido enchufable, o están considerando adquirirlo durante los próximos 12 meses. No dominan la terminología energética y desconfían de promociones con condiciones poco claras.",
+    "age_range": "35-55 años",
+    "location": "España, principalmente áreas urbanas y metropolitanas",
+    "needs": [
+      "Entender fácilmente el precio y las condiciones de la tarifa.",
+      "Valorar la estabilidad del precio y la ausencia de permanencia.",
+      "Comprender cómo funciona el saldo promocional de recarga.",
+      "Poder iniciar la contratación online o solicitar una llamada."
+    ]
+  },
+  "offer": {
+    "name": "Tarifa Luz Move Siempre",
+    "description": "Tarifa de luz para el hogar con precio de consumo fijo durante 12 meses y una promoción ficticia de 150 € de saldo para recarga pública mediante el partner ficticio VoltioGo.",
+    "price": "0,1099 €/kWh, impuestos no incluidos",
+    "conditions": [
+      "Mismo precio de consumo las 24 horas.",
+      "Precio fijo durante 12 meses.",
+      "Sin permanencia.",
+      "Promoción ficticia de 150 € de saldo para recarga pública.",
+      "Elegible para nuevos clientes que contraten online una tarifa de luz.",
+      "Contrataciones ficticias comprendidas entre el 1 de octubre y el 30 de noviembre de 2026.",
+      "El código de activación se recibiría por correo durante los 15 días posteriores a la activación del suministro.",
+      "El saldo caducaría 12 meses después de su activación.",
+      "La promoción no sería acumulable con otras promociones.",
+      "Todos los datos son ficticios y no constituyen una oferta publicada."
+    ],
+    "benefits": [
+      "Precio de consumo sencillo de entender.",
+      "Mismo precio las 24 horas.",
+      "Precio fijo durante 12 meses.",
+      "Sin permanencia.",
+      "150 € de saldo ficticio para recarga pública.",
+      "Acompañamiento claro durante la activación."
+    ]
+  },
+  "ctas": [
+    {
+      "label": "Quiero contratar",
+      "goal": "Iniciar la contratación online de demostración.",
+      "priority": "primary"
+    },
+    {
+      "label": "Quiero que me llaméis",
+      "goal": "Solicitar una llamada informativa de demostración.",
+      "priority": "secondary"
+    },
+    {
+      "label": "Ver cómo funciona la promoción",
+      "goal": "Ir a la explicación del proceso de activación y condiciones.",
+      "priority": "informational"
+    }
+  ],
+  "kpis": [
+    "Inicio del flujo de contratación de demostración.",
+    "Comprensión de las condiciones principales.",
+    "Interacción con la explicación de la promoción.",
+    "Solicitud de llamada de demostración."
+  ],
+  "duration": "Campaña ficticia: contrataciones del 1 de octubre al 30 de noviembre de 2026; precio fijo durante 12 meses; saldo promocional ficticio con caducidad 12 meses después de su activación.",
+  "brand_guidance": [
+    "Usar un tono profesional, claro, cercano y transparente.",
+    "Conectar la energía del hogar con la movilidad eléctrica.",
+    "No afirmar que TotalEnergies vende vehículos o instala puntos de recarga.",
+    "No utilizar logotipos reales ni reproducir interfaces de partners.",
+    "Presentar siempre la propuesta como concepto de demostración.",
+    "Mostrar claramente que precios, condiciones, partner y promoción son ficticios."
+  ],
+  "assets": [
+    "Ilustración o imagen editorial ficticia de una persona llegando a casa con un vehículo eléctrico, el hogar iluminado y una referencia visual a la recarga.",
+    "No usar activos reales de marca o partner salvo que se proporcionen y autoricen explícitamente."
+  ],
+  "constraints": [
+    "La composición Canvas debe priorizar componentes existentes del catálogo y no crear componentes nuevos.",
+    "Usar como composición inicial C01 Hero, C02 RichText, C03 ImageText, C04 FeatureGrid, C05 CardGrid, C07 Steps, C09 Accordion y C10 CtaBanner, seleccionando solo los necesarios.",
+    "C00 SiteHeader y C99 SiteFooter son globales del tema y no deben incluirse dentro del árbol Canvas.",
+    "No existe un componente específico de tarifa en el catálogo: representar la oferta combinando componentes existentes, preferentemente C02, C04 o C05, sin inventar props.",
+    "El proceso de activación debe utilizar C07 Steps con tres pasos: contratación online, activación del suministro y recepción/activación del saldo.",
+    "Las preguntas frecuentes deben utilizar C09 Accordion e incluir las condiciones de elegibilidad, activación, caducidad, acumulación, permanencia, cancelación, vehículo eléctrico, soporte e impuestos.",
+    "Mantener un único h1 dentro de C01 Hero.",
+    "Incluir una franja visible con el texto: Concepto de demostración — contenido y condiciones no válidos para publicación.",
+    "El diseño visual debe entregarse primero en JPG desktop y mobile y quedar en awaiting_visual_approval.",
+    "El HTML responsive se genera solo después de aprobar la propuesta visual y debe quedar en awaiting_html_approval.",
+    "El HTML debe ser autocontenido, sin librerías externas, con acordeón accesible, interacciones de demostración y sin conexiones reales.",
+    "La especificación visual debe cubrir 1440 px, 768 px y 390 px, tokens, grid, espaciados, tipografía, CTAs, estados y comportamiento responsive.",
+    "Aplicar WCAG AA, foco visible, teclado, objetivos táctiles de al menos 44 x 44 px, texto alternativo y jerarquía correcta.",
+    "No implementar analítica en esta POC. Las recomendaciones de eventos quedan como documentación futura, fuera del HTML y del paquete Canvas.",
+    "Clasificar hallazgos de gobierno como bloqueante, importante o mejora y señalar validaciones pendientes de negocio, legal, marca, UX, accesibilidad, partner y canal.",
+    "No afirmar que se ha creado un archivo Figma, una oferta real, una landing publicada o una integración externa.",
+    "Si el MCP de despliegue no está conectado, generar únicamente los artefactos y el handoff manual; no simular ramas, pull requests, despliegues ni importaciones Drupal."
+  ],
+  "content_policy": {
+    "allow_fictional_content": true,
+    "tone": "Profesional, claro, cercano y transparente; todo el contenido comercial y promocional debe marcarse como ficticio para demostración."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "run_id": "energia-en-movimiento-20261111-161500",
+  "provider": "codex",
+  "status": "sdc_approved",
+  "stage": "sdc_approved",
+  "artifacts": [
+    "brief.json",
+    "proposal.json",
+    "design/desktop.jpg",
+    "design/mobile.jpg",
+    "preview/index.html",
+    "traceability.md",
+    "sdc-package/",
+    "approval.json"
+  ],
+  "blockers": [
+    "Pendiente de aprobación visual explícita antes de generar el HTML final y el paquete SDC."
+  ],
+  "source_brief": "agent/examples/energia-en-movimiento-brief.json"
+}
