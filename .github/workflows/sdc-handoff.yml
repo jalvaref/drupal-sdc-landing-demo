@@ -48,9 +48,12 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Ejecutar despliegue autorizado en Pantheon Dev
         env:
           PANTHEON_DEPLOY_COMMAND: ${{ secrets.PANTHEON_DEPLOY_COMMAND }}
+          PANTHEON_GIT_REMOTE: ${{ secrets.PANTHEON_GIT_REMOTE }}
+          PANTHEON_SSH_PRIVATE_KEY: ${{ secrets.PANTHEON_SSH_PRIVATE_KEY }}
           RUN_ID: ${{ inputs.run_id }}
         shell: bash
         run: |
@@ -58,6 +61,22 @@ jobs:
             echo "::error::Falta el secreto PANTHEON_DEPLOY_COMMAND; no se ejecuta ningún despliegue.";
             exit 1;
           fi
+          if [ -z "$PANTHEON_GIT_REMOTE" ] || [ -z "$PANTHEON_SSH_PRIVATE_KEY" ]; then
+            echo "::error::Faltan PANTHEON_GIT_REMOTE o PANTHEON_SSH_PRIVATE_KEY.";
+            exit 1;
+          fi
+          install -m 700 -d "$HOME/.ssh"
+          printf '%s\n' "$PANTHEON_SSH_PRIVATE_KEY" > "$HOME/.ssh/id_rsa"
+          chmod 600 "$HOME/.ssh/id_rsa"
+          host=$(printf '%s' "$PANTHEON_GIT_REMOTE" | sed -E 's#^[^@]+@([^:]+):.*#\1#')
+          port=$(printf '%s' "$PANTHEON_GIT_REMOTE" | sed -nE 's#^[^@]+@[^:]+:([0-9]+)/.*#\1#p')
+          if [ -z "$host" ] || [ -z "$port" ]; then
+            echo "::error::PANTHEON_GIT_REMOTE no tiene el formato SSH esperado.";
+            exit 1;
+          fi
+          ssh-keyscan -p "$port" "$host" >> "$HOME/.ssh/known_hosts"
+          git remote remove pantheon 2>/dev/null || true
+          git remote add pantheon "$PANTHEON_GIT_REMOTE"
           command="${PANTHEON_DEPLOY_COMMAND//<run>/$RUN_ID}"
           echo "Ejecutando el procedimiento autorizado de Pantheon Dev (run: $RUN_ID)."
           bash -lc "$command"
