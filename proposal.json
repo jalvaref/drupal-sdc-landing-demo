@@ -1,0 +1,256 @@
+{
+  "run_id": "energia-en-movimiento-20261111-161500",
+  "briefing_ref": "agent/examples/energia-en-movimiento-brief.json",
+  "status": "sdc_approved",
+  "visuals": {
+    "desktop": "design/desktop.jpg",
+    "mobile": "design/mobile.jpg"
+  },
+  "design_direction": {
+    "palette": {
+      "navy": "#142d65",
+      "coral": "#f0442e",
+      "surface": "#f4f6fa",
+      "ink": "#172033"
+    },
+    "layout": "Hero split en desktop, composición vertical en móvil, beneficios, pasos, FAQ y CTA.",
+    "visual_rationale": "Conecta hogar y movilidad con una jerarquía clara y contenido ficticio visible.",
+    "breakpoints": [
+      1440,
+      768,
+      390
+    ]
+  },
+  "components": [
+    {
+      "component_id": "C01",
+      "name": "Hero",
+      "variant": "split",
+      "props": {
+        "eyebrow": "Energía en Movimiento",
+        "title": "Una tarifa que acompaña tu energía en movimiento",
+        "description": "Combina la energía de tu hogar con una movilidad eléctrica más sencilla.",
+        "image": {
+          "src": "preview/hero-energy.jpg",
+          "alt": "Pareja junto a un vehículo eléctrico cargando en casa"
+        },
+        "primary_cta": {
+          "label": "Quiero contratar",
+          "url": "#contacto"
+        },
+        "secondary_cta": {
+          "label": "Quiero que me llaméis",
+          "url": "#contacto"
+        },
+        "variant": "split",
+        "theme": "light"
+      },
+      "status": "catalog",
+      "justification": "Presenta la propuesta y las acciones principales.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Contrato .component.yml",
+        "Aprobación del usuario"
+      ]
+    },
+    {
+      "component_id": "C02",
+      "name": "RichText",
+      "variant": "medium",
+      "props": {
+        "eyebrow": "Una propuesta sencilla",
+        "title": "Precio claro. Sin permanencia.",
+        "body": "<p>Una tarifa pensada para entender las condiciones principales y avanzar con confianza.</p>",
+        "alignment": "center",
+        "width": "medium"
+      },
+      "status": "catalog",
+      "justification": "Explica la propuesta sin inventar un componente de tarifa.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Contrato .component.yml",
+        "Aprobación del usuario"
+      ]
+    },
+    {
+      "component_id": "C03",
+      "name": "ImageText",
+      "variant": "right-image",
+      "props": {
+        "eyebrow": "Para tu día a día",
+        "title": "Energía para casa y movilidad",
+        "description": "Una experiencia clara para organizar tu consumo y tu recarga desde el hogar.",
+        "image": {
+          "src": "preview/hero-energy.jpg",
+          "alt": "Vehículo eléctrico junto a una vivienda"
+        },
+        "cta": {
+          "label": "Ver condiciones",
+          "url": "#condiciones"
+        },
+        "image_position": "right",
+        "theme": "light"
+      },
+      "status": "catalog",
+      "justification": "Relaciona el beneficio doméstico con el uso cotidiano.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Contrato .component.yml",
+        "Aprobación del usuario"
+      ]
+    },
+    {
+      "component_id": "C04",
+      "name": "FeatureGrid",
+      "variant": "with-icons",
+      "props": {
+        "title": "Lo esencial, de un vistazo",
+        "description": "Una propuesta ficticia con condiciones fáciles de comparar.",
+        "items": [
+          {
+            "icon": "price",
+            "title": "Precio claro",
+            "text": "Mismo precio de consumo las 24 horas."
+          },
+          {
+            "icon": "calendar",
+            "title": "12 meses",
+            "text": "Precio fijo durante 12 meses."
+          },
+          {
+            "icon": "charge",
+            "title": "Movilidad",
+            "text": "Saldo promocional ficticio para recarga pública."
+          }
+        ],
+        "columns": 3,
+        "variant": "with-icons",
+        "theme": "light"
+      },
+      "status": "catalog",
+      "justification": "Resume los beneficios con los campos del contrato.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Contrato .component.yml",
+        "Aprobación del usuario"
+      ]
+    },
+    {
+      "component_id": "C07",
+      "name": "Steps",
+      "variant": "numbered",
+      "props": {
+        "title": "Cómo funciona",
+        "description": "Activa tu tarifa de demostración en tres pasos.",
+        "items": [
+          {
+            "title": "Contratación online",
+            "text": "Inicia el flujo de contratación ficticio."
+          },
+          {
+            "title": "Activación del suministro",
+            "text": "Recibirías la confirmación por correo."
+          },
+          {
+            "title": "Recepción del saldo",
+            "text": "El código promocional ficticio llegaría después."
+          }
+        ],
+        "variant": "numbered"
+      },
+      "status": "catalog",
+      "justification": "Explica los tres pasos requeridos por el briefing.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Contrato .component.yml",
+        "Aprobación del usuario"
+      ]
+    },
+    {
+      "component_id": "C09",
+      "name": "Accordion",
+      "variant": "faq",
+      "props": {
+        "title": "Preguntas frecuentes",
+        "items": [
+          {
+            "question": "¿Quién puede acogerse?",
+            "answer": "<p>Personas que contraten online una tarifa de luz de demostración.</p>"
+          },
+          {
+            "question": "¿Hay permanencia?",
+            "answer": "<p>No se plantea permanencia en este concepto ficticio.</p>"
+          },
+          {
+            "question": "¿Cuándo recibiría el código?",
+            "answer": "<p>Durante los 15 días posteriores a la activación.</p>"
+          },
+          {
+            "question": "¿El saldo es acumulable?",
+            "answer": "<p>No sería acumulable y caducaría 12 meses después.</p>"
+          }
+        ],
+        "default_open": 0,
+        "variant": "faq"
+      },
+      "status": "catalog",
+      "justification": "Responde las dudas comerciales y de elegibilidad.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Contrato .component.yml",
+        "Aprobación del usuario"
+      ]
+    },
+    {
+      "component_id": "C10",
+      "name": "CtaBanner",
+      "variant": "standard",
+      "props": {
+        "eyebrow": "Siguiente paso",
+        "title": "Hablemos de tu próxima decisión energética",
+        "description": "Resuelve tus dudas sobre esta propuesta ficticia.",
+        "primary_cta": {
+          "label": "Quiero que me llaméis",
+          "url": "#contacto"
+        },
+        "secondary_cta": {
+          "label": "Volver al inicio",
+          "url": "#inicio"
+        },
+        "theme": "dark",
+        "variant": "standard"
+      },
+      "status": "catalog",
+      "justification": "Cierra la experiencia con un único CTA principal.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "Briefing de campaña",
+        "Contrato .component.yml",
+        "Aprobación del usuario"
+      ]
+    }
+  ],
+  "html_artifact": "preview/index.html",
+  "traceability_artifact": "traceability.md",
+  "assumptions": [
+    "Los datos comerciales son ficticios.",
+    "C00/C99 son globales del tema y quedan fuera de Canvas."
+  ],
+  "open_questions": [
+    "Validar copy y condiciones con negocio y legal."
+  ],
+  "blockers": [],
+  "approval": {
+    "phase": "sdc_approved",
+    "approved": true,
+    "approved_by": "jalvaref",
+    "approved_at": "2026-11-11T16:33:46.078Z",
+    "comment": "Paquete SDC aprobado para PR, despliegue Pantheon Dev e importación Drupal como draft."
+  }
+}

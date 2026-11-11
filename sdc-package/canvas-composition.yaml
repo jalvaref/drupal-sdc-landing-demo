@@ -1,0 +1,18 @@
+run_id: energia-en-movimiento-20261111-161500
+status: visual_draft
+canvas_components:
+  - component_id: C01
+    component: hero
+  - component_id: C02
+    component: rich-text
+  - component_id: C03
+    component: image-text
+  - component_id: C04
+    component: feature-grid
+  - component_id: C07
+    component: steps
+  - component_id: C09
+    component: accordion
+  - component_id: C10
+    component: cta-banner
+global_outside_canvas: [C00, C99]
