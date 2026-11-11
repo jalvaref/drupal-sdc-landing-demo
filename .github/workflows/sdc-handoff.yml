@@ -1,0 +1,59 @@
+name: SDC handoff
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'validate, deploy_pantheon_dev or import_drupal_draft'
+        required: true
+        type: choice
+        options: [validate, deploy_pantheon_dev, import_drupal_draft]
+      run_id:
+        description: 'ID de ejecución dentro de agent/runs'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: ${{ inputs.action == 'validate' || inputs.action == 'deploy_pantheon_dev' || inputs.action == 'import_drupal_draft' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validar ejecución
+        run: node agent/bin/validate-run.mjs agent/runs/${{ inputs.run_id }}
+      - name: Validar paquete SDC si existe
+        shell: bash
+        run: |
+          if [ -d "agent/runs/${{ inputs.run_id }}/sdc-package" ]; then
+            node agent/bin/validate-sdc-package.mjs "agent/runs/${{ inputs.run_id }}/sdc-package"
+          fi
+
+  pantheon:
+    if: ${{ inputs.action == 'deploy_pantheon_dev' }}
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comprobar Pantheon Dev
+        env:
+          PANTHEON_URL: https://dev-sdc-landing-demo.pantheonsite.io/
+        run: |
+          curl --fail --silent --show-error --max-time 30 "$PANTHEON_URL/pantheon_healthcheck"
+          echo "Pantheon Dev responde. La sincronización de código debe estar habilitada en Pantheon/GitHub."
+
+  drupal:
+    if: ${{ inputs.action == 'import_drupal_draft' }}
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bloqueo seguro hasta configurar Drush/Terminus
+        run: |
+          echo "La importación Drupal debe ejecutar sdc-agent:import-draft como status: 0."
+          echo "Configura el procedimiento autorizado en el entorno del workflow antes de activar este job."
+          exit 1
