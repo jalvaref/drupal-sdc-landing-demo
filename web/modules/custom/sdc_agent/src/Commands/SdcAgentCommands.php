@@ -2,6 +2,7 @@
 
 namespace Drupal\sdc_agent\Commands;
 
+use Drupal\Core\Url;
 use Drupal\sdc_agent\Service\DraftImporter;
 use Drush\Commands\DrushCommands;
 
@@ -25,7 +26,8 @@ final class SdcAgentCommands extends DrushCommands {
    */
   public function importDraft(string $proposal_file, array $options = ['title' => NULL]): void {
     $node = $this->importer->import($proposal_file, $options['title'] ?: NULL);
-    $this->logger()->success(sprintf('Draft creado o actualizado: node/%d.', $node->id()));
+    $url = Url::fromRoute('entity.node.canonical', ['node' => $node->id()], ['absolute' => TRUE])->toString();
+    $this->logger()->success(sprintf('Draft creado o actualizado: node/%d. URL: %s. Estado: draft. Modo: html_draft; Canvas editable: no.', $node->id(), $url));
   }
 
 }

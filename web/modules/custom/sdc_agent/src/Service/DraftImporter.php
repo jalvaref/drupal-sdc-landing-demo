@@ -25,6 +25,9 @@ final class DraftImporter {
     if (!is_file($path)) {
       throw new \InvalidArgumentException(sprintf('No existe el proposal: %s', $path));
     }
+    if (filesize($path) === 0) {
+      throw new \InvalidArgumentException(sprintf('El proposal está vacío: %s', $path));
+    }
 
     $proposal = json_decode((string) file_get_contents($path), TRUE, 512, JSON_THROW_ON_ERROR);
     if (($proposal['status'] ?? NULL) !== 'sdc_approved') {
@@ -32,6 +35,14 @@ final class DraftImporter {
     }
     if (empty($proposal['run_id'])) {
       throw new \InvalidArgumentException('La propuesta no contiene run_id.');
+    }
+    if (empty($proposal['components']) || !is_array($proposal['components'])) {
+      throw new \InvalidArgumentException('La propuesta no contiene componentes.');
+    }
+    foreach ($proposal['components'] as $component) {
+      if (in_array($component['component_id'] ?? NULL, ['C00', 'C99'], TRUE)) {
+        throw new \InvalidArgumentException('C00/C99 son globales del tema y no pueden importarse dentro de Canvas.');
+      }
     }
 
     $hero = array_values(array_filter($proposal['components'] ?? [], static fn (array $component): bool => ($component['component_id'] ?? '') === 'C01'))[0] ?? [];
