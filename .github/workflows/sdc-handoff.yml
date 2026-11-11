@@ -48,12 +48,25 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     steps:
-      - name: Comprobar Pantheon Dev
+      - name: Ejecutar despliegue autorizado en Pantheon Dev
+        env:
+          PANTHEON_DEPLOY_COMMAND: ${{ secrets.PANTHEON_DEPLOY_COMMAND }}
+          RUN_ID: ${{ inputs.run_id }}
+        shell: bash
+        run: |
+          if [ -z "$PANTHEON_DEPLOY_COMMAND" ]; then
+            echo "::error::Falta el secreto PANTHEON_DEPLOY_COMMAND; no se ejecuta ningún despliegue.";
+            exit 1;
+          fi
+          command="${PANTHEON_DEPLOY_COMMAND//<run>/$RUN_ID}"
+          echo "Ejecutando el procedimiento autorizado de Pantheon Dev (run: $RUN_ID)."
+          bash -lc "$command"
+      - name: Comprobar Pantheon Dev después del despliegue
         env:
           PANTHEON_URL: https://dev-sdc-landing-demo.pantheonsite.io/
         run: |
           curl --fail --silent --show-error --max-time 30 "$PANTHEON_URL/pantheon_healthcheck"
-          echo "Pantheon Dev responde. La sincronización de código debe estar habilitada en Pantheon/GitHub."
+          echo "Pantheon Dev responde después del procedimiento autorizado."
 
   drupal:
     if: ${{ inputs.action == 'import_drupal_draft' }}
@@ -61,8 +74,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Bloqueo seguro hasta configurar Drush/Terminus
+      - name: Importar landing como draft mediante el procedimiento autorizado
+        env:
+          DRUPAL_IMPORT_COMMAND: ${{ secrets.DRUPAL_IMPORT_COMMAND }}
+          RUN_ID: ${{ inputs.run_id }}
+        shell: bash
         run: |
-          echo "La importación Drupal debe ejecutar sdc-agent:import-draft como status: 0."
-          echo "Configura el procedimiento autorizado en el entorno del workflow antes de activar este job."
-          exit 1
+          if [ -z "$DRUPAL_IMPORT_COMMAND" ]; then
+            echo "::error::Falta el secreto DRUPAL_IMPORT_COMMAND; no se ejecuta ninguna importación.";
+            exit 1;
+          fi
+          command="${DRUPAL_IMPORT_COMMAND//<run>/$RUN_ID}"
+          echo "Ejecutando la importación Drupal del run $RUN_ID como draft."
+          output=$(bash -lc "$command")
+          echo "$output"
+          if ! echo "$output" | grep -Eiq 'draft|no publicado|unpublished'; then
+            echo "::error::La salida del procedimiento no confirma estado draft."
+            exit 1
+          fi
+          if echo "$output" | grep -Eiq 'published|publicado[^a-z]'; then
+            echo "::error::La salida indica publicación; se aborta por seguridad."
+            exit 1
+          fi
