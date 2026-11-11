@@ -9,11 +9,15 @@ const exec = promisify(execFile);
 const [, , briefPath, ...args] = process.argv;
 const outFlag = args.indexOf('--out');
 const providerFlag = args.indexOf('--provider');
+const desktopJpgFlag = args.indexOf('--desktop-jpg');
+const mobileJpgFlag = args.indexOf('--mobile-jpg');
 const output = resolve(outFlag >= 0 && args[outFlag + 1] ? args[outFlag + 1] : join('agent', 'runs', 'latest'));
 const provider = providerFlag >= 0 && args[providerFlag + 1] ? args[providerFlag + 1] : 'deterministic';
+const desktopJpg = desktopJpgFlag >= 0 ? args[desktopJpgFlag + 1] : null;
+const mobileJpg = mobileJpgFlag >= 0 ? args[mobileJpgFlag + 1] : null;
 
 if (!briefPath) {
-  console.error('Uso: node agent/bin/run-agent.mjs <brief.json> [--out <directorio>] [--provider deterministic|openai]');
+  console.error('Uso: node agent/bin/run-agent.mjs <brief.json> --desktop-jpg <file> --mobile-jpg <file> [--out <directorio>] [--provider deterministic|openai]');
   process.exit(1);
 }
 if (!['deterministic', 'openai'].includes(provider)) {
@@ -49,6 +53,8 @@ if (provider === 'openai') {
   await saveManifest();
 }
 const generatorArgs = [generator, resolve(briefPath), '--out', output, '--run-id', manifest.run_id];
+if (desktopJpg) generatorArgs.push('--desktop-jpg', resolve(desktopJpg));
+if (mobileJpg) generatorArgs.push('--mobile-jpg', resolve(mobileJpg));
 if (componentsPath) generatorArgs.push('--components-file', componentsPath);
 await exec(process.execPath, generatorArgs, { cwd: process.cwd(), encoding: 'utf8' });
 
@@ -60,8 +66,8 @@ manifest.stage = 'visual';
 manifest.artifacts = [
   'proposal.json',
   'preview/index.html',
-  'design/desktop.svg',
-  'design/mobile.svg',
+  'design/desktop.jpg',
+  'design/mobile.jpg',
   'traceability.md'
 ];
 if (provider === 'openai') manifest.artifacts.push('llm-components.json');
