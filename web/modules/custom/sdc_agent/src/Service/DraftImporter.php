@@ -122,6 +122,7 @@ final class DraftImporter {
         $configInstaller->setSyncing(TRUE);
       }
     }
+    $this->enableCanvasComponentsThatMeetRequirements();
     $componentMap = [
       'C01' => 'hero',
       'C02' => 'rich-text',
@@ -173,6 +174,26 @@ final class DraftImporter {
       ];
     }
     return $tree;
+  }
+
+  /**
+   * Re-enables SDC components auto-disabled by a previous incompatible schema.
+   * Manual Canvas disables remain untouched.
+   */
+  private function enableCanvasComponentsThatMeetRequirements(): void {
+    $reasonRepository = \Drupal::service(\Drupal\canvas\ComponentIncompatibilityReasonRepository::class);
+    $reasons = $reasonRepository->getReasons()['sdc'] ?? [];
+    $manualReason = \Drupal\canvas\ComponentIncompatibilityReasonRepository::MANUALLY_DISABLED_REASON;
+    foreach (['hero', 'rich-text', 'image-text', 'feature-grid', 'steps', 'accordion', 'cta-banner'] as $sourceId) {
+      $component = Component::load('sdc.sdc_landing.' . $sourceId);
+      if (!$component || $component->status()) {
+        continue;
+      }
+      $componentReasons = $reasons['sdc.sdc_landing.' . $sourceId] ?? [];
+      if ($componentReasons !== [$manualReason]) {
+        $component->enable()->save();
+      }
+    }
   }
 
   /**
