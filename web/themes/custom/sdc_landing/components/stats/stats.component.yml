@@ -3,9 +3,16 @@ name: Statistics
 status: stable
 props:
   type: object
-  required: [items]
   properties:
     title: { type: string, title: 'Título', examples: ['Datos destacados'] }
     description: { type: string, title: 'Descripción' }
-    items: { type: array, title: 'Estadísticas', minItems: 2, maxItems: 4, examples: [[{ value: '40%', label: 'Mayor eficiencia operativa' }, { value: '3x', label: 'Más velocidad de entrega' }]], items: { type: object, required: [value, label], properties: { value: { type: string, title: 'Valor', examples: ['40%'] }, label: { type: string, title: 'Etiqueta', examples: ['Mayor eficiencia operativa'] }, context: { type: string, title: 'Contexto' } } } }
+    stat_1_value: { type: string, title: 'Valor 1', examples: ['40%'] }
+    stat_1_label: { type: string, title: 'Etiqueta 1', examples: ['Mayor eficiencia operativa'] }
+    stat_1_context: { type: string, title: 'Contexto 1' }
+    stat_2_value: { type: string, title: 'Valor 2', examples: ['3x'] }
+    stat_2_label: { type: string, title: 'Etiqueta 2', examples: ['Más velocidad de entrega'] }
+    stat_2_context: { type: string, title: 'Contexto 2' }
+    stat_3_value: { type: string, title: 'Valor 3' }
+    stat_3_label: { type: string, title: 'Etiqueta 3' }
+    stat_3_context: { type: string, title: 'Contexto 3' }
     variant: { type: string, title: 'Variante', enum: [horizontal, grid, highlighted], default: highlighted, examples: ['highlighted'] }
