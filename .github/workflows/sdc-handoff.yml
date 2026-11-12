@@ -142,6 +142,22 @@ jobs:
           RUN_ID: ${{ inputs.run_id }}
         shell: bash
         run: |
+          echo "Esperando a que Pantheon publique el build artifact de Composer."
+          ready=0
+          for attempt in $(seq 1 18); do
+            if terminus drush sdc-landing-demo.dev -- status >/tmp/drupal-status.log 2>&1; then
+              ready=1
+              break
+            fi
+            echo "Drupal todavía no está listo (intento $attempt/18); reintentando en 20 segundos."
+            tail -n 8 /tmp/drupal-status.log || true
+            sleep 20
+          done
+          if [ "$ready" -ne 1 ]; then
+            echo "::error::Drupal no quedó operativo después de esperar el build artifact de Pantheon."
+            cat /tmp/drupal-status.log
+            exit 1
+          fi
           echo "Reconstruyendo cachés Drupal antes de descubrir componentes Canvas."
           terminus drush sdc-landing-demo.dev -- cr
           if [ -z "$DRUPAL_IMPORT_COMMAND" ]; then
