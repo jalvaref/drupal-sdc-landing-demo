@@ -95,7 +95,7 @@ Drupal añade una aprobación separada: un administrador o editor revisa la land
 - Informe de validación.
 - Landing Drupal en draft.
 
-La primera integración Drupal vive en `web/modules/custom/sdc_agent`. Su comando `sdc-agent:import-draft` exige una propuesta aprobada y crea una página `page` con `status: 0`; no publica automáticamente.
+La primera integración Drupal vive en `web/modules/custom/sdc_agent`. Con Drupal Canvas habilitado, su comando `sdc-agent:import-draft` exige una propuesta aprobada y crea o actualiza una entidad `canvas_page` con un árbol `components` editable y estado `draft`; no publica automáticamente. El importador HTML queda solo como fallback legacy si Canvas no está disponible.
 
 ## Reglas de aprobación
 

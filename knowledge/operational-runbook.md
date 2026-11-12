@@ -27,7 +27,7 @@ Generar HTML autocontenido y responsive con inspector. El inspector mínimo debe
 
 ## Fase SDC/Canvas
 
-Si los componentes son estables, generar solo la composición Canvas. El paquete debe contener la composición, la propuesta, el inventario de candidatos, los activos y el informe de validación. Mantener `draft` y `drupal_status: 0`.
+Si los componentes son estables, generar solo la composición Canvas. El paquete debe contener la composición, la propuesta, el inventario de candidatos, los activos y el informe de validación. La importación debe crear una entidad `canvas_page` y persistir sus instancias en el campo `components`; mantener `draft` y `drupal_status: 0`. El HTML del preview y su inspector son únicamente artefactos de revisión.
 
 ## MCP no conectado
 

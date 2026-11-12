@@ -55,7 +55,7 @@ La importación final en Drupal se realiza con:
 drush sdc-agent:import-draft <run>/proposal.json
 ```
 
-El agente no debe saltarse las aprobaciones ni ejecutar la importación como contenido publicado.
+El agente no debe saltarse las aprobaciones ni ejecutar la importación como contenido publicado. La importación objetivo crea una entidad Drupal Canvas `canvas_page` con su árbol `components`; no debe limitarse a copiar el HTML del preview en un campo `body`.
 
 ## Prompts iniciales
 

@@ -46,12 +46,18 @@ final class ImportDraftForm extends FormBase {
 
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     try {
-      $node = $this->importer->import(
+      $entity = $this->importer->import(
         $form_state->getValue('proposal_file'),
         $form_state->getValue('title') ?: NULL,
       );
-      $this->messenger()->addStatus($this->t('Draft creado o actualizado: node/@id.', ['@id' => $node->id()]));
-      $form_state->setRedirect('entity.node.edit_form', ['node' => $node->id()]);
+      if ($entity->getEntityTypeId() === 'canvas_page') {
+        $this->messenger()->addStatus($this->t('Draft Canvas creado o actualizado: page/@id.', ['@id' => $entity->id()]));
+        $form_state->setRedirect('entity.canvas_page.edit_form', ['canvas_page' => $entity->id()]);
+      }
+      else {
+        $this->messenger()->addStatus($this->t('Draft HTML legacy creado o actualizado: node/@id.', ['@id' => $entity->id()]));
+        $form_state->setRedirect('entity.node.edit_form', ['node' => $entity->id()]);
+      }
     }
     catch (\Throwable $exception) {
       $this->messenger()->addError($this->t('No se pudo crear el draft: @message', ['@message' => $exception->getMessage()]));
