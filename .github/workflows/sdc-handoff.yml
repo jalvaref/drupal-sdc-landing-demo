@@ -6,8 +6,8 @@ on:
       action:
         description: 'validate, deploy_pantheon_dev or import_drupal_draft'
         required: true
-        type: choice
-        options: [validate, deploy_pantheon_dev, import_drupal_draft]
+        type: string
+        default: validate
       run_id:
         description: 'ID de ejecución dentro de agent/runs'
         required: true
