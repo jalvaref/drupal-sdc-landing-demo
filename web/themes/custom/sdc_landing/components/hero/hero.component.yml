@@ -3,13 +3,14 @@ name: Hero
 status: stable
 props:
   type: object
-  required: [title]
   properties:
     eyebrow: { type: string, title: 'Antetítulo' }
-    title: { type: string, title: 'Título', minLength: 1, examples: ['Convierte la IA en una capacidad empresarial'] }
+    title: { type: string, title: 'Título', examples: ['Convierte la IA en una capacidad empresarial'] }
     description: { type: string, title: 'Descripción' }
     image: { type: object, title: 'Imagen', $ref: 'json-schema-definitions://canvas.module/image', examples: [{ src: '/themes/custom/sdc_landing/images/hero-energy.jpg', alt: 'Paisaje energético' }] }
-    primary_cta: { type: object, title: 'CTA principal', properties: { label: { type: string, title: 'Texto' }, url: { type: string, title: 'URL', format: uri-reference } } }
-    secondary_cta: { type: object, title: 'CTA secundaria', properties: { label: { type: string, title: 'Texto' }, url: { type: string, title: 'URL', format: uri-reference } } }
+    primary_label: { type: string, title: 'Texto CTA principal', examples: ['Solicitar una conversación'] }
+    primary_url: { type: string, title: 'URL CTA principal', format: uri-reference, examples: ['#contacto'] }
+    secondary_label: { type: string, title: 'Texto CTA secundaria', examples: ['Explorar el enfoque'] }
+    secondary_url: { type: string, title: 'URL CTA secundaria', format: uri-reference, examples: ['#enfoque'] }
     variant: { type: string, title: 'Variante', enum: [default, split, centered], default: split, examples: ['split'] }
     theme: { type: string, title: 'Tema', enum: [light, dark, brand], default: light, examples: ['light'] }

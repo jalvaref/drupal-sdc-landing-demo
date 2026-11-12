@@ -3,11 +3,18 @@ name: Feature grid
 status: stable
 props:
   type: object
-  required: [items]
   properties:
     title: { type: string, title: 'Título', examples: ['Capacidades para avanzar con confianza'] }
     description: { type: string, title: 'Descripción' }
-    items: { type: array, title: 'Capacidades', minItems: 3, maxItems: 6, examples: [[{ icon: 'governance', title: 'Gobierno', text: 'Estructura, roles y procesos claros.' }, { icon: 'security', title: 'Seguridad', text: 'Protección integral de datos y servicios.' }, { icon: 'scale', title: 'Escalabilidad', text: 'Una plataforma flexible y preparada.' }]], items: { type: object, required: [title, text], properties: { icon: { type: string, title: 'Icono', examples: ['governance'] }, title: { type: string, title: 'Título', examples: ['Gobierno'] }, text: { type: string, title: 'Texto', examples: ['Estructura, roles y procesos claros.'] } } } }
+    item_1_icon: { type: string, title: 'Icono 1', examples: ['governance'] }
+    item_1_title: { type: string, title: 'Título 1', examples: ['Gobierno'] }
+    item_1_text: { type: string, title: 'Texto 1', examples: ['Estructura, roles y procesos claros.'] }
+    item_2_icon: { type: string, title: 'Icono 2', examples: ['security'] }
+    item_2_title: { type: string, title: 'Título 2', examples: ['Seguridad'] }
+    item_2_text: { type: string, title: 'Texto 2', examples: ['Protección integral de datos y servicios.'] }
+    item_3_icon: { type: string, title: 'Icono 3', examples: ['scale'] }
+    item_3_title: { type: string, title: 'Título 3', examples: ['Escalabilidad'] }
+    item_3_text: { type: string, title: 'Texto 3', examples: ['Una plataforma flexible y preparada.'] }
     columns: { type: integer, title: 'Columnas', enum: [3, 4], default: 3, examples: [3] }
     variant: { type: string, title: 'Variante', enum: [standard, with-icons, with-numbers], default: with-icons, examples: ['with-icons'] }
     theme: { type: string, title: 'Tema', enum: [light, dark, brand], default: light, examples: ['light'] }

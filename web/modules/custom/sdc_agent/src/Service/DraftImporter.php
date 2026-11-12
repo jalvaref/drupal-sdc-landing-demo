@@ -144,6 +144,7 @@ final class DraftImporter {
         ));
       }
       $inputs = $component['props'] ?? [];
+      $this->normalizeCanvasComponentInputs($sourceId, $inputs);
       $this->normalizeCanvasImageInputs($inputs);
       $uuid = \Drupal::service('uuid')->generate();
       $tree[] = [
@@ -157,6 +158,56 @@ final class DraftImporter {
       ];
     }
     return $tree;
+  }
+
+  /**
+   * Converts the proposal's rich catalog shape to Canvas-editable props.
+   *
+   * Canvas supports primitive scalar props and selected special references,
+   * but not arbitrary nested objects or arrays of objects as editable fields.
+   * Keep the proposal contract expressive and flatten only at import time.
+   */
+  private function normalizeCanvasComponentInputs(string $sourceId, array &$inputs): void {
+    if ($sourceId === 'hero') {
+      foreach (['primary', 'secondary'] as $cta) {
+        if (isset($inputs[$cta . '_cta']) && is_array($inputs[$cta . '_cta'])) {
+          $inputs[$cta . '_label'] = $inputs[$cta . '_cta']['label'] ?? '';
+          $inputs[$cta . '_url'] = $inputs[$cta . '_cta']['url'] ?? '';
+          unset($inputs[$cta . '_cta']);
+        }
+      }
+    }
+    if ($sourceId === 'cta-banner') {
+      foreach (['primary', 'secondary'] as $cta) {
+        if (isset($inputs[$cta . '_cta']) && is_array($inputs[$cta . '_cta'])) {
+          $inputs[$cta . '_label'] = $inputs[$cta . '_cta']['label'] ?? '';
+          $inputs[$cta . '_url'] = $inputs[$cta . '_cta']['url'] ?? '';
+          unset($inputs[$cta . '_cta']);
+        }
+      }
+    }
+    if ($sourceId === 'feature-grid' && isset($inputs['items']) && is_array($inputs['items'])) {
+      foreach (array_values($inputs['items']) as $index => $item) {
+        $number = $index + 1;
+        if (is_array($item)) {
+          $inputs["item_{$number}_icon"] = $item['icon'] ?? '';
+          $inputs["item_{$number}_title"] = $item['title'] ?? '';
+          $inputs["item_{$number}_text"] = $item['text'] ?? '';
+        }
+      }
+      unset($inputs['items']);
+    }
+    if ($sourceId === 'stats' && isset($inputs['items']) && is_array($inputs['items'])) {
+      foreach (array_values($inputs['items']) as $index => $item) {
+        $number = $index + 1;
+        if (is_array($item)) {
+          $inputs["stat_{$number}_value"] = $item['value'] ?? '';
+          $inputs["stat_{$number}_label"] = $item['label'] ?? '';
+          $inputs["stat_{$number}_context"] = $item['context'] ?? '';
+        }
+      }
+      unset($inputs['items']);
+    }
   }
 
   private function normalizeCanvasImageInputs(array &$inputs): void {
