@@ -114,9 +114,7 @@ final class DraftImporter {
             if (!is_file($assetPath)) {
               return $imageMatches[0];
             }
-            $mime = function_exists('mime_content_type') ? mime_content_type($assetPath) : 'image/jpeg';
-            $data = base64_encode((string) file_get_contents($assetPath));
-            return $imageMatches[1] . 'data:' . $mime . ';base64,' . $data . $imageMatches[3];
+            return $imageMatches[1] . '/themes/custom/sdc_landing/assets/' . rawurlencode(basename($src)) . $imageMatches[3];
           }, $body);
           $styleTag = $styles !== '' ? '<style data-sdc-agent="landing">' . $styles . '</style>' : '';
           return $styleTag . $body;
