@@ -59,7 +59,7 @@ final class DraftImporter {
     if (!$page) {
       throw new \RuntimeException('No se pudo crear o cargar la página Canvas.');
     }
-    $page->setTitle($pageTitle);
+    $page->set('title', $pageTitle);
     $page->set('description', $runMarker . ' ' . ($hero['props']['description'] ?? ''));
     $page->setComponentTree($this->buildCanvasTree($proposal));
     $page->setPublished(FALSE);
