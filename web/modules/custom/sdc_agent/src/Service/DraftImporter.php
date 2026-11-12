@@ -114,7 +114,7 @@ final class DraftImporter {
             if (!is_file($assetPath)) {
               return $imageMatches[0];
             }
-            return $imageMatches[1] . '/themes/custom/sdc_landing/assets/' . rawurlencode(basename($src)) . $imageMatches[3];
+            return $imageMatches[1] . '/themes/custom/sdc_landing/images/' . rawurlencode(basename($src)) . $imageMatches[3];
           }, $body);
           $styleTag = $styles !== '' ? '<style data-sdc-agent="landing">' . $styles . '</style>' : '';
           return $styleTag . $body;
