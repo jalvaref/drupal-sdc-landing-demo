@@ -106,7 +106,22 @@ final class DraftImporter {
     $sdcPluginManager->useCaches(FALSE);
     $componentSourceManager = \Drupal::service(ComponentSourceManager::class);
     $componentSourceManager->clearCachedDefinitions();
-    $componentSourceManager->generateComponents('sdc');
+    $configInstaller = \Drupal::service('config.installer');
+    $wasSyncing = $configInstaller->isSyncing();
+    if ($wasSyncing) {
+      // Canvas intentionally skips component generation during config sync.
+      // This command is an explicit post-deploy content import, so allow the
+      // source definitions to be regenerated for this request only.
+      $configInstaller->setSyncing(FALSE);
+    }
+    try {
+      $componentSourceManager->generateComponents('sdc');
+    }
+    finally {
+      if ($wasSyncing) {
+        $configInstaller->setSyncing(TRUE);
+      }
+    }
     $componentMap = [
       'C01' => 'hero',
       'C02' => 'rich-text',
