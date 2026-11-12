@@ -209,6 +209,11 @@ final class DraftImporter {
    */
   private function normalizeCanvasComponentInputs(string $sourceId, array &$inputs): void {
     if ($sourceId === 'hero') {
+      if (isset($inputs['image']) && is_array($inputs['image'])) {
+        $inputs['image_src'] = $inputs['image']['src'] ?? '';
+        $inputs['image_alt'] = $inputs['image']['alt'] ?? '';
+        unset($inputs['image']);
+      }
       foreach (['primary', 'secondary'] as $cta) {
         if (isset($inputs[$cta . '_cta']) && is_array($inputs[$cta . '_cta'])) {
           $inputs[$cta . '_label'] = $inputs[$cta . '_cta']['label'] ?? '';
@@ -283,6 +288,9 @@ final class DraftImporter {
 
   private function normalizeCanvasImageInputs(array &$inputs): void {
     foreach ($inputs as $key => &$value) {
+      if (in_array($key, ['image_src', 'src'], TRUE) && is_string($value) && $value !== '' && !str_starts_with($value, '/')) {
+        $value = '/themes/custom/sdc_landing/images/' . rawurlencode(basename($value));
+      }
       if ($key === 'image' && is_array($value) && !empty($value['src']) && !str_starts_with((string) $value['src'], '/')) {
         $value['src'] = '/themes/custom/sdc_landing/images/' . rawurlencode(basename((string) $value['src']));
       }

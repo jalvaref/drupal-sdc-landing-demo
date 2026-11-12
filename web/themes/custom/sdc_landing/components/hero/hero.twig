@@ -1,6 +1,6 @@
 <section class="sdc-hero sdc-hero--{{ variant|default('split') }} sdc-hero--{{ theme|default('light') }}" aria-labelledby="{{ title|clean_class }}">
   <div class="landing-container sdc-hero__inner">
     <div class="sdc-hero__content">{% if eyebrow %}<p class="sdc-kicker">{{ eyebrow }}</p>{% endif %}<h1 id="{{ title|clean_class }}">{{ title }}</h1>{% if description %}<p class="sdc-hero__description">{{ description }}</p>{% endif %}<div class="sdc-actions">{% if primary_label %}<a class="button button--primary" href="{{ primary_url }}">{{ primary_label }} <span aria-hidden="true">→</span></a>{% endif %}{% if secondary_label %}<a class="button button--text" href="{{ secondary_url }}">{{ secondary_label }} <span aria-hidden="true">→</span></a>{% endif %}</div></div>
-    {% if image.src %}<div class="sdc-hero__media"><img src="{{ image.src }}" alt="{{ image.alt }}" loading="eager"></div>{% endif %}
+    {% if image_src %}<div class="sdc-hero__media"><img src="{{ image_src }}" alt="{{ image_alt|default('') }}" loading="eager"></div>{% endif %}
   </div>
 </section>
