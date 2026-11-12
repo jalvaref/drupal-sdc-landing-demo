@@ -66,6 +66,8 @@ final class DraftImporter {
     $page->setComponentTree($this->buildCanvasTree($proposal));
     // Canvas pages use Drupal's editorial publication API.  setPublished()
     // has no boolean argument, so use the dedicated unpublished operation.
+    $page->setNewRevision(TRUE);
+    $page->isDefaultRevision(TRUE);
     $page->setUnpublished();
     $page->save();
     $storage->resetCache([$page->id()]);
