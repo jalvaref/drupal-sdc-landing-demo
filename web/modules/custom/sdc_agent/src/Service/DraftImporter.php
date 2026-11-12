@@ -64,6 +64,10 @@ final class DraftImporter {
     $page->set('title', $pageTitle);
     $page->set('description', $runMarker . ' ' . ($hero['props']['description'] ?? ''));
     $page->setComponentTree($this->buildCanvasTree($proposal));
+    // Canvas pages use Drupal's editorial publication API.  Calling
+    // setPublished(FALSE) alone is not sufficient for every Canvas storage
+    // implementation, so explicitly mark the entity unpublished as well.
+    $page->setUnpublished();
     $page->setPublished(FALSE);
     $page->save();
     $storage->resetCache([$page->id()]);
