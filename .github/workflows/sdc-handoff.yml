@@ -132,6 +132,8 @@ jobs:
           RUN_ID: ${{ inputs.run_id }}
         shell: bash
         run: |
+          echo "Reconstruyendo cachés Drupal antes de descubrir componentes Canvas."
+          terminus drush sdc-landing-demo.dev -- cr
           if [ -z "$DRUPAL_IMPORT_COMMAND" ]; then
             echo "::error::Falta el secreto DRUPAL_IMPORT_COMMAND; no se ejecuta ninguna importación.";
             exit 1;
