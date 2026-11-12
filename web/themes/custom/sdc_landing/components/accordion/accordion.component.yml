@@ -9,5 +9,9 @@ props:
     answer_1: { type: string, title: 'Respuesta 1', contentMediaType: text/html, x-formatting-context: block, examples: ['<p>Es el conjunto de políticas y controles.</p>'] }
     question_2: { type: string, title: 'Pregunta 2', examples: ['¿Qué beneficios aporta?'] }
     answer_2: { type: string, title: 'Respuesta 2', contentMediaType: text/html, x-formatting-context: block, examples: ['<p>Aporta claridad, control y capacidad de escalar.</p>'] }
+    question_3: { type: string, title: 'Pregunta 3', examples: ['¿Cómo se empieza?'] }
+    answer_3: { type: string, title: 'Respuesta 3', contentMediaType: text/html, x-formatting-context: block, examples: ['<p>Se empieza con un diagnóstico compartido.</p>'] }
+    question_4: { type: string, title: 'Pregunta 4', examples: ['¿Qué resultado se obtiene?'] }
+    answer_4: { type: string, title: 'Respuesta 4', contentMediaType: text/html, x-formatting-context: block, examples: ['<p>Una hoja de ruta priorizada y accionable.</p>'] }
     default_open: { type: integer, title: 'Pregunta abierta', minimum: 0, maximum: 0, examples: [0] }
     variant: { type: string, title: 'Variante', enum: [faq, standard, bordered], default: faq, examples: ['faq'] }
