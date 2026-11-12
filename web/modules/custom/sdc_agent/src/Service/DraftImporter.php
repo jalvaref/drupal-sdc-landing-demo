@@ -91,7 +91,7 @@ final class DraftImporter {
     // SDC component config entities are discovered from the active theme. A
     // deployment can update the theme without a prior Canvas UI visit, so
     // ensure the discovery has run before resolving component IDs.
-    \Drupal::service(ComponentSourceManager::class)->generateComponents();
+    \Drupal::service(ComponentSourceManager::class)->generateComponents('sdc');
     $componentMap = [
       'C01' => 'hero',
       'C02' => 'rich-text',
@@ -110,7 +110,9 @@ final class DraftImporter {
       $componentId = 'sdc.sdc_landing.' . $sourceId;
       $canvasComponent = Component::load($componentId);
       if (!$canvasComponent) {
-        throw new \RuntimeException(sprintf('El componente Canvas %s no está disponible en Drupal.', $componentId));
+        $available = array_keys(Component::loadMultiple());
+        $theme = (string) \Drupal::config('system.theme')->get('default');
+        throw new \RuntimeException(sprintf('El componente Canvas %s no está disponible en Drupal. Tema activo: %s. Componentes disponibles: %s', $componentId, $theme, implode(', ', array_slice($available, 0, 30))));
       }
       $inputs = $component['props'] ?? [];
       $this->normalizeCanvasImageInputs($inputs);
