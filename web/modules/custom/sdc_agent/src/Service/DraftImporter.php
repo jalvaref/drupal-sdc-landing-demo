@@ -8,6 +8,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Node\NodeInterface;
 use Drupal\canvas\Entity\Component;
+use Drupal\canvas\ComponentSource\ComponentSourceManager;
 
 /**
  * Creates unpublished Drupal pages from approved agent proposals.
@@ -87,6 +88,10 @@ final class DraftImporter {
   }
 
   private function buildCanvasTree(array $proposal): array {
+    // SDC component config entities are discovered from the active theme. A
+    // deployment can update the theme without a prior Canvas UI visit, so
+    // ensure the discovery has run before resolving component IDs.
+    \Drupal::service(ComponentSourceManager::class)->generateComponents();
     $componentMap = [
       'C01' => 'hero',
       'C02' => 'rich-text',
