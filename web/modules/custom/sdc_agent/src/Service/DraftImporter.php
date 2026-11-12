@@ -112,7 +112,21 @@ final class DraftImporter {
       if (!$canvasComponent) {
         $available = array_keys(Component::loadMultiple());
         $theme = (string) \Drupal::config('system.theme')->get('default');
-        throw new \RuntimeException(sprintf('El componente Canvas %s no está disponible en Drupal. Tema activo: %s. Componentes disponibles: %s', $componentId, $theme, implode(', ', array_slice($available, 0, 30))));
+        $reasons = \Drupal::service(\Drupal\canvas\ComponentIncompatibilityReasonRepository::class)->getReasons();
+        $sdcReasons = $reasons['sdc'] ?? [];
+        $reasonText = [];
+        foreach ($sdcReasons as $reasonComponentId => $componentReasons) {
+          if (str_starts_with($reasonComponentId, 'sdc.sdc_landing.')) {
+            $reasonText[] = $reasonComponentId . ': ' . implode(' | ', (array) $componentReasons);
+          }
+        }
+        throw new \RuntimeException(sprintf(
+          'El componente Canvas %s no está disponible en Drupal. Tema activo: %s. Componentes disponibles: %s. Motivos de incompatibilidad SDC: %s',
+          $componentId,
+          $theme,
+          implode(', ', array_slice($available, 0, 30)),
+          $reasonText ? implode(' || ', $reasonText) : 'no registrados'
+        ));
       }
       $inputs = $component['props'] ?? [];
       $this->normalizeCanvasImageInputs($inputs);
