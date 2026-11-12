@@ -43,7 +43,15 @@ function buildProposal(brief, runId, briefingRef) {
     item('C10', 'CtaBanner', 'standard', { eyebrow: 'Siguiente paso', title: 'Hablemos de tu próxima decisión energética', description: 'Resuelve tus dudas sobre esta propuesta ficticia.', primary_cta: { label: cta('secondary', 'Quiero que me llaméis'), url: '#contacto' }, secondary_cta: { label: 'Volver al inicio', url: '#inicio' }, theme: 'dark', variant: 'standard' }, 'Cierra la experiencia con un único CTA principal.')
   ];
   const canonicalBrief = briefingRef.includes('agent/examples/') ? briefingRef.slice(briefingRef.indexOf('agent/examples/')) : `agent/examples/${brief.slug}-brief.json`;
-  return { run_id: runId, briefing_ref: canonicalBrief, status: 'visual_draft', visuals: { desktop: 'design/desktop.jpg', mobile: 'design/mobile.jpg' }, design_direction: { palette: { navy: '#142d65', coral: '#f0442e', surface: '#f4f6fa', ink: '#172033' }, layout: 'Hero split en desktop, composición vertical en móvil, beneficios, pasos, FAQ y CTA.', visual_rationale: 'Conecta hogar y movilidad con una jerarquía clara y contenido ficticio visible.', breakpoints: [1440, 768, 390] }, components, html_artifact: 'preview/index.html', traceability_artifact: 'traceability.md', assumptions: ['Los datos comerciales son ficticios.', 'C00/C99 son globales del tema y quedan fuera de Canvas.'], open_questions: ['Validar copy y condiciones con negocio y legal.'], blockers: [], approval: { approved: false, phase: 'visual_draft' } };
+  const candidate_components = (brief.candidate_components || []).map((candidate) => ({
+    component_id: candidate.id,
+    name: candidate.name,
+    variant: candidate.variant,
+    props: candidate.props || {},
+    justification: candidate.justification || 'Candidato derivado del briefing para validación experimental.',
+    status: 'candidate'
+  }));
+  return { run_id: runId, briefing_ref: canonicalBrief, status: 'visual_draft', visuals: { desktop: 'design/desktop.jpg', mobile: 'design/mobile.jpg' }, design_direction: { palette: { navy: '#142d65', coral: '#f0442e', surface: '#f4f6fa', ink: '#172033' }, layout: 'Hero split en desktop, composición vertical en móvil, beneficios, pasos, FAQ y CTA.', visual_rationale: 'Conecta hogar y movilidad con una jerarquía clara y contenido ficticio visible.', breakpoints: [1440, 768, 390] }, components, candidate_components, html_artifact: 'preview/index.html', traceability_artifact: 'traceability.md', assumptions: ['Los datos comerciales son ficticios.', 'C00/C99 son globales del tema y quedan fuera de Canvas.'], open_questions: ['Validar copy y condiciones con negocio y legal.'], blockers: [], approval: { approved: false, phase: 'visual_draft' } };
 }
 
 function renderHtml(brief, components) {

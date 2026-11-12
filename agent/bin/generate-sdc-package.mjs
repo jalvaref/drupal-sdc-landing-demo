@@ -18,7 +18,10 @@ if (proposal.status === 'html_approved') {
   await writeFile(join(runPath, 'proposal.json'), JSON.stringify(proposal, null, 2) + '\n');
 }
 
-const candidates = proposal.components.filter((component) => component.status === 'candidate' || component.status === 'experimental');
+const candidates = [
+  ...proposal.components.filter((component) => component.status === 'candidate' || component.status === 'experimental'),
+  ...(proposal.candidate_components || []).map((component) => ({ ...component, status: 'candidate' }))
+];
 await mkdir(outPath, { recursive: true });
 await rm(join(outPath, 'components'), { recursive: true, force: true });
 await writeFile(join(outPath, 'package-manifest.json'), JSON.stringify({
