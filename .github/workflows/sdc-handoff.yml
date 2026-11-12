@@ -80,8 +80,18 @@ jobs:
           git remote remove pantheon 2>/dev/null || true
           git remote add pantheon "$PANTHEON_GIT_REMOTE"
           command="${PANTHEON_DEPLOY_COMMAND//<run>/$RUN_ID}"
+          if [[ "$command" != *"git push pantheon HEAD:master"* ]]; then
+            echo "::error::PANTHEON_DEPLOY_COMMAND debe incluir exactamente git push pantheon HEAD:master."
+            exit 1
+          fi
           echo "Ejecutando el procedimiento autorizado de Pantheon Dev (run: $RUN_ID)."
-          bash -lc "$command"
+          git push pantheon HEAD:master
+          remote_sha=$(git ls-remote pantheon refs/heads/master | awk '{print $1}')
+          if [ "$remote_sha" != "$GITHUB_SHA" ]; then
+            echo "::error::Pantheon no apunta al commit desplegado. Esperado $GITHUB_SHA; remoto $remote_sha."
+            exit 1
+          fi
+          echo "Pantheon Codeserver apunta a $remote_sha."
       - name: Comprobar Pantheon Dev después del despliegue
         env:
           PANTHEON_URL: https://dev-sdc-landing-demo.pantheonsite.io/
