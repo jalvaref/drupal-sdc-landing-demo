@@ -228,3 +228,34 @@ body { font-family: Arial, Helvetica, sans-serif; background: #fff; }
 .site-footer__bottom p { font-size: 1rem; }
 @media (max-width: 900px) { .sdc-feature { padding-inline: 24px; }.sdc-hero__inner { grid-template-columns: 1fr 1fr; gap: 32px; }.sdc-hero__media, .sdc-hero__media img { min-height: 420px; }.sdc-steps__list { grid-template-columns: repeat(2, 1fr); row-gap: 60px; }.sdc-steps__list li:nth-child(2)::after { display: none; } }
 @media (max-width: 760px) { .site-header { padding-block: 14px; }.site-header__brand { font-size: 1.35rem; }.sdc-hero__inner { grid-template-columns: 1fr; }.sdc-hero__media, .sdc-hero__media img { min-height: 300px; }.sdc-feature { min-height: 0; padding-block: 36px; border-right: 0; border-bottom: 1px solid #d7dce5; }.sdc-feature:last-child { border-bottom: 0; }.sdc-steps__list { grid-template-columns: 1fr; }.sdc-steps__list li:not(:last-child)::after { display: none; }.sdc-steps__list li { padding-top: 96px; }.site-footer__grid { gap: 34px; }.site-footer__bottom { margin-top: 48px; } }
+
+/* Imported agent landing: Drupal filters inline style tags from body fields, so
+ * the approved prototype presentation is provided by the theme library. */
+.demo { padding: 12px; background: #dfeaf8; color: #172033; font-size: 13px; font-weight: 700; text-align: center; }
+.layout-content > div > .demo + main { color: #172033; font-family: Arial, Helvetica, sans-serif; }
+.layout-content > div > main { overflow: hidden; }
+.layout-content > div > main > section { padding: 72px 0; }
+.layout-content > div > main .wrap { width: min(calc(100% - 48px), 1180px); margin-inline: auto; }
+.layout-content > div > main .hero { padding: 72px 0; background: #fff; }
+.layout-content > div > main .hero-grid, .layout-content > div > main .split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.layout-content > div > main .eyebrow { color: #f0442e; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.layout-content > div > main h1, .layout-content > div > main h2 { color: #111827; line-height: 1.05; letter-spacing: -.04em; }
+.layout-content > div > main h1 { margin: 16px 0; font-size: clamp(42px, 5vw, 72px); }
+.layout-content > div > main h2 { font-size: 38px; }
+.layout-content > div > main p { color: #536070; }
+.layout-content > div > main .hero p { font-size: 20px; }
+.layout-content > div > main .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+.layout-content > div > main .btn { display: inline-block; padding: 14px 20px; border-radius: 5px; background: #f0442e; color: #fff; font-weight: 700; text-decoration: none; }
+.layout-content > div > main .btn.alt { border: 2px solid #142d65; background: #fff; color: #142d65; }
+.layout-content > div > main img { width: 100%; display: block; max-height: 430px; border-radius: 18px; object-fit: cover; }
+.layout-content > div > main .center { max-width: 760px; margin-inline: auto; text-align: center; }
+.layout-content > div > main .surface { background: #f4f6fa; }
+.layout-content > div > main .grid, .layout-content > div > main .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.layout-content > div > main .card { padding: 26px; border: 1px solid #d8e0ea; border-radius: 12px; background: #fff; }
+.layout-content > div > main .card h3 { margin-top: 0; color: #172033; }
+.layout-content > div > main .num { color: #f0442e; font-size: 42px; font-weight: 700; }
+.layout-content > div > main details { padding: 20px 0; border-top: 1px solid #d8e0ea; }
+.layout-content > div > main summary { cursor: pointer; font-weight: 700; }
+.layout-content > div > main .cta { padding: 44px; border-radius: 18px; background: #142d65; color: #fff; }
+.layout-content > div > main .cta h2, .layout-content > div > main .cta p { color: #fff; }
+@media (max-width: 760px) { .layout-content > div > main .wrap { width: min(calc(100% - 36px), 1180px); } .layout-content > div > main .hero-grid, .layout-content > div > main .split, .layout-content > div > main .grid, .layout-content > div > main .steps { grid-template-columns: 1fr; } .layout-content > div > main h1 { font-size: 44px; } .layout-content > div > main h2 { font-size: 32px; } .layout-content > div > main .cta { padding: 28px; } }
