@@ -91,6 +91,12 @@ final class DraftImporter {
     // SDC component config entities are discovered from the active theme. A
     // deployment can update the theme without a prior Canvas UI visit, so
     // ensure the discovery has run before resolving component IDs.
+    // Drupal's SDC plugin manager has a separate discovery cache from the
+    // regular render cache. Pantheon may retain that cache between deploys,
+    // so invalidate it explicitly before Canvas generates its config entities.
+    $sdcPluginManager = \Drupal::service('plugin.manager.sdc');
+    $sdcPluginManager->clearCachedDefinitions();
+    $sdcPluginManager->useCaches(FALSE);
     \Drupal::service(ComponentSourceManager::class)->generateComponents('sdc');
     $componentMap = [
       'C01' => 'hero',
