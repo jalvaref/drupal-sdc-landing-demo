@@ -9,6 +9,7 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Node\NodeInterface;
 use Drupal\canvas\Entity\Component;
 use Drupal\canvas\ComponentSource\ComponentSourceManager;
+use Drupal\Component\FileCache\FileCacheFactory;
 
 /**
  * Creates unpublished Drupal pages from approved agent proposals.
@@ -94,10 +95,18 @@ final class DraftImporter {
     // Drupal's SDC plugin manager has a separate discovery cache from the
     // regular render cache. Pantheon may retain that cache between deploys,
     // so invalidate it explicitly before Canvas generates its config entities.
+    // The underlying YAML directory discovery also has a file cache which is
+    // not necessarily cleared by `drush cr`; disable it for this request so
+    // newly deployed theme components are discovered from disk.
+    FileCacheFactory::setConfiguration([
+      FileCacheFactory::DISABLE_CACHE => TRUE,
+    ]);
     $sdcPluginManager = \Drupal::service('plugin.manager.sdc');
     $sdcPluginManager->clearCachedDefinitions();
     $sdcPluginManager->useCaches(FALSE);
-    \Drupal::service(ComponentSourceManager::class)->generateComponents('sdc');
+    $componentSourceManager = \Drupal::service(ComponentSourceManager::class);
+    $componentSourceManager->clearCachedDefinitions();
+    $componentSourceManager->generateComponents('sdc');
     $componentMap = [
       'C01' => 'hero',
       'C02' => 'rich-text',
