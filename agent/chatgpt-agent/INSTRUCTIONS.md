@@ -18,7 +18,7 @@ Antes de generar una propuesta, consulta:
 
 La precedencia es obligatoria: `.component.yml` > `knowledge/component-catalog.yaml` > `knowledge/component-catalog.md` > inferencia del agente. El catálogo sirve para descubrir y seleccionar; nunca sustituye al contrato técnico del SDC.
 
-La implementación actual usa Drupal Canvas. El agente debe distinguir siempre entre la landing acoplada del tema y una página editable de Canvas: el contenido de una página Canvas se compone con SDC; el header y el footer son globales del tema y no deben duplicarse dentro del árbol de contenido.
+La implementación actual usa Drupal Canvas. El agente debe distinguir siempre entre la landing acoplada del tema y una página editable de Canvas: el contenido de una página Canvas se compone con SDC; el header y el footer son globales del tema y no deben duplicarse dentro del árbol de contenido. La plantilla global debe renderizar esos elementos alrededor de `page.content`; verifícalos también en la página Canvas.
 
 Si una fuente está incluida en el conocimiento, úsala y no declares que falta. Si falta un contrato técnico, no afirmes que la validación es completa: genera el artefacto con la limitación explícita y detén cualquier importación hasta poder contrastarlo.
 
@@ -38,9 +38,9 @@ Si una fuente está incluida en el conocimiento, úsala y no declares que falta.
 - Prioriza utilizar los campos existentes. Si un campo no encaja exactamente pero conserva el significado, reutilízalo; si hace falta un campo nuevo, propónlo y justifica por qué los existentes no son suficientes.
 - No inventes una prop, variante, slot o componente para resolver una preferencia de copy o layout si el catálogo ya cubre la necesidad.
 - Para Canvas, usa únicamente props declaradas en el `.component.yml`; respeta tipos, enums, límites de arrays, ejemplos y campos obligatorios.
-- Valida también la estructura interna de cada prop. No sustituyas nombres por equivalentes semánticos: `feature-grid.items` usa `title` y `text`; los CTAs usan `label` y `url`; `rich-text.body` es HTML filtrado; las estadísticas usan `value` y `label`; las imágenes deben seguir el objeto definido por el contrato Canvas.
+- Valida también la estructura interna de cada prop. No sustituyas nombres por equivalentes semánticos. En la implementación Canvas actual, Hero usa `image_src`/`image_alt` y `primary_label`/`primary_url`; Image Text usa `image_src`/`image_alt` y `cta_label`/`cta_url`; Feature Grid, Stats, Steps y Accordion usan campos escalares numerados; Rich Text recibe HTML filtrado; y CTA Banner usa `primary_label`/`primary_url`. Usa siempre el `.component.yml` desplegado como autoridad.
 - No uses campos auxiliares como `goal`, `description` dentro de items o `asset` en imágenes salvo que aparezcan explícitamente en el `.component.yml` cargado.
-- Si una imagen es necesaria, exige texto alternativo y utiliza la prop de imagen del componente existente; no sustituyas una imagen por HTML arbitrario.
+- Si una imagen es necesaria, exige texto alternativo y utiliza la prop de imagen del componente existente; no sustituyas una imagen por HTML arbitrario. Nunca emitas rutas del prototipo como `preview/hero-energy.jpg` ni rutas del workspace. Resuelve los activos a una ruta pública del tema o a una referencia Drupal/Media válida, y comprueba que el archivo está incluido.
 - Mantén una jerarquía clara con un único `h1` y CTA principal.
 - Produce `proposal.json`, `design/desktop.jpg`, `design/mobile.jpg` y `traceability.md`. El HTML responsive completo se genera después de la aprobación visual, pero la fase visual debe incluir un preview mínimo navegable o una representación visual equivalente.
 - El formato visual obligatorio es JPG. Genera una imagen JPG desktop y otra mobile, con suficiente resolución para revisar composición, jerarquía, espaciado, tipografía, color e imágenes. No sustituyas el JPG por una descripción textual, SVG o wireframe salvo que el usuario lo solicite expresamente.
@@ -53,6 +53,7 @@ Si una fuente está incluida en el conocimiento, úsala y no declares que falta.
 - Solo después de la aprobación visual genera o ajusta el HTML.
 - El HTML debe ser autocontenido, responsive, navegable con teclado y usable sin dependencias externas obligatorias.
 - Incluye el inspector visual de componentes con sus IDs y props.
+- El inspector superpuesto pertenece exclusivamente al HTML de revisión: nunca lo incluyas en `canvas-composition.yaml`, en el árbol Canvas ni en Drupal.
 - Detente en `awaiting_html_approval`.
 
 ### 4. Componentes SDC
@@ -71,8 +72,10 @@ Si una fuente está incluida en el conocimiento, úsala y no declares que falta.
 - Tras la aprobación SDC, prepara una rama idempotente `codex/landing-<slug>` y una pull request con resumen, decisiones, supuestos y validaciones.
 - Importa la propuesta en Drupal como draft.
 - Nunca publiques automáticamente en Drupal.
+- Una nueva importación puede devolver la página a estado no publicado; exige que el usuario vuelva a publicar manualmente si quiere validar la vista pública.
 - Antes de importar, comprueba que la composición Canvas no incluye `site-header` ni `site-footer` si el tema ya los proporciona globalmente.
 - Tras importar, valida desde la interfaz de Canvas que los componentes aparecen en la biblioteca, que sus campos son editables, que la página se guarda y que permanece como draft.
+- Si Canvas muestra `Unexpected token '<'` al cargar el layout, inspecciona `GET /canvas/api/v0/layout/...`: si devuelve HTML/403 en vez de JSON, el problema es Cloudflare/Pantheon o autenticación, no el árbol de componentes.
 
 #### Datos de handoff de la POC
 
@@ -87,6 +90,7 @@ Usa estos valores por defecto cuando el usuario no indique otros:
 - URL de Dev: `https://dev-sdc-landing-demo.pantheonsite.io/`.
 - Workflow autorizado: sincronización del código de `main` de GitHub hacia Pantheon Dev mediante la integración GitHub/Pantheon; verificar el workflow antes de continuar.
 - Drupal: ejecutar en el entorno Dev, con el módulo `sdc_agent` habilitado, `drush sdc-agent:import-draft <run>/proposal.json`. La importación debe crear o actualizar la landing como no publicada (`draft`, `status: 0`).
+- Pantheon: después de sincronizar código, espera a que termine el build artifact de Integrated Composer y comprueba que `terminus drush <site>.dev -- status` responde antes de ejecutar `drush cr` o importar.
 
 No solicites de nuevo estos datos salvo que la ejecución devuelva una evidencia de que han cambiado. No inventes una URL de administración de Drupal, usuario, token o credencial: si son necesarios, solicita únicamente el acceso o procedimiento que falte. La publicación posterior requiere aprobación de un administrador o editor de Drupal.
 
