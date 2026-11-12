@@ -1,0 +1,98 @@
+{
+  "campaign_name": "Nexo Energía · Energía que se adapta a cómo te mueves",
+  "slug": "nexo-energia-movilidad",
+  "objective": "Conseguir que la persona entienda una propuesta ficticia de energía para hogar y movilidad eléctrica, compare tres alternativas, reciba una orientación demostrativa y solicite una conversación comercial.",
+  "audience": {
+    "description": "Personas adultas que tienen o están considerando adquirir un vehículo eléctrico y quieren simplificar la relación entre la energía de su hogar y la recarga del vehículo.",
+    "age_range": "Adultos, sin conocimiento técnico requerido",
+    "location": "España",
+    "needs": [
+      "Entender la propuesta sin terminología energética compleja",
+      "Comparar alternativas de forma simultánea",
+      "Identificar qué opción encaja mejor con su vivienda y patrón de recarga",
+      "Solicitar una conversación comercial sin asumir que la oferta es real"
+    ]
+  },
+  "offer": {
+    "name": "Nexo Energía para hogar y movilidad",
+    "description": "Propuesta ficticia que combina una tarifa doméstica demostrativa, ventajas ilustrativas para la recarga y una orientación sencilla para elegir entre tres alternativas.",
+    "price": "Precios orientativos ficticios; pendientes de validación comercial",
+    "conditions": [
+      "Contenido y condiciones exclusivamente demostrativos",
+      "No se afirma disponibilidad, elegibilidad ni ahorro real",
+      "La conversación comercial es una interacción de prototipo"
+    ],
+    "benefits": [
+      "Relacionar consumo del hogar y necesidades de movilidad",
+      "Comparar opciones con criterios visibles",
+      "Recibir una recomendación ficticia a partir de tres respuestas"
+    ]
+  },
+  "ctas": [
+    { "label": "Quiero hablar con Nexo", "goal": "Solicitar una conversación comercial de demostración", "priority": "primary" },
+    { "label": "Comparar alternativas", "goal": "Ir a la comparación simultánea", "priority": "secondary" },
+    { "label": "Probar el recomendador", "goal": "Iniciar el recorrido guiado ficticio", "priority": "informational" }
+  ],
+  "kpis": [
+    "Comprensión de la propuesta",
+    "Interacción con la comparativa",
+    "Finalización del recomendador",
+    "Solicitud de conversación"
+  ],
+  "duration": "Campaña demostrativa sin vigencia operativa",
+  "brand_guidance": [
+    "Estética editorial, luminosa y contemporánea",
+    "Azul marino para títulos y contraste",
+    "Coral para acciones y acentos",
+    "Español de España; tono directo, profesional y cercano"
+  ],
+  "assets": [
+    "assets/nexo-energia-hero.jpg",
+    "design/desktop.jpg",
+    "design/mobile.jpg"
+  ],
+  "constraints": [
+    "Un único h1 dentro de Hero",
+    "Cabecera y pie globales del tema, fuera de Canvas",
+    "No añadir analítica",
+    "No usar logotipos, personas identificables ni marcas reales",
+    "Marcar cifras, precios y condiciones como ilustrativos o ficticios",
+    "No publicar automáticamente; Drupal deberá quedar como borrador",
+    "Detenerse tras la aprobación visual antes de generar HTML"
+  ],
+  "candidate_components": [
+    {
+      "id": "C11",
+      "name": "Plan comparison",
+      "variant": "experimental",
+      "justification": "La comparación exige lectura simultánea por criterios, tres columnas de alternativas, señalización de recomendación, selección y acción. OfferCard y CardGrid solo modelan unidades independientes y no garantizan semántica tabular ni escaneo por filas.",
+      "props": {
+        "title": "Compara las alternativas",
+        "description": "Contrato preliminar para una tabla responsive con tres planes ficticios.",
+        "plans": "array de 3 planes: id, name, price, price_note, recommended, highlight, action_label, action_url",
+        "criteria": "array ordenado de criterios: id, label, values por plan",
+        "selected_plan": "string|null",
+        "selection_label": "string"
+      }
+    },
+    {
+      "id": "C12",
+      "name": "Recommendation wizard",
+      "variant": "experimental",
+      "justification": "El recorrido necesita estado, navegación entre pasos, validación y un resultado condicionado por respuestas. Ningún componente catalogado ofrece formulario o asistente; resolverlo con RichText, Accordion o Steps perdería interacción y lógica de estado.",
+      "props": {
+        "title": "Encuentra una orientación demostrativa",
+        "steps": "array ordenado de 3 pasos: id, label, field, type, options, required",
+        "result_rules": "array de reglas ficticias que asocia respuestas con plan_id",
+        "result_title": "string",
+        "result_body": "string",
+        "primary_label": "string",
+        "primary_url": "uri-reference"
+      }
+    }
+  ],
+  "content_policy": {
+    "allow_fictional_content": true,
+    "tone": "professional, cercano y explícitamente demostrativo"
+  }
+}

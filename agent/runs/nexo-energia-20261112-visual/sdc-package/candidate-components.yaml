@@ -1,0 +1,95 @@
+schema_version: "1.0"
+source_run: "nexo-energia-20261112-visual"
+status: "experimental"
+components:
+  C11:
+    name: "Plan comparison"
+    slug: "plan-comparison"
+    status: "experimental"
+    variant: "experimental"
+    include: "sdc_landing:plan-comparison"
+    responsibility: "Renderizar una tabla comparativa de tres planes con criterios, recomendación textual, selección y acción por alternativa."
+    out_of_scope:
+      - "Calcular precios o ahorros reales"
+      - "Validar elegibilidad o contratar"
+      - "Resolver la recomendación del asistente"
+    props:
+      title: { type: "string", required: true }
+      description: { type: "string", required: false }
+      plans:
+        type: "array"
+        minItems: 3
+        maxItems: 3
+        items:
+          required: [id, name, price, price_note, recommended, action_label, action_url]
+          properties:
+            id: { type: "string" }
+            name: { type: "string" }
+            price: { type: "string" }
+            price_note: { type: "string" }
+            recommended: { type: "boolean" }
+            highlight: { type: "string" }
+            action_label: { type: "string" }
+            action_url: { type: "string", format: "uri-reference" }
+      criteria:
+        type: "array"
+        minItems: 1
+        items:
+          required: [id, label, values]
+          properties:
+            id: { type: "string" }
+            label: { type: "string" }
+            values: { type: "array", minItems: 3, maxItems: 3, items: { type: "string" } }
+      selected_plan: { type: "string", required: false }
+      selection_label: { type: "string", required: false }
+    states: ["idle", "recommended", "selected", "focus"]
+    responsive: "Desktop con tres columnas; móvil dentro de desplazamiento horizontal contenido conservando encabezados y criterios."
+    accessibility:
+      - "caption, thead, tbody y scope para lectura semántica"
+      - "Recomendación expresada con texto, no solo color"
+      - "Radios y botones con foco visible y nombres distinguibles"
+
+  C12:
+    name: "Recommendation wizard"
+    slug: "recommendation-wizard"
+    status: "experimental"
+    variant: "experimental"
+    include: "sdc_landing:recommendation-wizard"
+    responsibility: "Gestionar tres pasos de respuestas ficticias, validación básica, navegación atrás/adelante y resultado condicionado por reglas declarativas."
+    out_of_scope:
+      - "Persistir respuestas o conectar con CRM"
+      - "Realizar una recomendación comercial real"
+      - "Calcular consumo, precio o elegibilidad"
+    props:
+      title: { type: "string", required: true }
+      description: { type: "string", required: false }
+      steps:
+        type: "array"
+        minItems: 3
+        maxItems: 3
+        items:
+          required: [id, label, field, type, options, required]
+          properties:
+            id: { type: "string" }
+            label: { type: "string" }
+            field: { type: "string" }
+            type: { type: "string", enum: [radio, select] }
+            options: { type: "array", items: { type: "string" } }
+            required: { type: "boolean" }
+      result_rules:
+        type: "array"
+        items:
+          required: [when, plan_id]
+          properties:
+            when: { type: "string" }
+            plan_id: { type: "string" }
+      result_title: { type: "string" }
+      result_body: { type: "string" }
+      primary_label: { type: "string" }
+      primary_url: { type: "string", format: "uri-reference" }
+    states: ["idle", "step_1", "step_2", "step_3", "validation_error", "result"]
+    responsive: "Desktop con navegación de pasos y formulario en dos paneles; móvil en una columna con controles táctiles."
+    accessibility:
+      - "fieldset/legend y labels asociados"
+      - "aria-current para paso activo, role=alert para validación y foco gestionado"
+      - "El resultado no depende solo del color y mantiene CTA textual"

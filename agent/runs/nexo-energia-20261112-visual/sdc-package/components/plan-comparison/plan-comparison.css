@@ -1,0 +1,11 @@
+.plan-comparison__table-wrap { overflow-x: auto; }
+.plan-comparison__table { width: 100%; min-width: 48rem; border-collapse: collapse; }
+.plan-comparison__table th, .plan-comparison__table td { padding: 1rem; border: 1px solid var(--sdc-line, #d9dee7); text-align: left; vertical-align: top; }
+.plan-comparison__table thead th { background: var(--sdc-surface, #f6f8fb); }
+.plan-comparison__table .is-recommended { background: #fff2ef; }
+.plan-comparison__plan-name, .plan-comparison__price, .plan-comparison__price-note { display: block; }
+.plan-comparison__plan-name { color: var(--sdc-navy, #142d65); font-weight: 800; }
+.plan-comparison__price { margin-top: .5rem; color: var(--sdc-navy, #142d65); font-size: 1.35rem; font-weight: 900; }
+.plan-comparison__price-note { color: var(--sdc-muted, #536070); font-size: .8rem; }
+.plan-comparison__badge { display: inline-block; margin-top: .55rem; padding: .2rem .45rem; border-radius: 999px; color: #fff; background: var(--sdc-coral, #f0442e); font-size: .7rem; font-weight: 800; }
+.plan-comparison__table label { display: block; margin-bottom: .6rem; color: var(--sdc-navy, #142d65); font-weight: 700; }

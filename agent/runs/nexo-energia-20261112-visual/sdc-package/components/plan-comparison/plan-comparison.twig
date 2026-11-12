@@ -1,0 +1,39 @@
+<section class="plan-comparison" data-component-id="C11" aria-labelledby="plan-comparison-title">
+  <h2 id="plan-comparison-title">{{ title }}</h2>
+  {% if description %}<p class="plan-comparison__description">{{ description }}</p>{% endif %}
+  <div class="plan-comparison__table-wrap">
+    <table class="plan-comparison__table">
+      <caption>{{ selection_label|default('Comparación simultánea de alternativas') }}</caption>
+      <thead>
+        <tr>
+          <th scope="col">Criterio</th>
+          {% for plan in plans %}
+            <th scope="col"{% if plan.recommended %} class="is-recommended"{% endif %}>
+              <span class="plan-comparison__plan-name">{{ plan.name }}</span>
+              <span class="plan-comparison__price">{{ plan.price }}</span>
+              <span class="plan-comparison__price-note">{{ plan.price_note }}</span>
+              {% if plan.recommended %}<span class="plan-comparison__badge">Orientación demostrativa</span>{% endif %}
+            </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for criterion in criteria %}
+          <tr>
+            <th scope="row">{{ criterion.label }}</th>
+            {% for value in criterion.values %}<td>{{ value }}</td>{% endfor %}
+          </tr>
+        {% endfor %}
+        <tr>
+          <th scope="row">Continuar</th>
+          {% for plan in plans %}
+            <td{% if plan.recommended %} class="is-recommended"{% endif %}>
+              <label><input type="radio" name="plan-selection" value="{{ plan.id }}"> {{ plan.name }}</label>
+              <a class="button" href="{{ plan.action_url }}">{{ plan.action_label }}</a>
+            </td>
+          {% endfor %}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
