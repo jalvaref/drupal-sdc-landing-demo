@@ -7,7 +7,8 @@ props:
     eyebrow: { type: string, title: 'Antetítulo' }
     title: { type: string, title: 'Título', examples: ['Convierte la IA en una capacidad empresarial'] }
     description: { type: string, title: 'Descripción' }
-    image: { type: object, title: 'Imagen', $ref: 'json-schema-definitions://canvas.module/image', examples: [{ src: '/themes/custom/sdc_landing/images/hero-energy.jpg', alt: 'Paisaje energético' }] }
+    image_src: { type: string, title: 'URL de imagen', format: uri-reference, examples: ['/themes/custom/sdc_landing/images/hero-energy.jpg'] }
+    image_alt: { type: string, title: 'Texto alternativo', examples: ['Paisaje energético'] }
     primary_label: { type: string, title: 'Texto CTA principal', examples: ['Solicitar una conversación'] }
     primary_url: { type: string, title: 'URL CTA principal', format: uri-reference, examples: ['#contacto'] }
     secondary_label: { type: string, title: 'Texto CTA secundaria', examples: ['Explorar el enfoque'] }

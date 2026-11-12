@@ -1,0 +1,26 @@
+<div class="landing-shell">
+  {% include 'sdc_landing:site-header' with {
+    brand_name: 'SDC Landing Demo',
+    navigation: [
+      { label: 'Inicio', url: '/' },
+      { label: 'La propuesta', url: '#enfoque' },
+      { label: 'Preguntas frecuentes', url: '#preguntas-frecuentes' }
+    ],
+    primary_cta: { label: 'Contactar', url: '#contacto' }
+  } only %}
+
+  <main id="main-content">
+    {{ page.content }}
+  </main>
+
+  {% include 'sdc_landing:site-footer' with {
+    logo: { label: 'SDC Landing Demo', url: '/' },
+    columns: [
+      { title: 'La propuesta', links: [ { label: 'Inicio', url: '/' }, { label: 'Cómo funciona', url: '#como-funciona' } ] },
+      { title: 'Información', links: [ { label: 'Preguntas frecuentes', url: '#preguntas-frecuentes' }, { label: 'Condiciones', url: '#condiciones' } ] },
+      { title: 'Contacto', links: [ { label: 'Hablemos', url: '#contacto' } ] }
+    ],
+    legal_links: [ { label: 'Privacidad', url: '#' }, { label: 'Cookies', url: '#' }, { label: 'Legal', url: '#' } ],
+    copyright: '© 2026 SDC Landing Demo · Demo interna'
+  } only %}
+</div>
