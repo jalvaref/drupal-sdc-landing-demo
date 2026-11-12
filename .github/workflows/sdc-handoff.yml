@@ -95,6 +95,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Configurar clave SSH para Terminus
+        env:
+          PANTHEON_SSH_PRIVATE_KEY: ${{ secrets.PANTHEON_SSH_PRIVATE_KEY }}
+        shell: bash
+        run: |
+          if [ -z "$PANTHEON_SSH_PRIVATE_KEY" ]; then
+            echo "::error::Falta PANTHEON_SSH_PRIVATE_KEY; Terminus no puede acceder al Appserver Drupal."
+            exit 1
+          fi
+          install -m 700 -d "$HOME/.ssh"
+          printf '%s\n' "$PANTHEON_SSH_PRIVATE_KEY" > "$HOME/.ssh/id_rsa"
+          chmod 600 "$HOME/.ssh/id_rsa"
       - name: Preparar Terminus
         uses: shivammathur/setup-php@v2
         with:
