@@ -206,6 +206,11 @@ final class DraftImporter {
       $inputs['cta_url'] = $inputs['cta']['url'] ?? '';
       unset($inputs['cta']);
     }
+    if ($sourceId === 'image-text' && isset($inputs['image']) && is_array($inputs['image'])) {
+      $inputs['image_src'] = $inputs['image']['src'] ?? '';
+      $inputs['image_alt'] = $inputs['image']['alt'] ?? '';
+      unset($inputs['image']);
+    }
     if ($sourceId === 'feature-grid' && isset($inputs['items']) && is_array($inputs['items'])) {
       foreach (array_values($inputs['items']) as $index => $item) {
         $number = $index + 1;
