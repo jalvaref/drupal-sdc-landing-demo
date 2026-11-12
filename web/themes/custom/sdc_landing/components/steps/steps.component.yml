@@ -3,9 +3,16 @@ name: Steps
 status: stable
 props:
   type: object
-  required: [items]
   properties:
     title: { type: string, title: 'Título', examples: ['Un recorrido claro de principio a fin'] }
     description: { type: string, title: 'Descripción' }
-    items: { type: array, title: 'Pasos', minItems: 3, maxItems: 6, examples: [[{ title: 'Diagnóstico', text: 'Analizamos tu situación actual.', icon: 'diagnosis' }, { title: 'Diseño', text: 'Definimos la solución adecuada.', icon: 'design' }, { title: 'Implementación', text: 'Ponemos la solución en marcha.', icon: 'implementation' }]], items: { type: object, required: [title, text], properties: { title: { type: string, title: 'Título', examples: ['Diagnóstico'] }, text: { type: string, title: 'Texto', examples: ['Analizamos tu situación actual.'] }, icon: { type: string, title: 'Icono', examples: ['diagnosis'] } } } }
+    step_1_title: { type: string, title: 'Título paso 1', examples: ['Diagnóstico'] }
+    step_1_text: { type: string, title: 'Texto paso 1', examples: ['Analizamos tu situación actual.'] }
+    step_1_icon: { type: string, title: 'Icono paso 1', examples: ['diagnosis'] }
+    step_2_title: { type: string, title: 'Título paso 2', examples: ['Diseño'] }
+    step_2_text: { type: string, title: 'Texto paso 2', examples: ['Definimos la solución adecuada.'] }
+    step_2_icon: { type: string, title: 'Icono paso 2', examples: ['design'] }
+    step_3_title: { type: string, title: 'Título paso 3', examples: ['Implementación'] }
+    step_3_text: { type: string, title: 'Texto paso 3', examples: ['Ponemos la solución en marcha.'] }
+    step_3_icon: { type: string, title: 'Icono paso 3', examples: ['implementation'] }
     variant: { type: string, title: 'Variante', enum: [vertical, horizontal, numbered, timeline], default: numbered, examples: ['numbered'] }

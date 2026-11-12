@@ -233,6 +233,27 @@ final class DraftImporter {
       }
       unset($inputs['items']);
     }
+    if ($sourceId === 'steps' && isset($inputs['items']) && is_array($inputs['items'])) {
+      foreach (array_values($inputs['items']) as $index => $item) {
+        $number = $index + 1;
+        if (is_array($item)) {
+          $inputs["step_{$number}_title"] = $item['title'] ?? '';
+          $inputs["step_{$number}_text"] = $item['text'] ?? '';
+          $inputs["step_{$number}_icon"] = $item['icon'] ?? '';
+        }
+      }
+      unset($inputs['items']);
+    }
+    if ($sourceId === 'accordion' && isset($inputs['items']) && is_array($inputs['items'])) {
+      foreach (array_values($inputs['items']) as $index => $item) {
+        $number = $index + 1;
+        if (is_array($item)) {
+          $inputs["question_{$number}"] = $item['question'] ?? '';
+          $inputs["answer_{$number}"] = $item['answer'] ?? '';
+        }
+      }
+      unset($inputs['items']);
+    }
   }
 
   private function normalizeCanvasImageInputs(array &$inputs): void {
