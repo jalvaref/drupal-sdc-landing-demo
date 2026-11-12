@@ -4,5 +4,6 @@ description: 'Importa propuestas aprobadas por el agente como páginas Drupal en
 package: Custom
 core_version_requirement: '^10.3 || ^11'
 dependencies:
+  - canvas:canvas
   - drupal:node
   - drupal:filter

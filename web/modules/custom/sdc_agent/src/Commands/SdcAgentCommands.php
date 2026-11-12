@@ -25,9 +25,15 @@ final class SdcAgentCommands extends DrushCommands {
    * @aliases sdc-import-draft
    */
   public function importDraft(string $proposal_file, array $options = ['title' => NULL]): void {
-    $node = $this->importer->import($proposal_file, $options['title'] ?: NULL);
-    $url = Url::fromRoute('entity.node.canonical', ['node' => $node->id()], ['absolute' => TRUE])->toString();
-    $this->logger()->success(sprintf('Draft creado o actualizado: node/%d. URL: %s. Estado: draft. Modo: html_draft; Canvas editable: no.', $node->id(), $url));
+    $entity = $this->importer->import($proposal_file, $options['title'] ?: NULL);
+    if ($entity->getEntityTypeId() === 'canvas_page') {
+      $url = Url::fromRoute('entity.canvas_page.canonical', ['canvas_page' => $entity->id()], ['absolute' => TRUE])->toString();
+      $editor = Url::fromRoute('entity.canvas_page.edit_form', ['canvas_page' => $entity->id()], ['absolute' => TRUE])->toString();
+      $this->logger()->success(sprintf('Draft Canvas creado o actualizado: page/%d. URL: %s. Editor: %s. Estado: draft. Modo: canvas; Canvas editable: sí.', $entity->id(), $url, $editor));
+      return;
+    }
+    $url = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()], ['absolute' => TRUE])->toString();
+    $this->logger()->success(sprintf('Draft creado o actualizado: node/%d. URL: %s. Estado: draft. Modo: html_legacy; Canvas editable: no.', $entity->id(), $url));
   }
 
 }
