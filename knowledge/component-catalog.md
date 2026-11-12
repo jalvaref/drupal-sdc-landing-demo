@@ -1,6 +1,6 @@
 # Catálogo SDC para Drupal Canvas
 
-La fuente estructurada es `knowledge/component-catalog.yaml`. Este documento resume las reglas que debe aplicar el agente al componer una página Canvas.
+La fuente estructurada es `knowledge/component-catalog.yaml`. Este documento resume las reglas que debe aplicar el agente al componer una página Canvas. Los `.component.yml` desplegados son la autoridad final.
 
 ## Regla de selección
 
@@ -22,16 +22,16 @@ No todos los bloques son obligatorios: la composición depende del briefing.
 | ID | Componente | Cuándo usarlo | Campos principales |
 | --- | --- | --- | --- |
 | C00 | Site header | Global del tema | `brand_name`, `navigation`, `primary_cta` |
-| C01 | Hero | Propuesta de valor principal | `eyebrow`, `title`, `description`, `image`, CTAs |
+| C01 | Hero | Propuesta de valor principal | `eyebrow`, `title`, `description`, `image_src`, `image_alt`, `primary_label`, `primary_url`, `secondary_label`, `secondary_url` |
 | C02 | Rich text | Contexto o contenido editorial | `eyebrow`, `title`, `body`, `alignment`, `width` |
-| C03 | Image-text | Explicación visual de una idea | `eyebrow`, `title`, `description`, `image`, `cta` |
-| C04 | Feature grid | Capacidades o beneficios homogéneos | `title`, `items`, `columns`, `variant` |
+| C03 | Image-text | Explicación visual de una idea | `eyebrow`, `title`, `description`, `image_src`, `image_alt`, `cta_label`, `cta_url` |
+| C04 | Feature grid | Capacidades o beneficios homogéneos | `title`, `item_1_*`, `item_2_*`, `item_3_*`, `columns`, `variant` |
 | C05 | Card grid | Soluciones o contenidos navegables | `title`, `cards`, `variant` |
-| C06 | Stats | Datos destacados | `items`, `variant` |
-| C07 | Steps | Procesos y fases ordenadas | `items`, `variant` |
+| C06 | Stats | Datos destacados | `stat_1_*`, `stat_2_*`, `stat_3_*`, `variant` |
+| C07 | Steps | Procesos y fases ordenadas | `step_1_*`, `step_2_*`, `step_3_*`, `variant` |
 | C08 | Quote | Cita o mensaje editorial | `quote`, `author`, `role`, `image` |
-| C09 | Accordion | Preguntas frecuentes | `title`, `items`, `default_open` |
-| C10 | CTA banner | Cierre y conversión | `title`, `primary_cta`, `theme` |
+| C09 | Accordion | Preguntas frecuentes | `title`, `question_1`/`answer_1` … `question_4`/`answer_4`, `default_open` |
+| C10 | CTA banner | Cierre y conversión | `title`, `primary_label`, `primary_url`, `theme` |
 | C99 | Site footer | Global del tema | `columns`, `legal_links`, `copyright` |
 
 ## Reglas de contenido
@@ -39,6 +39,7 @@ No todos los bloques son obligatorios: la composición depende del briefing.
 - Un solo `h1`, dentro de `Hero`.
 - Máximo un CTA principal por sección.
 - Todas las imágenes tienen texto alternativo.
+- Las imágenes nunca pueden conservar rutas del prototipo como `preview/...`; deben resolver a un activo público del tema o a una referencia Drupal/Media válida.
 - Cifras, testimonios y claims ficticios se marcan como ilustrativos o `pending_validation`.
 - No se inventan precios, logos, partners, teléfonos o condiciones comerciales.
 - El contenido debe ser profesional y estar alineado con el briefing.
@@ -49,7 +50,8 @@ Cada componente debe usar únicamente las props declaradas en su `.component.yml
 
 ### Contratos anidados críticos
 
-- `C01 Hero`: los CTA son objetos con `label` y `url`; `image` debe seguir exactamente el objeto de imagen definido por Canvas.
+- `C01 Hero`: en Canvas usa `image_src`/`image_alt` y `primary_label`/`primary_url`; no envíes `primary_cta` ni la ruta temporal `preview/...`.
+- `C03 ImageText`: en Canvas usa `image_src`/`image_alt` y `cta_label`/`cta_url`.
 - `C02 RichText`: `body` es HTML filtrado; para párrafos debe utilizarse, por ejemplo, `<p>Texto editorial.</p>`.
 - `C04 FeatureGrid`: cada item usa `title` y `text`. `description` es la descripción del componente, no el texto interno del item.
 - `C06 Stats`: cada item usa `value` y `label`; las cifras ficticias deben marcarse como ilustrativas.
@@ -58,3 +60,10 @@ Cada componente debe usar únicamente las props declaradas en su `.component.yml
 Estos ejemplos son reglas de control para evitar errores de composición; la validación final siempre debe hacerse contra el `.component.yml` real cargado como fuente de conocimiento.
 
 Tras generar una landing, el agente debe comprobar que los componentes aparecen en la biblioteca, que sus props se editan, que la página se guarda y que el estado queda como draft.
+
+## Límites de Canvas y despliegue
+
+- `site-header` y `site-footer` son globales del tema: no forman parte del árbol Canvas, pero deben aparecer en la plantilla global que envuelve `page.content`.
+- El inspector superpuesto solo se entrega en el HTML de revisión; no se importa en Drupal.
+- Tras un despliegue Pantheon hay que esperar el build de Composer y validar `terminus drush <site>.dev -- status` antes de reconstruir cachés o importar.
+- Si el editor muestra `Unexpected token '<'`, revisar que `/canvas/api/v0/layout/...` devuelva JSON y no HTML de Cloudflare, login o error 403.

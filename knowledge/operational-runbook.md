@@ -17,6 +17,13 @@ Antes de presentar una fase como preparada:
 7. Marcar como ilustrativos los datos ficticios, claims, cifras y activos generados.
 8. Registrar supuestos, preguntas abiertas, artefactos y siguiente aprobación.
 
+### Comprobaciones específicas de activos y Canvas
+
+- Rechazar cualquier `src` que empiece por `preview/`, `file://`, una ruta del workspace o una URL temporal.
+- Para Hero e Image Text, validar `image_src` e `image_alt` contra sus `.component.yml` reales.
+- Comprobar que el activo existe dentro del tema o que se ha creado/referenciado como Media Drupal.
+- Comprobar que la plantilla global muestra header y footer alrededor de `page.content`, sin duplicarlos dentro del árbol Canvas.
+
 ## Fase visual
 
 Entregar dos imágenes reales en JPG: `design/desktop.jpg` y `design/mobile.jpg`. Una descripción textual no sustituye a las imágenes. Detenerse en `awaiting_visual_approval`.
@@ -27,7 +34,15 @@ Generar HTML autocontenido y responsive con inspector. El inspector mínimo debe
 
 ## Fase SDC/Canvas
 
-Si los componentes son estables, generar solo la composición Canvas. El paquete debe contener la composición, la propuesta, el inventario de candidatos, los activos y el informe de validación. La importación debe crear una entidad `canvas_page` y persistir sus instancias en el campo `components`; mantener `draft` y `drupal_status: 0`. El HTML del preview y su inspector son únicamente artefactos de revisión.
+Si los componentes son estables, generar solo la composición Canvas. El paquete debe contener la composición, la propuesta, el inventario de candidatos, los activos y el informe de validación. La importación debe crear una entidad `canvas_page` y persistir sus instancias en el campo `components`; mantener `draft` y `drupal_status: 0`. El HTML del preview y su inspector son únicamente artefactos de revisión. Tras el despliegue Pantheon, esperar el build Composer y ejecutar `terminus drush <site>.dev -- status` antes de `drush cr` y de la importación. Una nueva importación puede devolver una página publicada a draft; publicar es siempre una acción manual posterior.
+
+## Diagnóstico del editor Canvas
+
+Si aparece `Error PARSING_ERROR: Unexpected token '<'` al cargar el layout, el navegador ha recibido HTML donde esperaba JSON. Inspeccionar `GET /canvas/api/v0/layout/{entity_type}/{entity}` y distinguir:
+
+- `403` o HTML de Cloudflare: permitir las rutas Canvas/API o resolver el challenge.
+- Redirección/login HTML: renovar la sesión y revisar permisos de edición.
+- `500` HTML/Drupal: revisar logs y el contrato del componente; no modificar el árbol a ciegas.
 
 ## MCP no conectado
 
