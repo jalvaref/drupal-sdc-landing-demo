@@ -97,11 +97,29 @@ final class DraftImporter {
       : '';
     if ($preview && is_file($preview)) {
       $html = (string) file_get_contents($preview);
+      $styles = '';
+      if (preg_match_all('/<style\b[^>]*>(.*?)<\/style>/is', $html, $styleMatches)) {
+        $styles = implode("\n", $styleMatches[1]);
+      }
       if (preg_match('/<body[^>]*>(.*)<\/body>/is', $html, $matches)) {
         $body = preg_replace('/<script\b[^>]*>.*?<\/script>/is', '', $matches[1]);
         $body = preg_replace('/\s+on[a-z]+\s*=\s*(["\']).*?\1/is', '', $body);
         if (is_string($body) && trim($body) !== '') {
-          return $body;
+          $body = preg_replace_callback('/(<img\b[^>]*\bsrc\s*=\s*["\'])([^"\']+)(["\'])/i', function (array $imageMatches) use ($proposalPath): string {
+            $src = $imageMatches[2];
+            if (preg_match('/^(?:data:|https?:|\/)/i', $src)) {
+              return $imageMatches[0];
+            }
+            $assetPath = dirname($proposalPath) . DIRECTORY_SEPARATOR . 'preview' . DIRECTORY_SEPARATOR . basename($src);
+            if (!is_file($assetPath)) {
+              return $imageMatches[0];
+            }
+            $mime = function_exists('mime_content_type') ? mime_content_type($assetPath) : 'image/jpeg';
+            $data = base64_encode((string) file_get_contents($assetPath));
+            return $imageMatches[1] . 'data:' . $mime . ';base64,' . $data . $imageMatches[3];
+          }, $body);
+          $styleTag = $styles !== '' ? '<style data-sdc-agent="landing">' . $styles . '</style>' : '';
+          return $styleTag . $body;
         }
       }
     }
