@@ -49,6 +49,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Ejecutar despliegue autorizado en Pantheon Dev
         env:
           PANTHEON_DEPLOY_COMMAND: ${{ secrets.PANTHEON_DEPLOY_COMMAND }}
