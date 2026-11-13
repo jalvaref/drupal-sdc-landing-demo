@@ -23,24 +23,25 @@ props:
           options: { type: array, title: 'Opciones', items: { type: string } }
           required: { type: boolean, title: 'Obligatorio' }
       examples:
-        - id: home
-          label: Tu vivienda
-          field: home_type
-          type: radio
-          options: [Piso, Casa, Otra vivienda]
-          required: true
-        - id: charge
-          label: Tu recarga
-          field: charge_pattern
-          type: radio
-          options: [Ocasional, Casi siempre en casa, Todavía no lo sé]
-          required: true
-        - id: zone
-          label: Tu zona
-          field: zone
-          type: select
-          options: [Urbana, Metropolitana, Rural]
-          required: true
+        -
+          - id: home
+            label: Tu vivienda
+            field: home_type
+            type: radio
+            options: [Piso, Casa, Otra vivienda]
+            required: true
+          - id: charge
+            label: Tu recarga
+            field: charge_pattern
+            type: radio
+            options: [Ocasional, Casi siempre en casa, Todavía no lo sé]
+            required: true
+          - id: zone
+            label: Tu zona
+            field: zone
+            type: select
+            options: [Urbana, Metropolitana, Rural]
+            required: true
     result_rules:
       type: array
       title: 'Reglas de resultado'
@@ -52,8 +53,9 @@ props:
           when: { type: string, title: 'Condición' }
           plan_id: { type: string, title: 'Plan resultante' }
       examples:
-        - when: 'otherwise'
-          plan_id: flex
+        -
+          - when: 'otherwise'
+            plan_id: flex
     result_title: { type: string, title: 'Título del resultado', examples: ['Tu orientación ficticia: Equilibrio'] }
     result_body: { type: string, title: 'Texto del resultado', examples: ['Esta alternativa podría ser un punto de partida para conversar.'] }
     primary_label: { type: string, title: 'CTA principal', examples: ['Quiero hablar sobre mi orientación'] }

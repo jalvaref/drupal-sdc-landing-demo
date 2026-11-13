@@ -25,30 +25,31 @@ props:
           action_label: { type: string, title: 'Texto de acción' }
           action_url: { type: string, title: 'URL de acción', format: uri-reference }
       examples:
-        - id: base
-          name: Base hogar
-          price: '29,90 €'
-          price_note: 'al mes · orientativo'
-          recommended: false
-          highlight: Para empezar
-          action_label: Ver Base
-          action_url: '#contacto'
-        - id: equilibrio
-          name: Equilibrio
-          price: '39,90 €'
-          price_note: 'al mes · orientativo'
-          recommended: true
-          highlight: Orientación demostrativa
-          action_label: Elegir Equilibrio
-          action_url: '#recomendacion'
-        - id: flex
-          name: Flex movilidad
-          price: '49,90 €'
-          price_note: 'al mes · orientativo'
-          recommended: false
-          highlight: Más flexibilidad
-          action_label: Ver Flex
-          action_url: '#contacto'
+        -
+          - id: base
+            name: Base hogar
+            price: '29,90 €'
+            price_note: 'al mes · orientativo'
+            recommended: false
+            highlight: Para empezar
+            action_label: Ver Base
+            action_url: '#contacto'
+          - id: equilibrio
+            name: Equilibrio
+            price: '39,90 €'
+            price_note: 'al mes · orientativo'
+            recommended: true
+            highlight: Orientación demostrativa
+            action_label: Elegir Equilibrio
+            action_url: '#recomendacion'
+          - id: flex
+            name: Flex movilidad
+            price: '49,90 €'
+            price_note: 'al mes · orientativo'
+            recommended: false
+            highlight: Más flexibilidad
+            action_label: Ver Flex
+            action_url: '#contacto'
     criteria:
       type: array
       title: 'Criterios'
@@ -61,8 +62,9 @@ props:
           label: { type: string, title: 'Etiqueta' }
           values: { type: array, title: 'Valores por plan', minItems: 3, maxItems: 3, items: { type: string } }
       examples:
-        - id: home
-          label: Tipo de hogar
-          values: [Cualquier vivienda, Vivienda habitual, Vivienda + segunda plaza]
+        -
+          - id: home
+            label: Tipo de hogar
+            values: [Cualquier vivienda, Vivienda habitual, Vivienda + segunda plaza]
     selected_plan: { type: string, title: 'Plan seleccionado', examples: ['equilibrio'] }
     selection_label: { type: string, title: 'Texto de selección', examples: ['Selecciona una opción para continuar'] }
