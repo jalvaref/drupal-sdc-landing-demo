@@ -1,9 +1,9 @@
 # Informe de validación SDC · Nexo Energía
 
 - Run: `nexo-energia-20261112-visual`
-- Estado: `sdc_approved` / handoff externo pendiente
+- Estado: `sdc_approved` / handoff externo completado
 - Drupal target: `draft` (`status: 0`)
-- Clasificación de paquete: `code_deploy_required` pendiente de decisión operativa, porque incluye dos candidatos experimentales con archivos de componente que no existen en el tema estable desplegado.
+- Clasificación de paquete: `code_deploy_required`; incluye dos candidatos experimentales con archivos de componente que requieren despliegue de runtime.
 
 ## 1. Validación estructural local
 
@@ -39,14 +39,13 @@ El contrato preliminar define tres pasos, tipos de campo, opciones, reglas ficti
 
 ## 4. Validación bloqueada
 
-- No se puede afirmar que los candidatos estén disponibles en la biblioteca Canvas del entorno Dev: todavía no se ha solicitado ni ejecutado handoff externo.
-- No se puede importar esta composición hasta que se apruebe el paquete SDC y se confirme cómo se desplegarán los dos componentes experimentales.
-- No se ha solicitado PR, despliegue Pantheon ni importación Drupal; el gateway no está conectado.
-- La landing no está publicada y no existe evidencia de escritura externa.
+- La protección HTTP de Pantheon Dev impide usar una comprobación pública directa; la verificación efectiva se hace con Terminus/Drupal sobre la entidad `canvas_page`.
+- Los candidatos `C11` y `C12` siguen documentados como experimentales y requieren validación funcional futura dentro de Canvas; no se han convertido en componentes estables.
+- Handoff confirmado: workflow `43418088756` (`success`), página `page/5`, estado `draft`, Canvas editable y `2 props de imagen verificadas`.
 
 ## Resultado
 
-Paquete local preparado para revisión SDC. Los componentes estables reutilizan el catálogo; los únicos añadidos son `C11` y `C12`, explícitamente experimentales, con responsabilidades, límites, contratos preliminares, estados, responsive y accesibilidad documentados.
+Handoff completado sobre el run existente. Los componentes estables reutilizan el catálogo; los únicos añadidos son `C11` y `C12`, explícitamente experimentales, con responsabilidades, límites, contratos preliminares, estados, responsive y accesibilidad documentados. Drupal conserva la landing como borrador editable.
 
 ## Paridad visual
 
