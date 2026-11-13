@@ -132,9 +132,12 @@ final class DraftImporter {
       'C02' => 'rich-text',
       'C03' => 'image-text',
       'C04' => 'feature-grid',
+      'C06' => 'stats',
       'C07' => 'steps',
       'C09' => 'accordion',
       'C10' => 'cta-banner',
+      'C11' => 'plan-comparison',
+      'C12' => 'recommendation-wizard',
     ];
     $tree = [];
     foreach ($proposal['components'] as $component) {
@@ -188,7 +191,7 @@ final class DraftImporter {
     $reasonRepository = \Drupal::service(\Drupal\canvas\ComponentIncompatibilityReasonRepository::class);
     $reasons = $reasonRepository->getReasons()['sdc'] ?? [];
     $manualReason = \Drupal\canvas\ComponentIncompatibilityReasonRepository::MANUALLY_DISABLED_REASON;
-    foreach (['hero', 'rich-text', 'image-text', 'feature-grid', 'steps', 'accordion', 'cta-banner'] as $sourceId) {
+    foreach (['hero', 'rich-text', 'image-text', 'feature-grid', 'stats', 'steps', 'accordion', 'cta-banner', 'plan-comparison', 'recommendation-wizard'] as $sourceId) {
       $component = Component::load('sdc.sdc_landing.' . $sourceId);
       if (!$component || $component->status()) {
         continue;
