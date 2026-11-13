@@ -25,6 +25,8 @@ jobs:
           node --check agent/bin/run-agent.mjs
           node --check agent/bin/generate-preview.mjs
           node --check agent/bin/validate-run.mjs
+          node --check agent/bin/validate-assets.mjs
+          node --check agent/bin/validate-imported-images.mjs
           node --check agent/bin/approve-run.mjs
           node --check agent/bin/generate-sdc-package.mjs
           node --check agent/bin/prepare-pull-request.mjs

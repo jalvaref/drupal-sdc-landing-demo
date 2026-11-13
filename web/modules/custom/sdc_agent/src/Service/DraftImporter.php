@@ -132,9 +132,12 @@ final class DraftImporter {
       'C02' => 'rich-text',
       'C03' => 'image-text',
       'C04' => 'feature-grid',
+      'C06' => 'stats',
       'C07' => 'steps',
       'C09' => 'accordion',
       'C10' => 'cta-banner',
+      'C11' => 'plan-comparison',
+      'C12' => 'recommendation-wizard',
     ];
     $tree = [];
     foreach ($proposal['components'] as $component) {
@@ -166,6 +169,7 @@ final class DraftImporter {
       $inputs = $component['props'] ?? [];
       $this->normalizeCanvasComponentInputs($sourceId, $inputs);
       $this->normalizeCanvasImageInputs($inputs);
+      $this->validateCanvasImageInputs($inputs);
       $uuid = \Drupal::service('uuid')->generate();
       $tree[] = [
         'uuid' => $uuid,
@@ -188,7 +192,7 @@ final class DraftImporter {
     $reasonRepository = \Drupal::service(\Drupal\canvas\ComponentIncompatibilityReasonRepository::class);
     $reasons = $reasonRepository->getReasons()['sdc'] ?? [];
     $manualReason = \Drupal\canvas\ComponentIncompatibilityReasonRepository::MANUALLY_DISABLED_REASON;
-    foreach (['hero', 'rich-text', 'image-text', 'feature-grid', 'steps', 'accordion', 'cta-banner'] as $sourceId) {
+    foreach (['hero', 'rich-text', 'image-text', 'feature-grid', 'stats', 'steps', 'accordion', 'cta-banner', 'plan-comparison', 'recommendation-wizard'] as $sourceId) {
       $component = Component::load('sdc.sdc_landing.' . $sourceId);
       if (!$component || $component->status()) {
         continue;
@@ -263,6 +267,55 @@ final class DraftImporter {
       }
       unset($inputs['items']);
     }
+    if ($sourceId === 'plan-comparison') {
+      foreach (array_values($inputs['plans'] ?? []) as $index => $plan) {
+        $number = $index + 1;
+        if (is_array($plan)) {
+          foreach (['id', 'name', 'price', 'price_note', 'recommended', 'highlight', 'action_label', 'action_url'] as $field) {
+            if (array_key_exists($field, $plan)) {
+              $value = $plan[$field];
+              if ($field === 'recommended') {
+                $value = $value ? 'Recomendado' : 'No';
+              }
+              $inputs["plan_{$number}_{$field}"] = $value;
+            }
+          }
+        }
+      }
+      foreach (array_values($inputs['criteria'] ?? []) as $index => $criterion) {
+        $number = $index + 1;
+        if (is_array($criterion)) {
+          $inputs["criterion_{$number}_label"] = $criterion['label'] ?? '';
+          foreach (array_values($criterion['values'] ?? []) as $valueIndex => $value) {
+            $inputs["criterion_{$number}_value_" . ($valueIndex + 1)] = $value;
+          }
+        }
+      }
+      unset($inputs['plans'], $inputs['criteria']);
+    }
+    if ($sourceId === 'recommendation-wizard') {
+      foreach (array_values($inputs['steps'] ?? []) as $index => $step) {
+        $number = $index + 1;
+        if (is_array($step)) {
+          foreach (['id', 'label', 'field', 'type', 'required'] as $field) {
+            if (array_key_exists($field, $step)) {
+              $inputs["step_{$number}_{$field}"] = $step[$field];
+            }
+          }
+          foreach (array_values($step['options'] ?? []) as $optionIndex => $option) {
+            $inputs["step_{$number}_option_" . ($optionIndex + 1)] = $option;
+          }
+        }
+      }
+      foreach (array_values($inputs['result_rules'] ?? []) as $index => $rule) {
+        $number = $index + 1;
+        if (is_array($rule)) {
+          $inputs["rule_{$number}_when"] = $rule['when'] ?? '';
+          $inputs["rule_{$number}_plan_id"] = $rule['plan_id'] ?? '';
+        }
+      }
+      unset($inputs['steps'], $inputs['result_rules']);
+    }
     if ($sourceId === 'steps' && isset($inputs['items']) && is_array($inputs['items'])) {
       foreach (array_values($inputs['items']) as $index => $item) {
         $number = $index + 1;
@@ -296,6 +349,23 @@ final class DraftImporter {
       }
       if (is_array($value)) {
         $this->normalizeCanvasImageInputs($value);
+      }
+    }
+  }
+
+  /**
+   * Prevents creating a draft whose normalized theme image URL is broken.
+   */
+  private function validateCanvasImageInputs(array $inputs): void {
+    foreach ($inputs as $key => $value) {
+      if (in_array($key, ['image_src', 'src'], TRUE) && is_string($value) && str_starts_with($value, '/themes/custom/sdc_landing/images/')) {
+        $path = DRUPAL_ROOT . $value;
+        if (!is_file($path) || filesize($path) === 0) {
+          throw new \InvalidArgumentException(sprintf('El asset de imagen no existe en el tema: %s. Se aborta la importación para no crear un draft con imágenes rotas.', $value));
+        }
+      }
+      if (is_array($value)) {
+        $this->validateCanvasImageInputs($value);
       }
     }
   }
@@ -397,7 +467,7 @@ final class DraftImporter {
             }
             $assetPath = dirname($proposalPath) . DIRECTORY_SEPARATOR . 'preview' . DIRECTORY_SEPARATOR . basename($src);
             if (!is_file($assetPath)) {
-              return $imageMatches[0];
+              throw new \InvalidArgumentException(sprintf('El asset de imagen del preview no existe: %s. Se aborta la importación.', $src));
             }
             return $imageMatches[1] . '/themes/custom/sdc_landing/images/' . rawurlencode(basename($src)) . $imageMatches[3];
           }, $body);

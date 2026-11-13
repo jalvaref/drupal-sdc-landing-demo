@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "run_id": "nexo-energia-20261112-visual",
+  "source_proposal": "../proposal.json",
+  "status": "approved",
+  "reused_components": [
+    "C01",
+    "C02",
+    "C04",
+    "C06",
+    "C03",
+    "C07",
+    "C09",
+    "C10"
+  ],
+  "candidate_components": [
+    "C11",
+    "C12"
+  ],
+  "drupal_target": "draft"
+}

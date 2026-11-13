@@ -1,0 +1,38 @@
+<section class="sdc-section recommendation-wizard" data-component-id="C12" aria-labelledby="recommendation-wizard-title">
+  <div class="landing-container">
+    <span class="candidate-tag">C12 · candidato experimental</span>
+    <div class="sdc-section__intro recommendation-wizard__intro">
+      <h2 id="recommendation-wizard-title">{{ title }}</h2>
+      {% if description %}<p>{{ description }}</p>{% endif %}
+    </div>
+    <div class="recommendation-wizard__layout">
+      <nav class="recommendation-wizard__steps" aria-label="Pasos del recomendador">
+        <h3>Tu recorrido</h3>
+        <ol class="recommendation-wizard__progress">
+          {% for step_number in 1..3 %}<li data-wizard-progress="{{ step_number }}"{% if step_number == 1 %} aria-current="step"{% endif %}><span class="recommendation-wizard__step-number">{{ '%02d'|format(step_number) }}</span><span>{{ attribute(_context, 'step_' ~ step_number ~ '_label') }}</span></li>{% endfor %}
+          <li data-wizard-progress="result"><span class="recommendation-wizard__step-number">04</span><span>Resultado</span></li>
+        </ol>
+      </nav>
+      <div class="recommendation-wizard__panel" aria-live="polite">
+        <p class="sdc-kicker">Paso 1 de 3</p>
+        <form class="recommendation-wizard__form" novalidate>
+          {% for step_number in 1..3 %}
+            {% set step_type = attribute(_context, 'step_' ~ step_number ~ '_type') %}
+            {% set step_field = attribute(_context, 'step_' ~ step_number ~ '_field') %}
+            <fieldset class="recommendation-wizard__fieldset" data-wizard-step="{{ step_number }}"{% if step_number != 1 %} hidden{% endif %}>
+              <legend>{{ attribute(_context, 'step_' ~ step_number ~ '_label') }}</legend>
+              {% if step_type == 'select' %}
+                <label class="visually-hidden" for="{{ step_field }}">{{ attribute(_context, 'step_' ~ step_number ~ '_label') }}</label><select class="recommendation-wizard__select" id="{{ step_field }}" name="{{ step_field }}"><option value="">Selecciona una opción</option>{% for option_number in 1..3 %}{% set option = attribute(_context, 'step_' ~ step_number ~ '_option_' ~ option_number) %}{% if option %}<option value="{{ option }}">{{ option }}</option>{% endif %}{% endfor %}</select>
+              {% else %}
+                <div class="recommendation-wizard__options">{% for option_number in 1..3 %}{% set option = attribute(_context, 'step_' ~ step_number ~ '_option_' ~ option_number) %}{% if option %}<label class="recommendation-wizard__option"><input type="radio" name="{{ step_field }}" value="{{ option }}">{{ option }}</label>{% endif %}{% endfor %}</div>
+              {% endif %}
+            </fieldset>
+          {% endfor %}
+          <p class="recommendation-wizard__error" role="alert" aria-live="assertive"></p>
+          <div class="recommendation-wizard__actions"><button class="button button--secondary" type="button" data-wizard-back hidden>Volver</button><button class="button button--primary" type="button" data-wizard-next>Siguiente</button></div>
+        </form>
+        <div class="recommendation-wizard__result" data-wizard-result hidden aria-live="polite"><h3>{{ result_title }}</h3><p>{{ result_body }}</p><a class="button button--primary" href="{{ primary_url }}">{{ primary_label }}</a></div>
+      </div>
+    </div>
+  </div>
+</section>

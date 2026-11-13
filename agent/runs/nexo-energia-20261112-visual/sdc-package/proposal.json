@@ -1,0 +1,393 @@
+{
+  "run_id": "nexo-energia-20261112-visual",
+  "briefing_ref": "agent/runs/nexo-energia-20261112-visual/brief.json",
+  "status": "sdc_approved",
+  "visuals": {
+    "desktop": "design/desktop.jpg",
+    "mobile": "design/mobile.jpg"
+  },
+  "components": [
+    {
+      "component_id": "C01",
+      "name": "Hero",
+      "variant": "split",
+      "props": {
+        "eyebrow": "Nexo Energía · concepto demostrativo",
+        "title": "Una energía que se adapta a cómo te mueves",
+        "description": "Coordina el consumo de tu hogar con las necesidades de recarga de tu vehículo eléctrico, con una propuesta clara y fácil de comparar.",
+        "image_src": "assets/nexo-energia-hero.jpg",
+        "image_alt": "Vivienda iluminada al anochecer con un vehículo eléctrico conectado y una persona llegando a casa",
+        "primary_label": "Quiero hablar con Nexo",
+        "primary_url": "#contacto",
+        "secondary_label": "Comparar alternativas",
+        "secondary_url": "#comparativa",
+        "variant": "split",
+        "theme": "light"
+      },
+      "status": "catalog",
+      "justification": "Presenta el beneficio principal, mantiene el único h1 y ofrece una acción primaria y una alternativa secundaria.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "brief.json",
+        "hero.component.yml",
+        "Aprobación visual"
+      ]
+    },
+    {
+      "component_id": "C02",
+      "name": "RichText",
+      "variant": "medium",
+      "props": {
+        "eyebrow": "Una propuesta sencilla",
+        "title": "La energía de tu casa también puede acompañar tus trayectos",
+        "body": "<p>Nexo Energía es un concepto ficticio para explorar cómo una tarifa doméstica, la recarga y una recomendación clara podrían convivir en una misma experiencia.</p>",
+        "alignment": "center",
+        "width": "medium"
+      },
+      "status": "catalog",
+      "justification": "Explica el contexto editorial sin forzar un componente de producto que el catálogo no contempla.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "brief.json",
+        "rich-text.component.yml"
+      ]
+    },
+    {
+      "component_id": "C04",
+      "name": "FeatureGrid",
+      "variant": "with-icons",
+      "props": {
+        "title": "Lo esencial, de un vistazo",
+        "description": "Tres ventajas ilustrativas para entender la propuesta antes de comparar.",
+        "item_1_icon": "home",
+        "item_1_title": "Pensada para tu hogar",
+        "item_1_text": "Una lectura sencilla del consumo doméstico y la recarga.",
+        "item_2_icon": "compare",
+        "item_2_title": "Fácil de comparar",
+        "item_2_text": "Criterios visibles para valorar tres alternativas ficticias.",
+        "item_3_icon": "conversation",
+        "item_3_title": "Acompañamiento",
+        "item_3_text": "Una orientación demostrativa antes de hablar con el equipo.",
+        "columns": 3,
+        "variant": "with-icons",
+        "theme": "light"
+      },
+      "status": "catalog",
+      "justification": "Resume tres beneficios homogéneos con los tres ítems escalares definidos por el contrato.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "brief.json",
+        "feature-grid.component.yml"
+      ]
+    },
+    {
+      "component_id": "C06",
+      "name": "Stats",
+      "variant": "highlighted",
+      "props": {
+        "title": "Una referencia rápida",
+        "description": "Cifras de demostración para dar escala a la propuesta; no son datos comerciales reales.",
+        "stat_1_value": "3",
+        "stat_1_label": "alternativas ficticias",
+        "stat_1_context": "Comparación en una misma vista",
+        "stat_2_value": "3",
+        "stat_2_label": "preguntas para orientarte",
+        "stat_2_context": "Recorrido demostrativo",
+        "stat_3_value": "1",
+        "stat_3_label": "conversación siguiente",
+        "stat_3_context": "CTA principal de la landing",
+        "variant": "highlighted"
+      },
+      "status": "catalog",
+      "justification": "Hace visibles los indicadores ilustrativos sin presentarlos como métricas reales.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "brief.json",
+        "stats.component.yml"
+      ]
+    },
+    {
+      "component_id": "C11",
+      "name": "Plan comparison",
+      "variant": "experimental",
+      "props": {
+        "title": "Compara las alternativas",
+        "description": "Precios, condiciones y ventajas ficticios para esta prueba. La columna coral es una orientación, no una recomendación comercial real.",
+        "plans": [
+          {
+            "id": "base",
+            "name": "Base hogar",
+            "price": "29,90 €",
+            "price_note": "al mes · orientativo",
+            "recommended": false,
+            "highlight": "Para empezar",
+            "action_label": "Ver Base",
+            "action_url": "#contacto"
+          },
+          {
+            "id": "equilibrio",
+            "name": "Equilibrio",
+            "price": "39,90 €",
+            "price_note": "al mes · orientativo",
+            "recommended": true,
+            "highlight": "Orientación demostrativa",
+            "action_label": "Elegir Equilibrio",
+            "action_url": "#recomendacion"
+          },
+          {
+            "id": "flex",
+            "name": "Flex movilidad",
+            "price": "49,90 €",
+            "price_note": "al mes · orientativo",
+            "recommended": false,
+            "highlight": "Más flexibilidad",
+            "action_label": "Ver Flex",
+            "action_url": "#contacto"
+          }
+        ],
+        "criteria": [
+          {
+            "id": "home",
+            "label": "Tipo de hogar",
+            "values": [
+              "Cualquier vivienda",
+              "Vivienda habitual",
+              "Vivienda + segunda plaza"
+            ]
+          },
+          {
+            "id": "charge",
+            "label": "Patrón de recarga",
+            "values": [
+              "Ocasional",
+              "Nocturna habitual",
+              "Variable"
+            ]
+          },
+          {
+            "id": "mobility",
+            "label": "Ventaja de movilidad",
+            "values": [
+              "Guía básica",
+              "Saldo ilustrativo",
+              "Más opciones ilustrativas"
+            ]
+          },
+          {
+            "id": "commitment",
+            "label": "Condición clave",
+            "values": [
+              "Sin condición real",
+              "Revisión anual ficticia",
+              "Flexibilidad ilustrativa"
+            ]
+          }
+        ],
+        "selected_plan": null,
+        "selection_label": "Selecciona una opción para continuar"
+      },
+      "status": "experimental",
+      "justification": "La necesidad requiere lectura simultánea por filas y columnas, selección de una alternativa y señalización explícita de recomendación; OfferCard y CardGrid no cubren esa semántica.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "brief.json",
+        "offer-card.component.yml",
+        "card-grid.component.yml",
+        "Aprobación de extensión"
+      ]
+    },
+    {
+      "component_id": "C12",
+      "name": "Recommendation wizard",
+      "variant": "experimental",
+      "props": {
+        "title": "Encuentra una orientación demostrativa",
+        "steps": [
+          {
+            "id": "home",
+            "label": "Tu vivienda",
+            "field": "home_type",
+            "type": "radio",
+            "options": [
+              "Piso",
+              "Casa",
+              "Otra vivienda"
+            ],
+            "required": true
+          },
+          {
+            "id": "charge",
+            "label": "Tu recarga",
+            "field": "charge_pattern",
+            "type": "radio",
+            "options": [
+              "Ocasional",
+              "Casi siempre en casa",
+              "Todavía no lo sé"
+            ],
+            "required": true
+          },
+          {
+            "id": "zone",
+            "label": "Tu zona",
+            "field": "zone",
+            "type": "select",
+            "options": [
+              "Urbana",
+              "Metropolitana",
+              "Rural"
+            ],
+            "required": true
+          }
+        ],
+        "result_rules": [
+          {
+            "when": "home_type=Casa AND charge_pattern=Casi siempre en casa",
+            "plan_id": "equilibrio"
+          },
+          {
+            "when": "charge_pattern=Ocasional",
+            "plan_id": "base"
+          },
+          {
+            "when": "otherwise",
+            "plan_id": "flex"
+          }
+        ],
+        "result_title": "Tu orientación ficticia: Equilibrio",
+        "result_body": "Por tus respuestas de demostración, esta alternativa podría ser un punto de partida para conversar.",
+        "primary_label": "Quiero hablar sobre mi orientación",
+        "primary_url": "#contacto"
+      },
+      "status": "experimental",
+      "justification": "La necesidad requiere pasos con estado, validación básica, navegación atrás/adelante y resultado condicionado; ningún componente estable del catálogo ofrece esa interacción.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "brief.json",
+        "C01–C10 catalogados",
+        "Aprobación de extensión"
+      ]
+    },
+    {
+      "component_id": "C03",
+      "name": "ImageText",
+      "variant": "image-right",
+      "props": {
+        "eyebrow": "Una escena cotidiana",
+        "title": "Cuando llegar a casa también significa estar listo para mañana",
+        "description": "Un bloque editorial conecta la vivienda, la movilidad y la tranquilidad de tener la propuesta explicada con claridad.",
+        "image_src": "assets/nexo-energia-hero.jpg",
+        "image_alt": "Persona llegando a una vivienda iluminada junto a un vehículo eléctrico conectado",
+        "cta_label": "Volver a comparar",
+        "cta_url": "#comparativa",
+        "image_position": "right",
+        "theme": "light"
+      },
+      "status": "catalog",
+      "justification": "Resuelve el bloque editorial con imagen informativa, texto y un único enlace de retorno a la comparación.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "brief.json",
+        "image-text.component.yml"
+      ]
+    },
+    {
+      "component_id": "C07",
+      "name": "Steps",
+      "variant": "numbered",
+      "props": {
+        "title": "Qué ocurriría después de pedir información",
+        "description": "Tres pasos ilustrativos para explicar el siguiente tramo de la conversación.",
+        "step_1_title": "Cuéntanos tu situación",
+        "step_1_text": "Compartes tus necesidades de hogar y movilidad en una conversación de demostración.",
+        "step_1_icon": "conversation",
+        "step_2_title": "Revisamos las opciones",
+        "step_2_text": "Repasamos condiciones y dudas con lenguaje claro.",
+        "step_2_icon": "compare",
+        "step_3_title": "Decides con contexto",
+        "step_3_text": "Te llevas una orientación para valorar el siguiente paso.",
+        "step_3_icon": "decision",
+        "variant": "numbered"
+      },
+      "status": "catalog",
+      "justification": "Explica el proceso posterior en tres pasos ordenados, tal como soporta el contrato estable.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "brief.json",
+        "steps.component.yml"
+      ]
+    },
+    {
+      "component_id": "C09",
+      "name": "Accordion",
+      "variant": "faq",
+      "props": {
+        "title": "Preguntas frecuentes",
+        "question_1": "¿Quién puede usar esta orientación?",
+        "answer_1": "<p>Cualquier persona adulta que quiera explorar la relación entre su hogar y la movilidad eléctrica. Es una experiencia ficticia y no determina una elegibilidad real.</p>",
+        "question_2": "¿Los precios y condiciones son reales?",
+        "answer_2": "<p>No. Los precios, ventajas y condiciones mostrados son ilustrativos y están pendientes de validación; no constituyen una oferta publicada.</p>",
+        "question_3": "¿Necesito tener ya un vehículo eléctrico?",
+        "answer_3": "<p>No se presupone. La propuesta está pensada también para quien está considerando adquirirlo y quiere entender sus opciones.</p>",
+        "question_4": "¿Qué ocurre al solicitar una conversación?",
+        "answer_4": "<p>En este prototipo se mostraría un siguiente paso de contacto. No se envían datos ni se conecta con sistemas reales.</p>",
+        "default_open": 0,
+        "variant": "faq"
+      },
+      "status": "catalog",
+      "justification": "Responde las dudas principales con un patrón de preguntas nativo y operable por teclado.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "brief.json",
+        "accordion.component.yml"
+      ]
+    },
+    {
+      "component_id": "C10",
+      "name": "CtaBanner",
+      "variant": "standard",
+      "props": {
+        "eyebrow": "Siguiente paso",
+        "title": "¿Hablamos de cómo te mueves?",
+        "description": "Solicita una conversación de demostración o vuelve a revisar las alternativas antes de decidir.",
+        "primary_label": "Quiero hablar con Nexo",
+        "primary_url": "#contacto",
+        "secondary_label": "Volver a la comparativa",
+        "secondary_url": "#comparativa",
+        "theme": "dark",
+        "variant": "standard"
+      },
+      "status": "catalog",
+      "justification": "Cierra con una única acción principal y un enlace secundario de retorno a la comparación.",
+      "content_status": "pending_validation",
+      "source_requirements": [
+        "brief.json",
+        "cta-banner.component.yml"
+      ]
+    }
+  ],
+  "design_direction": {
+    "palette": "Fondo #f6f8fb y blanco; títulos y superficies de contraste en azul marino #142d65; acciones y recomendación en coral #f0442e; tinta #111827; líneas #d9dee7.",
+    "layout": "Composición editorial de ancho contenido: hero dividido en escritorio y apilado en móvil; beneficios y estadísticas; tabla comparativa de tres columnas; asistente en tres pasos; bloque editorial con imagen; pasos, FAQ y CTA final. En móvil todo pasa a una columna y la tabla conserva lectura simultánea mediante desplazamiento horizontal contenido.",
+    "visual_rationale": "El contraste navy/coral prioriza comprensión y acción. La tabla y el asistente ocupan zonas de alta atención para demostrar las dos extensiones sin disfrazarlas como tarjetas o texto estático. El aviso de demostración permanece visible al inicio y junto a cifras/condiciones sensibles."
+  },
+  "assumptions": [
+    "Nexo Energía es una marca ficticia para esta prueba.",
+    "Los precios, etiquetas, cifras, condiciones y resultados de recomendación son ilustrativos y no son una oferta real.",
+    "La creatividad generada no contiene logos, marcas ni personas identificables.",
+    "C00 site-header y C99 site-footer son globales del tema y quedan fuera del árbol Canvas.",
+    "La propuesta visual usa una tabla comparativa y un asistente como candidatos experimentales, sujetos a aprobación antes de incorporarlos al paquete SDC."
+  ],
+  "open_questions": [
+    "Validar con negocio el copy final y la nomenclatura de las tres alternativas.",
+    "Definir, si se aprueba la extensión, el contrato técnico definitivo de C11 y C12.",
+    "Confirmar el activo público o referencia Media que sustituirá la ruta de prototipo al preparar Canvas."
+  ],
+  "blockers": [],
+  "html_artifact": "preview/index.html",
+  "approval": {
+    "approved": false,
+    "comment": "Propuesta visual, HTML y paquete SDC aprobados explícitamente por el usuario; handoff externo pendiente de gateway disponible."
+  },
+  "traceability_artifact": "traceability.md"
+}

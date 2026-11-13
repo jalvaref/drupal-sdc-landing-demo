@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Prototipo demostrativo de Nexo Energía para hogar y movilidad eléctrica.">
+  <title>Nexo Energía · Energía que se adapta a cómo te mueves</title>
+  <style>
+    :root {
+      --ink: #111827;
+      --navy: #142d65;
+      --coral: #f0442e;
+      --coral-dark: #c93222;
+      --surface: #f6f8fb;
+      --line: #d9dee7;
+      --muted: #536070;
+      --white: #fff;
+      --focus: #1d72d8;
+      --radius: 18px;
+      --shadow: 0 18px 40px rgba(20, 45, 101, .09);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--white); font: 16px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+    .demo-notice { padding: .7rem 1rem; color: var(--navy); background: #e9f0fa; text-align: center; font-size: .82rem; font-weight: 800; letter-spacing: .02em; }
+    .global-header { border-bottom: 1px solid var(--line); background: rgba(255,255,255,.97); }
+    .header-inner, .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    .header-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .brand { color: var(--navy); font-size: 1.55rem; font-weight: 900; text-decoration: none; letter-spacing: -.05em; }
+    .brand span { color: var(--coral); }
+    .global-nav { display: flex; align-items: center; gap: 1.35rem; font-size: .92rem; font-weight: 700; }
+    .global-nav a { color: var(--navy); text-decoration: none; }
+    .button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; border: 2px solid transparent; border-radius: 5px; padding: .75rem 1.1rem; color: var(--white); background: var(--coral); font-weight: 800; text-decoration: none; cursor: pointer; }
+    .button:hover { background: var(--coral-dark); }
+    .button.secondary { color: var(--navy); background: var(--white); border-color: var(--navy); }
+    .button.secondary:hover { color: var(--white); background: var(--navy); }
+    .button.small { min-height: 42px; padding: .55rem .8rem; font-size: .88rem; }
+    .hero { padding: clamp(3.5rem, 7vw, 6rem) 0; background: var(--surface); }
+    .hero-grid, .image-text-grid, .wizard-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+    .eyebrow { margin: 0 0 .9rem; color: var(--coral); font-size: .78rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    h1, h2, h3 { color: var(--navy); line-height: 1.08; letter-spacing: -.035em; }
+    h1 { max-width: 680px; margin: 0 0 1.35rem; font-size: clamp(3rem, 6vw, 5.3rem); }
+    h2 { margin: 0 0 .8rem; font-size: clamp(2rem, 4vw, 3.15rem); }
+    h3 { margin: 0 0 .45rem; font-size: 1.25rem; }
+    p { margin: 0 0 1rem; }
+    .lead { max-width: 620px; color: var(--muted); font-size: clamp(1.1rem, 2vw, 1.35rem); }
+    .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.75rem; }
+    .hero-media, .editorial-media { overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow); }
+    .hero-media img, .editorial-media img { display: block; width: 100%; aspect-ratio: 1.35; object-fit: cover; }
+    section { padding: clamp(4rem, 8vw, 7rem) 0; }
+    .section-heading { max-width: 740px; margin-bottom: 2.3rem; }
+    .section-heading.center { margin-right: auto; margin-left: auto; text-align: center; }
+    .section-heading p, .muted { color: var(--muted); }
+    .intro { text-align: center; }
+    .intro-copy { max-width: 740px; margin: 0 auto; color: var(--muted); font-size: 1.15rem; }
+    .intro-callout { max-width: 960px; margin: 2.2rem auto 0; padding: 1.8rem 2rem; border-radius: var(--radius); color: var(--navy); background: #e9f0fa; font-size: 1.12rem; }
+    .soft { background: var(--surface); }
+    .feature-grid, .stats-grid, .process-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+    .feature-card, .process-card { padding: 1.6rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); }
+    .feature-number, .process-number { display: block; margin-bottom: 1rem; color: var(--coral); font-size: 1.8rem; font-weight: 900; }
+    .feature-card p, .process-card p { color: var(--muted); }
+    .stats { color: var(--white); background: var(--navy); }
+    .stats .section-heading h2, .stats h2 { color: var(--white); }
+    .stats .section-heading p, .stats .eyebrow { color: #ff8f82; }
+    .stats-grid { align-items: end; }
+    .stat-value { display: block; font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; line-height: 1; }
+    .stat-label { display: block; margin-top: .35rem; font-weight: 800; }
+    .stat-context { display: block; margin-top: .35rem; color: #d5def0; font-size: .9rem; }
+    .candidate { position: relative; }
+    .candidate::before { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--coral); content: ""; }
+    .candidate-tag { display: inline-flex; margin-bottom: .8rem; padding: .35rem .65rem; border-radius: 999px; color: var(--white); background: var(--coral); font-size: .72rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+    .comparison-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); }
+    .comparison-table { width: 100%; min-width: 820px; border-collapse: collapse; }
+    .comparison-table caption { padding: 1rem; color: var(--muted); text-align: left; font-size: .9rem; }
+    .comparison-table th, .comparison-table td { padding: 1rem; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .comparison-table thead th { color: var(--navy); background: var(--surface); }
+    .comparison-table th:first-child { width: 24%; }
+    .plan-name { display: block; font-size: 1.15rem; }
+    .plan-price { display: block; margin-top: .65rem; color: var(--navy); font-size: 1.55rem; }
+    .plan-note { display: block; color: var(--muted); font-size: .82rem; font-weight: 500; }
+    .recommended { position: relative; background: #fff2ef !important; }
+    .recommended::after { display: inline-block; margin-top: .7rem; padding: .25rem .5rem; border-radius: 999px; color: var(--white); background: var(--coral); content: "Orientación demostrativa"; font-size: .7rem; font-weight: 900; }
+    .compare-actions { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+    .select-plan { display: inline-flex; align-items: center; gap: .45rem; color: var(--navy); font-weight: 800; }
+    .selection-note { margin-top: 1rem; color: var(--muted); font-size: .9rem; }
+    .wizard-layout { align-items: stretch; }
+    .wizard-steps { padding: 1.6rem; border-radius: var(--radius); color: var(--white); background: var(--navy); }
+    .wizard-steps h3 { color: var(--white); }
+    .wizard-step { display: flex; gap: .8rem; width: 100%; margin: 0; padding: .85rem .8rem; border: 0; border-radius: 8px; color: var(--white); background: transparent; text-align: left; cursor: pointer; }
+    .wizard-step + .wizard-step { margin-top: .45rem; }
+    .wizard-step[aria-current="step"] { background: var(--coral); }
+    .wizard-step-number { font-weight: 900; }
+    .wizard-panel { padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); }
+    .wizard-panel[hidden] { display: none; }
+    .wizard-panel h3 { font-size: 1.65rem; }
+    .wizard-fieldset { margin: 1.5rem 0; padding: 0; border: 0; }
+    .wizard-fieldset legend { margin-bottom: .75rem; color: var(--navy); font-weight: 800; }
+    .option-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
+    .option { display: flex; min-height: 48px; align-items: center; justify-content: center; padding: .7rem; border: 1px solid var(--line); border-radius: 8px; color: var(--navy); background: var(--surface); font-weight: 700; text-align: center; cursor: pointer; }
+    .option:has(input:checked) { border-color: var(--coral); box-shadow: 0 0 0 2px var(--coral); background: #fff2ef; }
+    .option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+    .wizard-error { min-height: 1.4rem; color: #a52218; font-size: .9rem; font-weight: 700; }
+    .wizard-actions { display: flex; justify-content: space-between; gap: .75rem; margin-top: 1.2rem; }
+    .result { padding: 1.2rem; border-left: 4px solid var(--coral); background: #fff2ef; }
+    .result h3 { margin-bottom: .5rem; }
+    .image-text-grid { align-items: center; }
+    .steps-line { position: relative; }
+    .steps-line::before { position: absolute; top: 2.1rem; left: 4%; right: 4%; height: 1px; background: var(--line); content: ""; }
+    .process-card { position: relative; z-index: 1; }
+    .faq-list { max-width: 900px; margin: 0 auto; }
+    details { border-top: 1px solid var(--line); }
+    details:last-child { border-bottom: 1px solid var(--line); }
+    summary { padding: 1.15rem 0; color: var(--navy); font-weight: 800; cursor: pointer; }
+    details p { max-width: 760px; padding: 0 0 1.2rem; color: var(--muted); }
+    .cta-banner { padding: clamp(2rem, 5vw, 4rem); border-radius: var(--radius); color: var(--white); background: var(--navy); }
+    .cta-banner h2 { color: var(--white); }
+    .cta-banner p { max-width: 620px; color: #d5def0; }
+    .global-footer { padding: 2rem 0; color: #d5def0; background: #0d214d; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; }
+
+    /* Inspector: solo existe en este prototipo de revisión; no se importa a Canvas. */
+    .inspector-toggle { position: fixed; right: 1rem; bottom: 1rem; z-index: 50; border: 0; border-radius: 999px; padding: .8rem 1rem; color: var(--white); background: #111827; box-shadow: var(--shadow); font-weight: 900; cursor: pointer; }
+    .inspector-panel { position: fixed; top: 1rem; right: 1rem; z-index: 51; display: none; width: min(390px, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); overflow: auto; padding: 1rem; border-radius: 14px; color: var(--white); background: #111827; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+    .inspector-panel.is-open { display: block; }
+    .inspector-panel h2 { margin: 0; color: var(--white); font-size: 1.25rem; }
+    .inspector-close { float: right; border: 0; color: var(--white); background: transparent; font-size: 1.5rem; cursor: pointer; }
+    .inspector-list { display: grid; gap: .55rem; margin: 1rem 0 0; }
+    .inspector-item { width: 100%; padding: .7rem; border: 1px solid #41506b; border-radius: 8px; color: var(--white); background: #1b2b52; text-align: left; cursor: pointer; }
+    .inspector-item strong { display: block; color: #ff9b8f; }
+    .inspector-item small { display: block; margin-top: .25rem; color: #d5def0; }
+    .inspector-detail { margin-top: .8rem; padding: .8rem; border-radius: 8px; background: #253861; font-size: .85rem; }
+    .inspector-on [data-component-id] { outline: 2px dashed var(--coral); outline-offset: 5px; }
+
+    @media (max-width: 760px) {
+      .header-inner, .container { width: min(100% - 28px, 620px); }
+      .global-nav { display: none; }
+      .hero-grid, .image-text-grid, .wizard-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .hero { padding-top: 3rem; }
+      h1 { font-size: clamp(2.8rem, 14vw, 4rem); }
+      .feature-grid, .stats-grid, .process-grid { grid-template-columns: 1fr; }
+      .stats-grid { gap: 1.6rem; }
+      .option-list { grid-template-columns: 1fr; }
+      .steps-line::before { top: 1.6rem; bottom: 1.6rem; left: 1.6rem; width: 1px; height: auto; }
+      .footer-inner { flex-direction: column; }
+      .button { width: 100%; }
+      .actions .button { flex: 1 1 100%; }
+    }
+  </style>
+</head>
+<body id="inicio">
+  <div class="demo-notice">Concepto de demostración — contenido y condiciones no válidos para publicación</div>
+
+  <!-- Cabecera global del tema: no forma parte del árbol Canvas. -->
+  <header class="global-header">
+    <div class="header-inner">
+      <a class="brand" href="#inicio" aria-label="Nexo Energía, inicio">nexo <span>energía</span></a>
+      <nav class="global-nav" aria-label="Navegación principal">
+        <a href="#comparativa">Comparar</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a class="button small" href="#contacto">Hablar con Nexo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero component" id="propuesta" data-component-id="C01" data-component-name="Hero" data-variant="split" data-status="catalog" data-catalog="catalogado / estable" data-why="Presenta el beneficio principal, mantiene el único h1 y ofrece una acción primaria y una alternativa secundaria." data-props="variant=split; theme=light; primary_url=#contacto; secondary_url=#comparativa">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Nexo Energía · concepto demostrativo</p>
+          <h1>Una energía que se adapta a cómo te mueves</h1>
+          <p class="lead">Coordina el consumo de tu hogar con las necesidades de recarga de tu vehículo eléctrico, con una propuesta clara y fácil de comparar.</p>
+          <div class="actions">
+            <a class="button" href="#contacto">Quiero hablar con Nexo</a>
+            <a class="button secondary" href="#comparativa">Comparar alternativas</a>
+          </div>
+        </div>
+        <figure class="hero-media">
+          <img src="../assets/nexo-energia-hero.jpg" alt="Vivienda iluminada al anochecer con un vehículo eléctrico conectado y una persona llegando a casa">
+        </figure>
+      </div>
+    </section>
+
+    <section class="intro component" data-component-id="C02" data-component-name="RichText" data-variant="medium" data-status="catalog" data-catalog="catalogado / estable" data-why="Explica el contexto editorial sin forzar un componente de producto que el catálogo no contempla." data-props="alignment=center; width=medium">
+      <div class="container">
+        <div class="section-heading center">
+          <p class="eyebrow">Una propuesta sencilla</p>
+          <h2>La energía de tu casa también puede acompañar tus trayectos</h2>
+          <p class="intro-copy">Nexo Energía es un concepto ficticio para explorar cómo una tarifa doméstica, la recarga y una recomendación clara podrían convivir en una misma experiencia.</p>
+        </div>
+        <p class="intro-callout">Todo lo que ves aquí —precios, cifras, condiciones y recomendaciones— es ilustrativo y está pendiente de validación.</p>
+      </div>
+    </section>
+
+    <section class="soft component" data-component-id="C04" data-component-name="FeatureGrid" data-variant="with-icons" data-status="catalog" data-catalog="catalogado / estable" data-why="Resume tres beneficios homogéneos con los tres ítems escalares definidos por el contrato." data-props="columns=3; variant=with-icons; theme=light">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Beneficios</p>
+          <h2>Lo esencial, de un vistazo</h2>
+          <p>Tres ventajas ilustrativas para entender la propuesta antes de comparar.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card"><span class="feature-number">01</span><h3>Pensada para tu hogar</h3><p>Una lectura sencilla del consumo doméstico y la recarga.</p></article>
+          <article class="feature-card"><span class="feature-number">02</span><h3>Fácil de comparar</h3><p>Criterios visibles para valorar tres alternativas ficticias.</p></article>
+          <article class="feature-card"><span class="feature-number">03</span><h3>Acompañamiento</h3><p>Una orientación demostrativa antes de hablar con el equipo.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats component" data-component-id="C06" data-component-name="Stats" data-variant="highlighted" data-status="catalog" data-catalog="catalogado / estable" data-why="Hace visibles los indicadores ilustrativos sin presentarlos como métricas reales." data-props="variant=highlighted; values=3|3|1">
+      <div class="container">
+        <div class="section-heading"><p class="eyebrow">Referencia rápida</p><h2>Una orientación para empezar</h2><p>Cifras de demostración, no métricas comerciales reales.</p></div>
+        <div class="stats-grid">
+          <div><span class="stat-value">3</span><span class="stat-label">alternativas ficticias</span><span class="stat-context">Comparación en una misma vista</span></div>
+          <div><span class="stat-value">3</span><span class="stat-label">preguntas para orientarte</span><span class="stat-context">Recorrido demostrativo</span></div>
+          <div><span class="stat-value">1</span><span class="stat-label">conversación siguiente</span><span class="stat-context">CTA principal de la landing</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="candidate" id="comparativa" data-component-id="C11" data-component-name="Plan comparison" data-variant="experimental" data-status="experimental" data-catalog="candidato nuevo / no catalogado" data-why="La necesidad requiere lectura simultánea por filas y columnas, selección de una alternativa y señalización explícita de recomendación; OfferCard y CardGrid no cubren esa semántica." data-props="plans=3; criteria=4; selected_plan=radio; responsive=horizontal-scroll">
+      <div class="container">
+        <span class="candidate-tag">C11 · candidato experimental</span>
+        <div class="section-heading"><h2>Compara las alternativas</h2><p>Precios, condiciones y ventajas ficticios para esta prueba. La columna coral es una orientación, no una recomendación comercial real.</p></div>
+        <div class="comparison-wrap">
+          <table class="comparison-table">
+            <caption>Comparación simultánea por criterios. En móvil, desplaza horizontalmente la tabla sin perder la relación entre filas y columnas.</caption>
+            <thead>
+              <tr>
+                <th scope="col">Criterio</th>
+                <th scope="col"><span class="plan-name">Base hogar</span><span class="plan-price">29,90 €</span><span class="plan-note">al mes · orientativo</span></th>
+                <th scope="col" class="recommended"><span class="plan-name">Equilibrio</span><span class="plan-price">39,90 €</span><span class="plan-note">al mes · orientativo</span></th>
+                <th scope="col"><span class="plan-name">Flex movilidad</span><span class="plan-price">49,90 €</span><span class="plan-note">al mes · orientativo</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Tipo de vivienda</th><td>Cualquier vivienda</td><td class="recommended">Vivienda habitual</td><td>Vivienda + segunda plaza</td></tr>
+              <tr><th scope="row">Patrón de recarga</th><td>Ocasional</td><td class="recommended">Nocturna habitual</td><td>Variable</td></tr>
+              <tr><th scope="row">Ventaja de movilidad</th><td>Guía básica</td><td class="recommended">Saldo ilustrativo</td><td>Más opciones ilustrativas</td></tr>
+              <tr><th scope="row">Condición clave</th><td>Sin condición real</td><td class="recommended">Revisión anual ficticia</td><td>Flexibilidad ilustrativa</td></tr>
+              <tr>
+                <th scope="row">Continuar</th>
+                <td><div class="compare-actions"><label class="select-plan"><input type="radio" name="selected-plan" value="base"> Seleccionar Base</label><button class="button small choose-plan" type="button" data-plan="base">Continuar</button></div></td>
+                <td class="recommended"><div class="compare-actions"><label class="select-plan"><input type="radio" name="selected-plan" value="equilibrio"> Seleccionar Equilibrio</label><button class="button small choose-plan" type="button" data-plan="equilibrio">Continuar</button></div></td>
+                <td><div class="compare-actions"><label class="select-plan"><input type="radio" name="selected-plan" value="flex"> Seleccionar Flex</label><button class="button small choose-plan" type="button" data-plan="flex">Continuar</button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="selection-note" id="selection-note" aria-live="polite">Selecciona una alternativa para continuar con la orientación demostrativa.</p>
+      </div>
+    </section>
+
+    <section class="soft candidate" id="recomendacion" data-component-id="C12" data-component-name="Recommendation wizard" data-variant="experimental" data-status="experimental" data-catalog="candidato nuevo / no catalogado" data-why="La necesidad requiere pasos con estado, validación básica, navegación atrás/adelante y resultado condicionado; ningún componente estable del catálogo ofrece esa interacción." data-props="steps=3; states=idle|step|validation_error|result; result_rules=fictitious">
+      <div class="container">
+        <span class="candidate-tag">C12 · candidato experimental</span>
+        <div class="section-heading"><h2>Encuentra una orientación demostrativa</h2><p>Indica tus circunstancias para recibir un resultado ficticio. No se guardan respuestas ni se envían datos.</p></div>
+        <div class="wizard-layout">
+          <nav class="wizard-steps" aria-label="Pasos del recomendador">
+            <h3>Tu recorrido</h3>
+            <button class="wizard-step" type="button" data-step-target="1" aria-current="step"><span class="wizard-step-number">01</span><span>Tu vivienda</span></button>
+            <button class="wizard-step" type="button" data-step-target="2"><span class="wizard-step-number">02</span><span>Tu recarga</span></button>
+            <button class="wizard-step" type="button" data-step-target="3"><span class="wizard-step-number">03</span><span>Tu zona</span></button>
+            <button class="wizard-step" type="button" data-step-target="4"><span class="wizard-step-number">04</span><span>Resultado</span></button>
+          </nav>
+          <div class="wizard-panel" id="wizard-panel" aria-live="polite">
+            <p class="eyebrow" id="wizard-count">Paso 1 de 3</p>
+            <form id="recommendation-form" novalidate>
+              <fieldset class="wizard-fieldset" data-step="1">
+                <legend>¿Qué tipo de vivienda tienes?</legend>
+                <div class="option-list">
+                  <label class="option"><input type="radio" name="home_type" value="piso">Piso</label>
+                  <label class="option"><input type="radio" name="home_type" value="casa">Casa</label>
+                  <label class="option"><input type="radio" name="home_type" value="otra">Otra vivienda</label>
+                </div>
+              </fieldset>
+              <fieldset class="wizard-fieldset" data-step="2" hidden>
+                <legend>¿Cómo sueles recargar?</legend>
+                <div class="option-list">
+                  <label class="option"><input type="radio" name="charge_pattern" value="ocasional">De forma ocasional</label>
+                  <label class="option"><input type="radio" name="charge_pattern" value="casa">Casi siempre en casa</label>
+                  <label class="option"><input type="radio" name="charge_pattern" value="nose">Todavía no lo sé</label>
+                </div>
+              </fieldset>
+              <fieldset class="wizard-fieldset" data-step="3" hidden>
+                <legend><label for="zone">¿En qué zona vives?</label></legend>
+                <select id="zone" name="zone" style="width:100%;min-height:48px;padding:.7rem;border:1px solid var(--line);border-radius:8px;color:var(--navy);background:var(--surface);">
+                  <option value="">Selecciona una zona</option><option value="urbana">Urbana</option><option value="metropolitana">Metropolitana</option><option value="rural">Rural</option>
+                </select>
+              </fieldset>
+              <p class="wizard-error" id="wizard-error" role="alert"></p>
+              <div class="wizard-actions">
+                <button class="button secondary" id="wizard-back" type="button" hidden>Volver</button>
+                <button class="button" id="wizard-next" type="button">Siguiente</button>
+              </div>
+            </form>
+            <div class="result" id="wizard-result" hidden>
+              <h3 id="result-title">Tu orientación ficticia</h3>
+              <p id="result-body"></p>
+              <a class="button" href="#contacto">Quiero hablar sobre mi orientación</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="component" data-component-id="C03" data-component-name="ImageText" data-variant="image-right" data-status="catalog" data-catalog="catalogado / estable" data-why="Resuelve el bloque editorial con imagen informativa, texto y un único enlace de retorno a la comparación." data-props="image_position=right; theme=light; cta_url=#comparativa">
+      <div class="container image-text-grid">
+        <div><p class="eyebrow">Una escena cotidiana</p><h2>Cuando llegar a casa también significa estar listo para mañana</h2><p class="lead">La vivienda, la movilidad y la tranquilidad de tener la propuesta explicada con claridad.</p><a class="button secondary" href="#comparativa">Volver a comparar</a></div>
+        <figure class="editorial-media"><img src="../assets/nexo-energia-hero.jpg" alt="Persona llegando a una vivienda iluminada junto a un vehículo eléctrico conectado"></figure>
+      </div>
+    </section>
+
+    <section class="soft component" id="como-funciona" data-component-id="C07" data-component-name="Steps" data-variant="numbered" data-status="catalog" data-catalog="catalogado / estable" data-why="Explica el proceso posterior en tres pasos ordenados, tal como soporta el contrato estable." data-props="variant=numbered; steps=3">
+      <div class="container">
+        <div class="section-heading"><p class="eyebrow">Después de pedir información</p><h2>Un proceso fácil de seguir</h2><p>Tres pasos ilustrativos para explicar el siguiente tramo de la conversación.</p></div>
+        <div class="process-grid steps-line">
+          <article class="process-card"><span class="process-number">01</span><h3>Cuéntanos tu situación</h3><p>Compartes tus necesidades de hogar y movilidad en una conversación de demostración.</p></article>
+          <article class="process-card"><span class="process-number">02</span><h3>Revisamos las opciones</h3><p>Repasamos condiciones y dudas con lenguaje claro.</p></article>
+          <article class="process-card"><span class="process-number">03</span><h3>Decides con contexto</h3><p>Te llevas una orientación para valorar el siguiente paso.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="component" id="preguntas" data-component-id="C09" data-component-name="Accordion" data-variant="faq" data-status="catalog" data-catalog="catalogado / estable" data-why="Responde las dudas principales con un patrón de preguntas nativo y operable por teclado." data-props="variant=faq; default_open=0; questions=4">
+      <div class="container">
+        <div class="section-heading center"><p class="eyebrow">Dudas frecuentes</p><h2>Preguntas frecuentes</h2><p>Elegibilidad, precio, recarga y condiciones del concepto demostrativo.</p></div>
+        <div class="faq-list">
+          <details open><summary>¿Quién puede usar esta orientación?</summary><p>Cualquier persona adulta que quiera explorar la relación entre su hogar y la movilidad eléctrica. Es una experiencia ficticia y no determina una elegibilidad real.</p></details>
+          <details><summary>¿Los precios y condiciones son reales?</summary><p>No. Los precios, ventajas y condiciones mostrados son ilustrativos y están pendientes de validación; no constituyen una oferta publicada.</p></details>
+          <details><summary>¿Necesito tener ya un vehículo eléctrico?</summary><p>No se presupone. La propuesta está pensada también para quien está considerando adquirirlo y quiere entender sus opciones.</p></details>
+          <details><summary>¿Qué ocurre al solicitar una conversación?</summary><p>En este prototipo se mostraría un siguiente paso de contacto. No se envían datos ni se conecta con sistemas reales.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section class="component" id="contacto" data-component-id="C10" data-component-name="CtaBanner" data-variant="standard" data-status="catalog" data-catalog="catalogado / estable" data-why="Cierra con una única acción principal y un enlace secundario de retorno a la comparación." data-props="theme=dark; variant=standard; primary_url=#contacto; secondary_url=#comparativa">
+      <div class="container">
+        <div class="cta-banner"><p class="eyebrow">Siguiente paso</p><h2>¿Hablamos de cómo te mueves?</h2><p>Solicita una conversación de demostración o vuelve a revisar las alternativas antes de decidir.</p><div class="actions"><a class="button" href="#contacto">Quiero hablar con Nexo</a><a class="button secondary" href="#comparativa">Volver a la comparativa</a></div></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pie global del tema: no forma parte del árbol Canvas. -->
+  <footer class="global-footer"><div class="container footer-inner"><span>Nexo Energía · concepto ficticio para validación</span><span>Contenido y condiciones no válidos para publicación</span></div></footer>
+
+  <button class="inspector-toggle" id="inspector-toggle" type="button" aria-controls="inspector-panel" aria-expanded="false">Mostrar inspector</button>
+  <aside class="inspector-panel" id="inspector-panel" aria-label="Inspector de componentes" aria-hidden="true">
+    <button class="inspector-close" id="inspector-close" type="button" aria-label="Cerrar inspector">×</button>
+    <h2>Inspector de componentes</h2>
+    <p style="margin:.4rem 0 0;color:#d5def0;font-size:.85rem;">Solo disponible en este prototipo. No se importa a Drupal Canvas.</p>
+    <div class="inspector-list" id="inspector-list"></div>
+    <div class="inspector-detail" id="inspector-detail">Activa el inspector y selecciona un bloque para ver sus metadatos.</div>
+  </aside>
+
+  <script>
+    (() => {
+      const body = document.body;
+      const toggle = document.getElementById('inspector-toggle');
+      const panel = document.getElementById('inspector-panel');
+      const close = document.getElementById('inspector-close');
+      const list = document.getElementById('inspector-list');
+      const detail = document.getElementById('inspector-detail');
+      const components = [...document.querySelectorAll('[data-component-id]')];
+      let inspectorOn = false;
+
+      const showDetail = (component) => {
+        detail.innerHTML = `<strong>${component.dataset.componentId} · ${component.dataset.componentName}</strong><br><span>Variante:</span> ${component.dataset.variant}<br><span>Estado:</span> ${component.dataset.status}<br><span>Catálogo:</span> ${component.dataset.catalog}<br><span>Props:</span> ${component.dataset.props}<br><span>Motivo:</span> ${component.dataset.why}`;
+        components.forEach((item) => item.removeAttribute('data-inspected'));
+        component.setAttribute('data-inspected', 'true');
+      };
+      components.forEach((component) => {
+        const item = document.createElement('button');
+        item.type = 'button';
+        item.className = 'inspector-item';
+        item.innerHTML = `<strong>${component.dataset.componentId} · ${component.dataset.componentName}</strong><small>${component.dataset.status} · ${component.dataset.variant}</small>`;
+        item.addEventListener('click', () => { component.scrollIntoView({ behavior: 'smooth', block: 'center' }); showDetail(component); });
+        list.appendChild(item);
+        component.addEventListener('click', (event) => { if (!inspectorOn) return; event.preventDefault(); event.stopPropagation(); showDetail(component); });
+      });
+      const setInspector = (open) => { inspectorOn = open; body.classList.toggle('inspector-on', open); panel.classList.toggle('is-open', open); panel.setAttribute('aria-hidden', String(!open)); toggle.setAttribute('aria-expanded', String(open)); toggle.textContent = open ? 'Ocultar inspector' : 'Mostrar inspector'; };
+      toggle.addEventListener('click', () => setInspector(!inspectorOn));
+      close.addEventListener('click', () => setInspector(false));
+      document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setInspector(false); });
+
+      const form = document.getElementById('recommendation-form');
+      const fieldsets = [...form.querySelectorAll('[data-step]')];
+      const stepButtons = [...document.querySelectorAll('.wizard-step')];
+      const count = document.getElementById('wizard-count');
+      const error = document.getElementById('wizard-error');
+      const back = document.getElementById('wizard-back');
+      const next = document.getElementById('wizard-next');
+      const result = document.getElementById('wizard-result');
+      const resultTitle = document.getElementById('result-title');
+      const resultBody = document.getElementById('result-body');
+      let step = 1;
+      const setStep = (nextStep) => {
+        step = nextStep;
+        fieldsets.forEach((fieldset) => { fieldset.hidden = Number(fieldset.dataset.step) !== step; });
+        stepButtons.forEach((button) => { button.setAttribute('aria-current', Number(button.dataset.stepTarget) === step ? 'step' : 'false'); });
+        count.textContent = step <= 3 ? `Paso ${step} de 3` : 'Resultado';
+        back.hidden = step <= 1 || step > 3;
+        next.hidden = step > 3;
+        if (step === 3) next.textContent = 'Ver orientación';
+        error.textContent = '';
+        if (step <= 3) fieldsets[step - 1].querySelector('input, select')?.focus();
+      };
+      const validCurrentStep = () => {
+        const current = fieldsets[step - 1];
+        const selected = current.querySelector('input:checked, select');
+        if (!selected || !selected.value) { error.textContent = 'Selecciona una opción para continuar.'; selected?.focus(); return false; }
+        return true;
+      };
+      const getValue = (name) => form.elements[name]?.value || '';
+      next.addEventListener('click', () => {
+        if (!validCurrentStep()) return;
+        if (step < 3) { setStep(step + 1); return; }
+        const home = getValue('home_type'); const charge = getValue('charge_pattern');
+        const plan = charge === 'ocasional' ? 'Base hogar' : (home === 'casa' && charge === 'casa' ? 'Equilibrio' : 'Flex movilidad');
+        resultTitle.textContent = `Tu orientación ficticia: ${plan}`;
+        resultBody.textContent = `Por tus respuestas de demostración (${home}, ${charge}, ${getValue('zone')}), esta alternativa podría ser un punto de partida para conversar.`;
+        form.hidden = true; result.hidden = false; setStep(4);
+      });
+      back.addEventListener('click', () => { if (step > 1 && step <= 3) setStep(step - 1); });
+      stepButtons.forEach((button) => button.addEventListener('click', () => { const target = Number(button.dataset.stepTarget); if (target < step && target <= 3) setStep(target); }));
+
+      const selectionNote = document.getElementById('selection-note');
+      document.querySelectorAll('input[name="selected-plan"]').forEach((radio) => radio.addEventListener('change', () => {
+        selectionNote.textContent = `Has seleccionado ${radio.value}. Puedes continuar con la orientación demostrativa.`;
+      }));
+      document.querySelectorAll('.choose-plan').forEach((button) => button.addEventListener('click', () => {
+        const radio = document.querySelector(`input[name="selected-plan"][value="${button.dataset.plan}"]`);
+        if (radio) { radio.checked = true; radio.dispatchEvent(new Event('change')); }
+        document.getElementById('recomendacion').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }));
+    })();
+  </script>
+</body>
+</html>
