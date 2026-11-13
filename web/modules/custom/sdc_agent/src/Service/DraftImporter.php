@@ -272,7 +272,11 @@ final class DraftImporter {
         if (is_array($plan)) {
           foreach (['id', 'name', 'price', 'price_note', 'recommended', 'highlight', 'action_label', 'action_url'] as $field) {
             if (array_key_exists($field, $plan)) {
-              $inputs["plan_{$number}_{$field}"] = $plan[$field];
+              $value = $plan[$field];
+              if ($field === 'recommended') {
+                $value = $value ? 'Recomendado' : 'No';
+              }
+              $inputs["plan_{$number}_{$field}"] = $value;
             }
           }
         }

@@ -9,11 +9,11 @@
           <th scope="col">Criterio</th>
           {% for plan_number in 1..3 %}
             {% set plan_recommended = attribute(_context, 'plan_' ~ plan_number ~ '_recommended') %}
-            <th scope="col"{% if plan_recommended %} class="is-recommended"{% endif %}>
+            <th scope="col"{% if plan_recommended and plan_recommended != 'No' %} class="is-recommended"{% endif %}>
               <span class="plan-comparison__plan-name">{{ attribute(_context, 'plan_' ~ plan_number ~ '_name') }}</span>
               <span class="plan-comparison__price">{{ attribute(_context, 'plan_' ~ plan_number ~ '_price') }}</span>
               <span class="plan-comparison__price-note">{{ attribute(_context, 'plan_' ~ plan_number ~ '_price_note') }}</span>
-              {% if plan_recommended %}<span class="plan-comparison__badge">{{ plan_recommended }}</span>{% endif %}
+              {% if plan_recommended and plan_recommended != 'No' %}<span class="plan-comparison__badge">{{ plan_recommended }}</span>{% endif %}
             </th>
           {% endfor %}
         </tr>
@@ -32,7 +32,7 @@
           <th scope="row">Continuar</th>
           {% for plan_number in 1..3 %}
             {% set plan_recommended = attribute(_context, 'plan_' ~ plan_number ~ '_recommended') %}
-            <td{% if plan_recommended %} class="is-recommended"{% endif %}>
+            <td{% if plan_recommended and plan_recommended != 'No' %} class="is-recommended"{% endif %}>
               <label><input type="radio" name="plan-selection" value="{{ attribute(_context, 'plan_' ~ plan_number ~ '_id') }}"> {{ attribute(_context, 'plan_' ~ plan_number ~ '_name') }}</label>
               <a class="button" href="{{ attribute(_context, 'plan_' ~ plan_number ~ '_action_url') }}">{{ attribute(_context, 'plan_' ~ plan_number ~ '_action_label') }}</a>
             </td>
