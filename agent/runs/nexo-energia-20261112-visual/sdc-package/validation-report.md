@@ -47,3 +47,7 @@ El contrato preliminar define tres pasos, tipos de campo, opciones, reglas ficti
 ## Resultado
 
 Paquete local preparado para revisión SDC. Los componentes estables reutilizan el catálogo; los únicos añadidos son `C11` y `C12`, explícitamente experimentales, con responsabilidades, límites, contratos preliminares, estados, responsive y accesibilidad documentados.
+
+## Paridad visual
+
+El HTML generado (`preview/index.html`) es la referencia principal para la implementación Canvas. Las plantillas y estilos SDC se ajustan a su contenedor, escala tipográfica, espaciado, paleta, botones, tarjetas, tabla y wizard responsive sin modificar los contratos de props.

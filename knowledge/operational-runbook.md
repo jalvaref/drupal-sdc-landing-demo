@@ -22,6 +22,8 @@ Antes de presentar una fase como preparada:
 - Rechazar cualquier `src` que empiece por `preview/`, `file://`, una ruta del workspace o una URL temporal.
 - Para Hero e Image Text, validar `image_src` e `image_alt` contra sus `.component.yml` reales.
 - Comprobar que el activo existe dentro del tema o que se ha creado/referenciado como Media Drupal.
+- Resolver el nombre final antes del handoff: si `image_src` es relativo, el fichero debe existir con el mismo `basename` en `web/themes/custom/sdc_landing/images/`; una referencia de origen dentro de `agent/runs` no es una URL pública.
+- Ejecutar `node agent/bin/validate-assets.mjs agent/runs/<run_id>` y bloquear PR, despliegue e importación si falla.
 - Comprobar que la plantilla global muestra header y footer alrededor de `page.content`, sin duplicarlos dentro del árbol Canvas.
 
 ## Fase visual
@@ -35,6 +37,8 @@ Generar HTML autocontenido y responsive con inspector. El inspector mínimo debe
 ## Fase SDC/Canvas
 
 Si los componentes son estables, generar solo la composición Canvas. El paquete debe contener la composición, la propuesta, el inventario de candidatos, los activos y el informe de validación. La importación debe crear una entidad `canvas_page` y persistir sus instancias en el campo `components`; mantener `draft` y `drupal_status: 0`. El HTML del preview y su inspector son únicamente artefactos de revisión. Tras el despliegue Pantheon, esperar el build Composer y ejecutar `terminus drush <site>.dev -- status` antes de `drush cr` y de la importación. Una nueva importación puede devolver una página publicada a draft; publicar es siempre una acción manual posterior.
+
+Después de importar, extraer la URL dev devuelta por Drupal y ejecutar `node agent/bin/validate-imported-images.mjs <url>`; el workflow debe fallar si una imagen no responde con `2xx` y `Content-Type: image/*`.
 
 ## Diagnóstico del editor Canvas
 

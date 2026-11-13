@@ -169,6 +169,7 @@ final class DraftImporter {
       $inputs = $component['props'] ?? [];
       $this->normalizeCanvasComponentInputs($sourceId, $inputs);
       $this->normalizeCanvasImageInputs($inputs);
+      $this->validateCanvasImageInputs($inputs);
       $uuid = \Drupal::service('uuid')->generate();
       $tree[] = [
         'uuid' => $uuid,
@@ -352,6 +353,23 @@ final class DraftImporter {
     }
   }
 
+  /**
+   * Prevents creating a draft whose normalized theme image URL is broken.
+   */
+  private function validateCanvasImageInputs(array $inputs): void {
+    foreach ($inputs as $key => $value) {
+      if (in_array($key, ['image_src', 'src'], TRUE) && is_string($value) && str_starts_with($value, '/themes/custom/sdc_landing/images/')) {
+        $path = DRUPAL_ROOT . $value;
+        if (!is_file($path) || filesize($path) === 0) {
+          throw new \InvalidArgumentException(sprintf('El asset de imagen no existe en el tema: %s. Se aborta la importación para no crear un draft con imágenes rotas.', $value));
+        }
+      }
+      if (is_array($value)) {
+        $this->validateCanvasImageInputs($value);
+      }
+    }
+  }
+
   private function importHtml(string $proposalFile, ?string $title = NULL): NodeInterface {
     $path = str_starts_with($proposalFile, DIRECTORY_SEPARATOR)
       ? $proposalFile
@@ -449,7 +467,7 @@ final class DraftImporter {
             }
             $assetPath = dirname($proposalPath) . DIRECTORY_SEPARATOR . 'preview' . DIRECTORY_SEPARATOR . basename($src);
             if (!is_file($assetPath)) {
-              return $imageMatches[0];
+              throw new \InvalidArgumentException(sprintf('El asset de imagen del preview no existe: %s. Se aborta la importación.', $src));
             }
             return $imageMatches[1] . '/themes/custom/sdc_landing/images/' . rawurlencode(basename($src)) . $imageMatches[3];
           }, $body);

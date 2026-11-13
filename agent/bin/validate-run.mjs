@@ -44,6 +44,12 @@ for (const file of ['design/desktop.jpg', 'design/mobile.jpg', 'traceability.md'
   } catch { errors.push(`Falta el artefacto ${file}.`); }
 }
 
+for (const component of proposal.components.filter((item) => ['C01', 'C03'].includes(item.component_id))) {
+  const source = component.props?.image?.src || component.props?.image_src || '';
+  if (!source) errors.push(`${component.component_id} no tiene referencia de imagen.`);
+  if (/^(?:preview\/|file:\/\/)/i.test(source)) errors.push(`${component.component_id} usa una ruta de imagen temporal: ${source}.`);
+}
+
 if (errors.length) {
   console.error(errors.map((error) => `[ERROR] ${error}`).join('\n'));
   process.exit(1);
