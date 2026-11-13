@@ -118,7 +118,7 @@
 - Candidatos `C11` y `C12` generados como archivos experimentales separados y registrados en `candidate-components.yaml`.
 - Catálogo actualizado en `knowledge/component-catalog.yaml`, `knowledge/component-catalog.md` y `knowledge/experimental-candidates.md` con estado `experimental`.
 - Informe separado en validación estructural, contratos reales y validación bloqueada.
-- Handoff externo no iniciado; no hay PR, despliegue Pantheon ni importación Drupal.
+- Handoff externo completado en el mismo run; la landing se mantiene como borrador editable.
 
 ## Fase de handoff
 
@@ -126,9 +126,12 @@
 - Clasificación: `code_deploy_required`, por los candidatos experimentales con archivos de runtime.
 - Handoff manual: `handoff-manual.md`.
 - Secuencia externa documentada: `validate_landing_run` → `create_github_pull_request` → `deploy_pantheon_dev` → `import_drupal_draft` → comprobación de draft/Canvas.
-- Bloqueo: `MCP_TOKEN rechazado por deck_sdc_gateway` (`Unauthorized`).
-- Autorización explícita para la secuencia externa: recibida; no ejecutada porque `validate_landing_run` no ha sido autorizado.
-- No se han escrito sistemas externos ni se ha publicado Drupal.
+- PRs de la secuencia y correcciones: #41 (paridad visual y assets), #42 (normalización de URL), #43–#44 (verificación Canvas), #45 (lectura de `ComponentTreeItem::getInputs()`).
+- Validación final del workflow: `43418088756` (`success`). Despliegue Pantheon Dev: `43415820589` (`success`).
+- Importación Drupal: `43418088756` (`success`); página `page/5`, estado `draft`, modo `canvas`, Canvas editable.
+- Comprobación post-import: `2 props de imagen verificadas en el árbol Canvas`; el asset se valida contra `/themes/custom/sdc_landing/images/` desde Drupal.
+- Enlace de edición Canvas: `http://dev-sdc-landing-demo.pantheonsite.io/canvas/editor/canvas_page/5`.
+- La landing no se ha publicado; el estado Drupal se conserva en `draft` / `status: 0`.
 
 ## Siguiente puerta
 
