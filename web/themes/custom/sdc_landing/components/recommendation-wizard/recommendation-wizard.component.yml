@@ -1,0 +1,37 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Recommendation wizard
+status: experimental
+props:
+  type: object
+  required: [title, steps, result_rules, result_title, result_body, primary_label, primary_url]
+  properties:
+    title: { type: string, title: 'Título' }
+    description: { type: string, title: 'Descripción' }
+    steps:
+      type: array
+      title: 'Pasos'
+      minItems: 3
+      maxItems: 3
+      items:
+        type: object
+        required: [id, label, field, type, options, required]
+        properties:
+          id: { type: string, title: 'ID del paso' }
+          label: { type: string, title: 'Etiqueta' }
+          field: { type: string, title: 'Campo' }
+          type: { type: string, title: 'Tipo', enum: [radio, select] }
+          options: { type: array, title: 'Opciones', items: { type: string } }
+          required: { type: boolean, title: 'Obligatorio' }
+    result_rules:
+      type: array
+      title: 'Reglas de resultado'
+      items:
+        type: object
+        required: [when, plan_id]
+        properties:
+          when: { type: string, title: 'Condición' }
+          plan_id: { type: string, title: 'Plan resultante' }
+    result_title: { type: string, title: 'Título del resultado' }
+    result_body: { type: string, title: 'Texto del resultado' }
+    primary_label: { type: string, title: 'CTA principal' }
+    primary_url: { type: string, title: 'URL CTA principal', format: uri-reference }

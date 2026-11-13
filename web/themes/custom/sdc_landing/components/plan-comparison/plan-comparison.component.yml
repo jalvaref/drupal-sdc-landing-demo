@@ -1,0 +1,39 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/11.x/core/assets/schemas/v1/metadata.schema.json
+name: Plan comparison
+status: experimental
+props:
+  type: object
+  required: [title, plans, criteria]
+  properties:
+    title: { type: string, title: 'Título' }
+    description: { type: string, title: 'Descripción' }
+    plans:
+      type: array
+      title: 'Planes'
+      minItems: 3
+      maxItems: 3
+      items:
+        type: object
+        required: [id, name, price, price_note, recommended, action_label, action_url]
+        properties:
+          id: { type: string, title: 'ID del plan' }
+          name: { type: string, title: 'Nombre' }
+          price: { type: string, title: 'Precio' }
+          price_note: { type: string, title: 'Nota de precio' }
+          recommended: { type: boolean, title: 'Recomendado' }
+          highlight: { type: string, title: 'Destacado' }
+          action_label: { type: string, title: 'Texto de acción' }
+          action_url: { type: string, title: 'URL de acción', format: uri-reference }
+    criteria:
+      type: array
+      title: 'Criterios'
+      minItems: 1
+      items:
+        type: object
+        required: [id, label, values]
+        properties:
+          id: { type: string, title: 'ID del criterio' }
+          label: { type: string, title: 'Etiqueta' }
+          values: { type: array, title: 'Valores por plan', minItems: 3, maxItems: 3, items: { type: string } }
+    selected_plan: { type: string, title: 'Plan seleccionado' }
+    selection_label: { type: string, title: 'Texto de selección' }
