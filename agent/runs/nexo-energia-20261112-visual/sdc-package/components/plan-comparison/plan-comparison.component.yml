@@ -3,37 +3,49 @@ name: Plan comparison
 status: experimental
 props:
   type: object
-  required: [title, plans, criteria]
+  required: [title]
   properties:
-    title: { type: string, title: 'Título' }
-    description: { type: string, title: 'Descripción' }
-    plans:
-      type: array
-      title: 'Planes'
-      minItems: 3
-      maxItems: 3
-      items:
-        type: object
-        required: [id, name, price, price_note, recommended, action_label, action_url]
-        properties:
-          id: { type: string, title: 'ID del plan' }
-          name: { type: string, title: 'Nombre' }
-          price: { type: string, title: 'Precio' }
-          price_note: { type: string, title: 'Nota de precio' }
-          recommended: { type: boolean, title: 'Recomendado' }
-          highlight: { type: string, title: 'Destacado' }
-          action_label: { type: string, title: 'Texto de acción' }
-          action_url: { type: string, title: 'URL de acción', format: uri-reference }
-    criteria:
-      type: array
-      title: 'Criterios'
-      minItems: 1
-      items:
-        type: object
-        required: [id, label, values]
-        properties:
-          id: { type: string, title: 'ID del criterio' }
-          label: { type: string, title: 'Etiqueta' }
-          values: { type: array, title: 'Valores por plan', minItems: 3, maxItems: 3, items: { type: string } }
-    selected_plan: { type: string, title: 'Plan seleccionado' }
-    selection_label: { type: string, title: 'Texto de selección' }
+    title: { type: string, title: 'Título', examples: ['Compara las alternativas'] }
+    description: { type: string, title: 'Descripción', examples: ['Precios y condiciones ilustrativos para esta demostración.'] }
+    plan_1_id: { type: string, title: 'ID plan 1', examples: ['base'] }
+    plan_1_name: { type: string, title: 'Nombre plan 1', examples: ['Base hogar'] }
+    plan_1_price: { type: string, title: 'Precio plan 1', examples: ['29,90 €'] }
+    plan_1_price_note: { type: string, title: 'Nota precio plan 1', examples: ['al mes · orientativo'] }
+    plan_1_recommended: { type: string, title: 'Destacado plan 1', examples: [''] }
+    plan_1_highlight: { type: string, title: 'Apunte plan 1', examples: ['Para empezar'] }
+    plan_1_action_label: { type: string, title: 'Acción plan 1', examples: ['Ver Base'] }
+    plan_1_action_url: { type: string, title: 'URL plan 1', format: uri-reference, examples: ['#contacto'] }
+    plan_2_id: { type: string, title: 'ID plan 2', examples: ['equilibrio'] }
+    plan_2_name: { type: string, title: 'Nombre plan 2', examples: ['Equilibrio'] }
+    plan_2_price: { type: string, title: 'Precio plan 2', examples: ['39,90 €'] }
+    plan_2_price_note: { type: string, title: 'Nota precio plan 2', examples: ['al mes · orientativo'] }
+    plan_2_recommended: { type: string, title: 'Destacado plan 2', examples: ['Orientación demostrativa'] }
+    plan_2_highlight: { type: string, title: 'Apunte plan 2', examples: ['Orientación demostrativa'] }
+    plan_2_action_label: { type: string, title: 'Acción plan 2', examples: ['Elegir Equilibrio'] }
+    plan_2_action_url: { type: string, title: 'URL plan 2', format: uri-reference, examples: ['#recomendacion'] }
+    plan_3_id: { type: string, title: 'ID plan 3', examples: ['flex'] }
+    plan_3_name: { type: string, title: 'Nombre plan 3', examples: ['Flex movilidad'] }
+    plan_3_price: { type: string, title: 'Precio plan 3', examples: ['49,90 €'] }
+    plan_3_price_note: { type: string, title: 'Nota precio plan 3', examples: ['al mes · orientativo'] }
+    plan_3_recommended: { type: string, title: 'Destacado plan 3', examples: [''] }
+    plan_3_highlight: { type: string, title: 'Apunte plan 3', examples: ['Más flexibilidad'] }
+    plan_3_action_label: { type: string, title: 'Acción plan 3', examples: ['Ver Flex'] }
+    plan_3_action_url: { type: string, title: 'URL plan 3', format: uri-reference, examples: ['#contacto'] }
+    criterion_1_label: { type: string, title: 'Criterio 1', examples: ['Tipo de hogar'] }
+    criterion_1_value_1: { type: string, title: 'Criterio 1 plan 1', examples: ['Cualquier vivienda'] }
+    criterion_1_value_2: { type: string, title: 'Criterio 1 plan 2', examples: ['Vivienda habitual'] }
+    criterion_1_value_3: { type: string, title: 'Criterio 1 plan 3', examples: ['Vivienda + segunda plaza'] }
+    criterion_2_label: { type: string, title: 'Criterio 2', examples: ['Patrón de recarga'] }
+    criterion_2_value_1: { type: string, title: 'Criterio 2 plan 1', examples: ['Ocasional'] }
+    criterion_2_value_2: { type: string, title: 'Criterio 2 plan 2', examples: ['Nocturna habitual'] }
+    criterion_2_value_3: { type: string, title: 'Criterio 2 plan 3', examples: ['Variable'] }
+    criterion_3_label: { type: string, title: 'Criterio 3', examples: ['Ventaja de movilidad'] }
+    criterion_3_value_1: { type: string, title: 'Criterio 3 plan 1', examples: ['Guía básica'] }
+    criterion_3_value_2: { type: string, title: 'Criterio 3 plan 2', examples: ['Saldo ilustrativo'] }
+    criterion_3_value_3: { type: string, title: 'Criterio 3 plan 3', examples: ['Más opciones ilustrativas'] }
+    criterion_4_label: { type: string, title: 'Criterio 4', examples: ['Condición clave'] }
+    criterion_4_value_1: { type: string, title: 'Criterio 4 plan 1', examples: ['Sin condición real'] }
+    criterion_4_value_2: { type: string, title: 'Criterio 4 plan 2', examples: ['Revisión anual ficticia'] }
+    criterion_4_value_3: { type: string, title: 'Criterio 4 plan 3', examples: ['Flexibilidad ilustrativa'] }
+    selected_plan: { type: string, title: 'Plan seleccionado', examples: ['equilibrio'] }
+    selection_label: { type: string, title: 'Texto de selección', examples: ['Selecciona una opción para continuar'] }

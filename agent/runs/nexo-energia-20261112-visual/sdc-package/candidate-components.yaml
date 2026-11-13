@@ -1,6 +1,9 @@
 schema_version: "1.0"
 source_run: "nexo-energia-20261112-visual"
 status: "experimental"
+notes:
+  - "La propuesta conserva props anidados para expresar el modelo editorial."
+  - "Canvas recibe props escalares numeradas; DraftImporter normaliza los objetos de la propuesta antes de construir el árbol editable."
 components:
   C11:
     name: "Plan comparison"
@@ -42,6 +45,7 @@ components:
             values: { type: "array", minItems: 3, maxItems: 3, items: { type: "string" } }
       selected_plan: { type: "string", required: false }
       selection_label: { type: "string", required: false }
+    canvas_props: "title, description, plan_1_*..plan_3_*, criterion_1_*..criterion_4_*, selected_plan, selection_label"
     states: ["idle", "recommended", "selected", "focus"]
     responsive: "Desktop con tres columnas; móvil dentro de desplazamiento horizontal contenido conservando encabezados y criterios."
     accessibility:
@@ -87,6 +91,7 @@ components:
       result_body: { type: "string" }
       primary_label: { type: "string" }
       primary_url: { type: "string", format: "uri-reference" }
+    canvas_props: "title, description, step_1_*..step_3_*, rule_1..rule_3, result_title, result_body, primary_label, primary_url"
     states: ["idle", "step_1", "step_2", "step_3", "validation_error", "result"]
     responsive: "Desktop con navegación de pasos y formulario en dos paneles; móvil en una columna con controles táctiles."
     accessibility:

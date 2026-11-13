@@ -266,6 +266,51 @@ final class DraftImporter {
       }
       unset($inputs['items']);
     }
+    if ($sourceId === 'plan-comparison') {
+      foreach (array_values($inputs['plans'] ?? []) as $index => $plan) {
+        $number = $index + 1;
+        if (is_array($plan)) {
+          foreach (['id', 'name', 'price', 'price_note', 'recommended', 'highlight', 'action_label', 'action_url'] as $field) {
+            if (array_key_exists($field, $plan)) {
+              $inputs["plan_{$number}_{$field}"] = $plan[$field];
+            }
+          }
+        }
+      }
+      foreach (array_values($inputs['criteria'] ?? []) as $index => $criterion) {
+        $number = $index + 1;
+        if (is_array($criterion)) {
+          $inputs["criterion_{$number}_label"] = $criterion['label'] ?? '';
+          foreach (array_values($criterion['values'] ?? []) as $valueIndex => $value) {
+            $inputs["criterion_{$number}_value_" . ($valueIndex + 1)] = $value;
+          }
+        }
+      }
+      unset($inputs['plans'], $inputs['criteria']);
+    }
+    if ($sourceId === 'recommendation-wizard') {
+      foreach (array_values($inputs['steps'] ?? []) as $index => $step) {
+        $number = $index + 1;
+        if (is_array($step)) {
+          foreach (['id', 'label', 'field', 'type', 'required'] as $field) {
+            if (array_key_exists($field, $step)) {
+              $inputs["step_{$number}_{$field}"] = $step[$field];
+            }
+          }
+          foreach (array_values($step['options'] ?? []) as $optionIndex => $option) {
+            $inputs["step_{$number}_option_" . ($optionIndex + 1)] = $option;
+          }
+        }
+      }
+      foreach (array_values($inputs['result_rules'] ?? []) as $index => $rule) {
+        $number = $index + 1;
+        if (is_array($rule)) {
+          $inputs["rule_{$number}_when"] = $rule['when'] ?? '';
+          $inputs["rule_{$number}_plan_id"] = $rule['plan_id'] ?? '';
+        }
+      }
+      unset($inputs['steps'], $inputs['result_rules']);
+    }
     if ($sourceId === 'steps' && isset($inputs['items']) && is_array($inputs['items'])) {
       foreach (array_values($inputs['items']) as $index => $item) {
         $number = $index + 1;

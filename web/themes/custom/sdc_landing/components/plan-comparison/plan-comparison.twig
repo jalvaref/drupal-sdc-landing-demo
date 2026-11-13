@@ -7,29 +7,34 @@
       <thead>
         <tr>
           <th scope="col">Criterio</th>
-          {% for plan in plans %}
-            <th scope="col"{% if plan.recommended %} class="is-recommended"{% endif %}>
-              <span class="plan-comparison__plan-name">{{ plan.name }}</span>
-              <span class="plan-comparison__price">{{ plan.price }}</span>
-              <span class="plan-comparison__price-note">{{ plan.price_note }}</span>
-              {% if plan.recommended %}<span class="plan-comparison__badge">Orientación demostrativa</span>{% endif %}
+          {% for plan_number in 1..3 %}
+            {% set plan_recommended = attribute(_context, 'plan_' ~ plan_number ~ '_recommended') %}
+            <th scope="col"{% if plan_recommended %} class="is-recommended"{% endif %}>
+              <span class="plan-comparison__plan-name">{{ attribute(_context, 'plan_' ~ plan_number ~ '_name') }}</span>
+              <span class="plan-comparison__price">{{ attribute(_context, 'plan_' ~ plan_number ~ '_price') }}</span>
+              <span class="plan-comparison__price-note">{{ attribute(_context, 'plan_' ~ plan_number ~ '_price_note') }}</span>
+              {% if plan_recommended %}<span class="plan-comparison__badge">{{ plan_recommended }}</span>{% endif %}
             </th>
           {% endfor %}
         </tr>
       </thead>
       <tbody>
-        {% for criterion in criteria %}
-          <tr>
-            <th scope="row">{{ criterion.label }}</th>
-            {% for value in criterion.values %}<td>{{ value }}</td>{% endfor %}
-          </tr>
+        {% for criterion_number in 1..4 %}
+          {% set criterion_label = attribute(_context, 'criterion_' ~ criterion_number ~ '_label') %}
+          {% if criterion_label %}
+            <tr>
+              <th scope="row">{{ criterion_label }}</th>
+              {% for plan_number in 1..3 %}<td>{{ attribute(_context, 'criterion_' ~ criterion_number ~ '_value_' ~ plan_number) }}</td>{% endfor %}
+            </tr>
+          {% endif %}
         {% endfor %}
         <tr>
           <th scope="row">Continuar</th>
-          {% for plan in plans %}
-            <td{% if plan.recommended %} class="is-recommended"{% endif %}>
-              <label><input type="radio" name="plan-selection" value="{{ plan.id }}"> {{ plan.name }}</label>
-              <a class="button" href="{{ plan.action_url }}">{{ plan.action_label }}</a>
+          {% for plan_number in 1..3 %}
+            {% set plan_recommended = attribute(_context, 'plan_' ~ plan_number ~ '_recommended') %}
+            <td{% if plan_recommended %} class="is-recommended"{% endif %}>
+              <label><input type="radio" name="plan-selection" value="{{ attribute(_context, 'plan_' ~ plan_number ~ '_id') }}"> {{ attribute(_context, 'plan_' ~ plan_number ~ '_name') }}</label>
+              <a class="button" href="{{ attribute(_context, 'plan_' ~ plan_number ~ '_action_url') }}">{{ attribute(_context, 'plan_' ~ plan_number ~ '_action_label') }}</a>
             </td>
           {% endfor %}
         </tr>

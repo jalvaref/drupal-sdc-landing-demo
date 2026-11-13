@@ -19,3 +19,5 @@ En escritorio muestra las tres columnas. En móvil usa desplazamiento horizontal
 Usa los tokens visuales del tema y los patrones de botones, espaciado y líneas. No duplica `offer-card` ni `card-grid`, porque ninguno cubre la semántica de comparación.
 
 Antes de promoverlo a estable hay que cerrar el contrato, validar el comportamiento de selección en Canvas y registrar pruebas con teclado y lector de pantalla.
+
+Nota de integración: la propuesta conserva `plans` y `criteria` como datos anidados, pero el contrato que registra Canvas usa props escalares numeradas (`plan_1_*` y `criterion_*`). `DraftImporter` realiza esa normalización al importar para mantener los campos editables y evitar objetos anidados no soportados por el checker de Canvas.

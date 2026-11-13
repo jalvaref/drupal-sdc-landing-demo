@@ -3,35 +3,41 @@ name: Recommendation wizard
 status: experimental
 props:
   type: object
-  required: [title, steps, result_rules, result_title, result_body, primary_label, primary_url]
+  required: [title]
   properties:
-    title: { type: string, title: 'Título' }
-    description: { type: string, title: 'Descripción' }
-    steps:
-      type: array
-      title: 'Pasos'
-      minItems: 3
-      maxItems: 3
-      items:
-        type: object
-        required: [id, label, field, type, options, required]
-        properties:
-          id: { type: string, title: 'ID del paso' }
-          label: { type: string, title: 'Etiqueta' }
-          field: { type: string, title: 'Campo' }
-          type: { type: string, title: 'Tipo', enum: [radio, select] }
-          options: { type: array, title: 'Opciones', items: { type: string } }
-          required: { type: boolean, title: 'Obligatorio' }
-    result_rules:
-      type: array
-      title: 'Reglas de resultado'
-      items:
-        type: object
-        required: [when, plan_id]
-        properties:
-          when: { type: string, title: 'Condición' }
-          plan_id: { type: string, title: 'Plan resultante' }
-    result_title: { type: string, title: 'Título del resultado' }
-    result_body: { type: string, title: 'Texto del resultado' }
-    primary_label: { type: string, title: 'CTA principal' }
-    primary_url: { type: string, title: 'URL CTA principal', format: uri-reference }
+    title: { type: string, title: 'Título', examples: ['Encuentra una orientación demostrativa'] }
+    description: { type: string, title: 'Descripción', examples: ['Responde tres preguntas ficticias para explorar una orientación.'] }
+    step_1_id: { type: string, title: 'ID paso 1', examples: ['home'] }
+    step_1_label: { type: string, title: 'Etiqueta paso 1', examples: ['Tu vivienda'] }
+    step_1_field: { type: string, title: 'Campo paso 1', examples: ['home_type'] }
+    step_1_type: { type: string, title: 'Tipo paso 1', enum: [radio, select], examples: ['radio'] }
+    step_1_required: { type: string, title: 'Obligatorio paso 1', examples: ['true'] }
+    step_1_option_1: { type: string, title: 'Opción paso 1.1', examples: ['Piso'] }
+    step_1_option_2: { type: string, title: 'Opción paso 1.2', examples: ['Casa'] }
+    step_1_option_3: { type: string, title: 'Opción paso 1.3', examples: ['Otra vivienda'] }
+    step_2_id: { type: string, title: 'ID paso 2', examples: ['charge'] }
+    step_2_label: { type: string, title: 'Etiqueta paso 2', examples: ['Tu recarga'] }
+    step_2_field: { type: string, title: 'Campo paso 2', examples: ['charge_pattern'] }
+    step_2_type: { type: string, title: 'Tipo paso 2', enum: [radio, select], examples: ['radio'] }
+    step_2_required: { type: string, title: 'Obligatorio paso 2', examples: ['true'] }
+    step_2_option_1: { type: string, title: 'Opción paso 2.1', examples: ['Ocasional'] }
+    step_2_option_2: { type: string, title: 'Opción paso 2.2', examples: ['Casi siempre en casa'] }
+    step_2_option_3: { type: string, title: 'Opción paso 2.3', examples: ['Todavía no lo sé'] }
+    step_3_id: { type: string, title: 'ID paso 3', examples: ['zone'] }
+    step_3_label: { type: string, title: 'Etiqueta paso 3', examples: ['Tu zona'] }
+    step_3_field: { type: string, title: 'Campo paso 3', examples: ['zone'] }
+    step_3_type: { type: string, title: 'Tipo paso 3', enum: [radio, select], examples: ['select'] }
+    step_3_required: { type: string, title: 'Obligatorio paso 3', examples: ['true'] }
+    step_3_option_1: { type: string, title: 'Opción paso 3.1', examples: ['Urbana'] }
+    step_3_option_2: { type: string, title: 'Opción paso 3.2', examples: ['Metropolitana'] }
+    step_3_option_3: { type: string, title: 'Opción paso 3.3', examples: ['Rural'] }
+    rule_1_when: { type: string, title: 'Condición 1', examples: ['otherwise'] }
+    rule_1_plan_id: { type: string, title: 'Resultado regla 1', examples: ['flex'] }
+    rule_2_when: { type: string, title: 'Condición 2', examples: ['charge_pattern=Ocasional'] }
+    rule_2_plan_id: { type: string, title: 'Resultado regla 2', examples: ['base'] }
+    rule_3_when: { type: string, title: 'Condición 3', examples: ['home_type=Casa AND charge_pattern=Casi siempre en casa'] }
+    rule_3_plan_id: { type: string, title: 'Resultado regla 3', examples: ['equilibrio'] }
+    result_title: { type: string, title: 'Título del resultado', examples: ['Tu orientación ficticia: Equilibrio'] }
+    result_body: { type: string, title: 'Texto del resultado', examples: ['Esta alternativa podría ser un punto de partida para conversar.'] }
+    primary_label: { type: string, title: 'CTA principal', examples: ['Quiero hablar sobre mi orientación'] }
+    primary_url: { type: string, title: 'URL CTA principal', format: uri-reference, examples: ['#contacto'] }
