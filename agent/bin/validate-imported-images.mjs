@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const pageUrl = process.argv[2];
+const pageUrl = process.argv[2]?.replace(/[.,;:]+$/, '');
 if (!pageUrl) {
   console.error('Uso: node agent/bin/validate-imported-images.mjs <url-de-la-pagina>');
   process.exit(2);
