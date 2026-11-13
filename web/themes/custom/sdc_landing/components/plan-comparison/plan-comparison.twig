@@ -1,44 +1,44 @@
-<section class="plan-comparison" data-component-id="C11" aria-labelledby="plan-comparison-title">
-  <h2 id="plan-comparison-title">{{ title }}</h2>
-  {% if description %}<p class="plan-comparison__description">{{ description }}</p>{% endif %}
-  <div class="plan-comparison__table-wrap">
-    <table class="plan-comparison__table">
-      <caption>{{ selection_label|default('Comparación simultánea de alternativas') }}</caption>
-      <thead>
-        <tr>
-          <th scope="col">Criterio</th>
-          {% for plan_number in 1..3 %}
-            {% set plan_recommended = attribute(_context, 'plan_' ~ plan_number ~ '_recommended') %}
-            <th scope="col"{% if plan_recommended and plan_recommended != 'No' %} class="is-recommended"{% endif %}>
-              <span class="plan-comparison__plan-name">{{ attribute(_context, 'plan_' ~ plan_number ~ '_name') }}</span>
-              <span class="plan-comparison__price">{{ attribute(_context, 'plan_' ~ plan_number ~ '_price') }}</span>
-              <span class="plan-comparison__price-note">{{ attribute(_context, 'plan_' ~ plan_number ~ '_price_note') }}</span>
-              {% if plan_recommended and plan_recommended != 'No' %}<span class="plan-comparison__badge">{{ plan_recommended }}</span>{% endif %}
-            </th>
+<section class="sdc-section plan-comparison" data-component-id="C11" aria-labelledby="plan-comparison-title">
+  <div class="landing-container">
+    <span class="candidate-tag">C11 · candidato experimental</span>
+    <div class="sdc-section__intro plan-comparison__intro">
+      <h2 id="plan-comparison-title">{{ title }}</h2>
+      {% if description %}<p>{{ description }}</p>{% endif %}
+    </div>
+    <div class="plan-comparison__table-wrap">
+      <table class="plan-comparison__table">
+        <caption>{{ selection_label|default('Comparación simultánea por criterios. En móvil, desplaza horizontalmente la tabla sin perder la relación entre filas y columnas.') }}</caption>
+        <thead>
+          <tr>
+            <th scope="col">Criterio</th>
+            {% for plan_number in 1..3 %}
+              {% set plan_recommended = attribute(_context, 'plan_' ~ plan_number ~ '_recommended') %}
+              <th scope="col"{% if plan_recommended and plan_recommended != 'No' %} class="is-recommended"{% endif %}>
+                <span class="plan-comparison__plan-name">{{ attribute(_context, 'plan_' ~ plan_number ~ '_name') }}</span>
+                <span class="plan-comparison__price">{{ attribute(_context, 'plan_' ~ plan_number ~ '_price') }}</span>
+                <span class="plan-comparison__price-note">{{ attribute(_context, 'plan_' ~ plan_number ~ '_price_note') }}</span>
+                {% if plan_recommended and plan_recommended != 'No' %}<span class="plan-comparison__badge">{{ plan_recommended }}</span>{% endif %}
+              </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for criterion_number in 1..4 %}
+            {% set criterion_label = attribute(_context, 'criterion_' ~ criterion_number ~ '_label') %}
+            {% if criterion_label %}<tr><th scope="row">{{ criterion_label }}</th>{% for plan_number in 1..3 %}{% set plan_recommended = attribute(_context, 'plan_' ~ plan_number ~ '_recommended') %}<td{% if plan_recommended and plan_recommended != 'No' %} class="is-recommended"{% endif %}>{{ attribute(_context, 'criterion_' ~ criterion_number ~ '_value_' ~ plan_number) }}</td>{% endfor %}</tr>{% endif %}
           {% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for criterion_number in 1..4 %}
-          {% set criterion_label = attribute(_context, 'criterion_' ~ criterion_number ~ '_label') %}
-          {% if criterion_label %}
-            <tr>
-              <th scope="row">{{ criterion_label }}</th>
-              {% for plan_number in 1..3 %}<td>{{ attribute(_context, 'criterion_' ~ criterion_number ~ '_value_' ~ plan_number) }}</td>{% endfor %}
-            </tr>
-          {% endif %}
-        {% endfor %}
-        <tr>
-          <th scope="row">Continuar</th>
-          {% for plan_number in 1..3 %}
-            {% set plan_recommended = attribute(_context, 'plan_' ~ plan_number ~ '_recommended') %}
-            <td{% if plan_recommended and plan_recommended != 'No' %} class="is-recommended"{% endif %}>
-              <label><input type="radio" name="plan-selection" value="{{ attribute(_context, 'plan_' ~ plan_number ~ '_id') }}"> {{ attribute(_context, 'plan_' ~ plan_number ~ '_name') }}</label>
-              <a class="button" href="{{ attribute(_context, 'plan_' ~ plan_number ~ '_action_url') }}">{{ attribute(_context, 'plan_' ~ plan_number ~ '_action_label') }}</a>
-            </td>
-          {% endfor %}
-        </tr>
-      </tbody>
-    </table>
+          <tr>
+            <th scope="row">Continuar</th>
+            {% for plan_number in 1..3 %}
+              {% set plan_recommended = attribute(_context, 'plan_' ~ plan_number ~ '_recommended') %}
+              <td{% if plan_recommended and plan_recommended != 'No' %} class="is-recommended"{% endif %}>
+                <div class="plan-comparison__actions"><label class="plan-comparison__select"><input type="radio" name="plan-selection" value="{{ attribute(_context, 'plan_' ~ plan_number ~ '_id') }}"> {{ attribute(_context, 'plan_' ~ plan_number ~ '_name') }}</label><a class="button button--primary button--small" href="{{ attribute(_context, 'plan_' ~ plan_number ~ '_action_url') }}">{{ attribute(_context, 'plan_' ~ plan_number ~ '_action_label') }}</a></div>
+              </td>
+            {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="plan-comparison__selection-note" aria-live="polite">{{ selection_label|default('Selecciona una alternativa para continuar con la orientación demostrativa.') }}</p>
   </div>
 </section>

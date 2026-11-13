@@ -132,4 +132,11 @@
 
 ## Siguiente puerta
 
-Conectar `deck_sdc_gateway` para ejecutar la secuencia autorizada sin simular resultados.
+La referencia visual para los ajustes Canvas es `preview/index.html`; los JPG desktop/mobile se mantienen como control de composición aprobada.
+
+## Ajuste de paridad visual · 2026-11-13
+
+- Se alinean los SDC Canvas con el HTML en contenedor, espaciado, escala tipográfica, colores, botones, superficies, tarjetas, tabla comparativa y wizard responsive.
+- C11 y C12 conservan los contratos escalares y la interacción existente; el cambio es de composición Twig/CSS y no añade props.
+- El asset `nexo-energia-hero.jpg` se incluye en el tema con el mismo nombre final que resuelve el importador.
+- El preflight de assets y la verificación post-import de imágenes quedan incorporados al proceso antes de aceptar otro handoff.

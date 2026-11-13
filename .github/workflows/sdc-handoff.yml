@@ -27,6 +27,8 @@ jobs:
           node-version: 22
       - name: Validar ejecución
         run: node agent/bin/validate-run.mjs agent/runs/${{ inputs.run_id }}
+      - name: Validar resolución de assets
+        run: node agent/bin/validate-assets.mjs agent/runs/${{ inputs.run_id }}
       - name: Validar paquete SDC si existe
         shell: bash
         run: |
@@ -176,3 +178,9 @@ jobs:
             echo "::error::La salida indica publicación; se aborta por seguridad."
             exit 1
           fi
+          page_url=$(printf '%s\n' "$output" | sed -n 's/.*URL: \(https\?:\/\/[^ ]*\).*/\1/p' | tail -n 1)
+          if [ -z "$page_url" ]; then
+            echo "::error::La salida de Drupal no contiene la URL de la página importada; no se pueden verificar sus imágenes."
+            exit 1
+          fi
+          node agent/bin/validate-imported-images.mjs "$page_url"
