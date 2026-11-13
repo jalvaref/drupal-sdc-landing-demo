@@ -1,0 +1,20 @@
+{
+  "component_id": "C11",
+  "name": "Plan comparison",
+  "variant": "experimental",
+  "status": "experimental",
+  "props": {
+    "title": "Compara las alternativas",
+    "description": "Precios y condiciones ficticios.",
+    "plans": [
+      { "id": "base", "name": "Base hogar", "price": "29,90 €", "price_note": "al mes · orientativo", "recommended": false, "action_label": "Ver Base", "action_url": "#contacto" },
+      { "id": "equilibrio", "name": "Equilibrio", "price": "39,90 €", "price_note": "al mes · orientativo", "recommended": true, "action_label": "Elegir Equilibrio", "action_url": "#recomendacion" },
+      { "id": "flex", "name": "Flex movilidad", "price": "49,90 €", "price_note": "al mes · orientativo", "recommended": false, "action_label": "Ver Flex", "action_url": "#contacto" }
+    ],
+    "criteria": [
+      { "id": "home", "label": "Tipo de vivienda", "values": ["Cualquier vivienda", "Vivienda habitual", "Vivienda + segunda plaza"] },
+      { "id": "charge", "label": "Patrón de recarga", "values": ["Ocasional", "Nocturna habitual", "Variable"] }
+    ],
+    "selection_label": "Selecciona una alternativa"
+  }
+}

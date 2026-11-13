@@ -1,0 +1,32 @@
+<section class="recommendation-wizard" data-component-id="C12" aria-labelledby="recommendation-wizard-title">
+  <h2 id="recommendation-wizard-title">{{ title }}</h2>
+  {% if description %}<p class="recommendation-wizard__description">{{ description }}</p>{% endif %}
+  <ol class="recommendation-wizard__progress" aria-label="Progreso del recorrido">
+    {% for step in steps %}<li data-wizard-progress="{{ loop.index }}"{% if loop.first %} aria-current="step"{% endif %}>{{ step.label }}</li>{% endfor %}
+    <li data-wizard-progress="result">Resultado</li>
+  </ol>
+  <form class="recommendation-wizard__form" novalidate>
+    {% for step in steps %}
+      <fieldset data-wizard-step="{{ loop.index }}"{% if not loop.first %} hidden{% endif %}>
+        <legend>{{ step.label }}</legend>
+        {% if step.type == 'select' %}
+          <label for="{{ step.field }}">{{ step.label }}</label>
+          <select id="{{ step.field }}" name="{{ step.field }}"{% if step.required %} required{% endif %}>
+            <option value="">Selecciona una opción</option>
+            {% for option in step.options %}<option value="{{ option }}">{{ option }}</option>{% endfor %}
+          </select>
+        {% else %}
+          {% for option in step.options %}<label><input type="radio" name="{{ step.field }}" value="{{ option }}"> {{ option }}</label>{% endfor %}
+        {% endif %}
+      </fieldset>
+    {% endfor %}
+    <p class="recommendation-wizard__error" role="alert" aria-live="assertive"></p>
+    <button type="button" data-wizard-back hidden>Volver</button>
+    <button type="button" data-wizard-next>Siguiente</button>
+  </form>
+  <div class="recommendation-wizard__result" data-wizard-result hidden aria-live="polite">
+    <h3>{{ result_title }}</h3>
+    <p>{{ result_body }}</p>
+    <a href="{{ primary_url }}">{{ primary_label }}</a>
+  </div>
+</section>

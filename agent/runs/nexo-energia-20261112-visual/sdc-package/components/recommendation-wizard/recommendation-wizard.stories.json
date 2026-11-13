@@ -1,0 +1,23 @@
+{
+  "component_id": "C12",
+  "name": "Recommendation wizard",
+  "variant": "experimental",
+  "status": "experimental",
+  "props": {
+    "title": "Encuentra una orientación demostrativa",
+    "steps": [
+      { "id": "home", "label": "Tu vivienda", "field": "home_type", "type": "radio", "options": ["Piso", "Casa", "Otra vivienda"], "required": true },
+      { "id": "charge", "label": "Tu recarga", "field": "charge_pattern", "type": "radio", "options": ["Ocasional", "Casi siempre en casa", "Todavía no lo sé"], "required": true },
+      { "id": "zone", "label": "Tu zona", "field": "zone", "type": "select", "options": ["Urbana", "Metropolitana", "Rural"], "required": true }
+    ],
+    "result_rules": [
+      { "when": "charge_pattern=Ocasional", "plan_id": "base" },
+      { "when": "home_type=Casa AND charge_pattern=Casi siempre en casa", "plan_id": "equilibrio" },
+      { "when": "otherwise", "plan_id": "flex" }
+    ],
+    "result_title": "Tu orientación ficticia",
+    "result_body": "Resultado de demostración pendiente de validación.",
+    "primary_label": "Quiero hablar sobre mi orientación",
+    "primary_url": "#contacto"
+  }
+}

@@ -1,0 +1,9 @@
+.recommendation-wizard__progress { display: flex; gap: .5rem; padding: 0; list-style: none; }
+.recommendation-wizard__progress li { padding: .6rem .8rem; border-radius: .5rem; color: var(--sdc-muted, #536070); background: var(--sdc-surface, #f6f8fb); }
+.recommendation-wizard__progress li[aria-current="step"] { color: #fff; background: var(--sdc-coral, #f0442e); }
+.recommendation-wizard fieldset { margin: 1.5rem 0; padding: 0; border: 0; }
+.recommendation-wizard fieldset[hidden], .recommendation-wizard__result[hidden] { display: none; }
+.recommendation-wizard legend { margin-bottom: .8rem; color: var(--sdc-navy, #142d65); font-weight: 800; }
+.recommendation-wizard__error { min-height: 1.4rem; color: #a52218; font-weight: 700; }
+.recommendation-wizard__result { padding: 1.2rem; border-left: 4px solid var(--sdc-coral, #f0442e); background: #fff2ef; }
+@media (max-width: 760px) { .recommendation-wizard__progress { flex-direction: column; } }

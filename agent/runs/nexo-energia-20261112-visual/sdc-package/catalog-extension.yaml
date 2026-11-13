@@ -1,0 +1,16 @@
+schema_version: "1.0"
+components:
+  - id: "C11"
+    name: "Plan comparison"
+    status: "experimental"
+    variant: "experimental"
+    path: "components/plan-comparison"
+    source_run: "nexo-energia-20261112-visual"
+    props: ["title", "description", "plans", "criteria", "selected_plan", "selection_label"]
+  - id: "C12"
+    name: "Recommendation wizard"
+    status: "experimental"
+    variant: "experimental"
+    path: "components/recommendation-wizard"
+    source_run: "nexo-energia-20261112-visual"
+    props: ["title", "steps", "result_rules", "result_title", "result_body", "primary_label", "primary_url"]
