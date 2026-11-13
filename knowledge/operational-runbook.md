@@ -22,19 +22,30 @@ Antes de presentar una fase como preparada:
 - Rechazar cualquier `src` que empiece por `preview/`, `file://`, una ruta del workspace o una URL temporal.
 - Para Hero e Image Text, validar `image_src` e `image_alt` contra sus `.component.yml` reales.
 - Comprobar que el activo existe dentro del tema o que se ha creado/referenciado como Media Drupal.
+- Resolver el nombre final antes del handoff: si `image_src` es relativo, el fichero debe existir con el mismo `basename` en `web/themes/custom/sdc_landing/images/`; una referencia de origen dentro de `agent/runs` no es una URL pública.
+- Ejecutar `node agent/bin/validate-assets.mjs agent/runs/<run_id>` y bloquear PR, despliegue e importación si falla.
 - Comprobar que la plantilla global muestra header y footer alrededor de `page.content`, sin duplicarlos dentro del árbol Canvas.
 
 ## Fase visual
 
-Entregar dos imágenes reales en JPG: `design/desktop.jpg` y `design/mobile.jpg`. Una descripción textual no sustituye a las imágenes. Detenerse en `awaiting_visual_approval`.
+Entregar dos imágenes reales en JPG: `design/desktop.jpg` y `design/mobile.jpg`. Una descripción textual no sustituye a las imágenes. Cada componente debe conservar la dirección visual de su JPG de catálogo en `docs/component-visuals/`; no se debe componer una propuesta genérica que solo reutilice colores. Detenerse en `awaiting_visual_approval`.
 
 ## Fase HTML
 
-Generar HTML autocontenido y responsive con inspector. El inspector mínimo debe mostrar IDs, nombres, variantes y props. La mejora de superposición contextual —estado de catálogo, justificación y resaltado directo sobre cada componente— queda como evolución post-POC. Detenerse en `awaiting_html_approval`.
+Generar HTML autocontenido y responsive con inspector. El HTML debe implementar fielmente los JPG aprobados y los JPG de referencia de cada componente: estructura, proporciones, jerarquía, espaciado, tipografía, color, imágenes, bordes, estados y responsive. El inspector mínimo debe mostrar IDs, nombres, variantes y props; puede añadir estado de catálogo y justificación. La mejora de superposición contextual no altera el diseño y nunca pasa a Drupal. Detenerse en `awaiting_html_approval`.
+
+Antes de pedir aprobación HTML, ejecutar una revisión de paridad por componente:
+
+1. Comparar el hero, rich text, image-text, grids, stats, steps, quote, accordion y CTA con sus JPG de referencia.
+2. Verificar que el orden y la composición no hayan cambiado respecto a los JPG aprobados.
+3. Verificar desktop y mobile, incluyendo colapsado de columnas, tamaños de texto y espaciado.
+4. Registrar cualquier desviación técnica en `traceability.md`; si es una desviación de diseño no justificada, corregirla antes de solicitar aprobación.
 
 ## Fase SDC/Canvas
 
 Si los componentes son estables, generar solo la composición Canvas. El paquete debe contener la composición, la propuesta, el inventario de candidatos, los activos y el informe de validación. La importación debe crear una entidad `canvas_page` y persistir sus instancias en el campo `components`; mantener `draft` y `drupal_status: 0`. El HTML del preview y su inspector son únicamente artefactos de revisión. Tras el despliegue Pantheon, esperar el build Composer y ejecutar `terminus drush <site>.dev -- status` antes de `drush cr` y de la importación. Una nueva importación puede devolver una página publicada a draft; publicar es siempre una acción manual posterior.
+
+Después de importar, extraer la URL dev devuelta por Drupal y ejecutar `node agent/bin/validate-imported-images.mjs <url>`; el workflow debe fallar si una imagen no responde con `2xx` y `Content-Type: image/*`.
 
 ## Diagnóstico del editor Canvas
 

@@ -229,6 +229,23 @@ body { font-family: Arial, Helvetica, sans-serif; background: #fff; }
 @media (max-width: 900px) { .sdc-feature { padding-inline: 24px; }.sdc-hero__inner { grid-template-columns: 1fr 1fr; gap: 32px; }.sdc-hero__media, .sdc-hero__media img { min-height: 420px; }.sdc-steps__list { grid-template-columns: repeat(2, 1fr); row-gap: 60px; }.sdc-steps__list li:nth-child(2)::after { display: none; } }
 @media (max-width: 760px) { .site-header { padding-block: 14px; }.site-header__brand { font-size: 1.35rem; }.sdc-hero__inner { grid-template-columns: 1fr; }.sdc-hero__media, .sdc-hero__media img { min-height: 300px; }.sdc-feature { min-height: 0; padding-block: 36px; border-right: 0; border-bottom: 1px solid #d7dce5; }.sdc-feature:last-child { border-bottom: 0; }.sdc-steps__list { grid-template-columns: 1fr; }.sdc-steps__list li:not(:last-child)::after { display: none; }.sdc-steps__list li { padding-top: 96px; }.site-footer__grid { gap: 34px; }.site-footer__bottom { margin-top: 48px; } }
 
+/* Component fidelity: the SDC presentation follows the approved JPG catalogue. */
+.sdc-rich-text h2 { max-width: 800px; margin-inline: auto; font-family: Georgia, 'Times New Roman', serif; font-weight: 500; }
+.sdc-rich-text__body { max-width: 760px; margin-inline: auto; line-height: 1.6; }
+.sdc-rich-text__body ul { padding-left: 1.3rem; }
+.sdc-rich-text__body li::marker { color: var(--sdc-color-action); }
+.sdc-hero__inner { position: relative; }
+.sdc-hero__media { position: relative; clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%); }
+.sdc-hero__media::after { position: absolute; inset: 0; background: linear-gradient(90deg, #f6f8fb 0%, rgb(246 248 251 / 50%) 12%, transparent 38%); content: ''; pointer-events: none; }
+.sdc-card:has(> img)::before { display: none; }
+.sdc-quote blockquote::before { display: block; margin-bottom: 18px; color: var(--sdc-color-action); content: '“'; font: 900 7rem/.7 Georgia, serif; }
+.sdc-quote__mark { display: none; }
+.sdc-accordion__control { flex: 0 0 auto; }
+.sdc-accordion details[open] .sdc-accordion__control { transform: rotate(45deg); }
+.sdc-cta__content { position: relative; z-index: 1; }
+.sdc-cta__inner { position: relative; }
+.sdc-cta__inner > img { display: none; }
+
 /* Imported agent landing: Drupal filters inline style tags from body fields, so
  * the approved prototype presentation is provided by the theme library. */
 .demo { padding: 12px; background: #dfeaf8; color: #172033; font-size: 13px; font-weight: 700; text-align: center; }

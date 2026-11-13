@@ -15,4 +15,7 @@ props:
     stat_3_value: { type: string, title: 'Valor 3' }
     stat_3_label: { type: string, title: 'Etiqueta 3' }
     stat_3_context: { type: string, title: 'Contexto 3' }
+    stat_4_value: { type: string, title: 'Valor 4', examples: ['85%'] }
+    stat_4_label: { type: string, title: 'Etiqueta 4', examples: ['Satisfacción de clientes'] }
+    stat_4_context: { type: string, title: 'Contexto 4' }
     variant: { type: string, title: 'Variante', enum: [horizontal, grid, highlighted], default: highlighted, examples: ['highlighted'] }
