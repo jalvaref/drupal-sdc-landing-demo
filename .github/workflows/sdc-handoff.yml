@@ -183,4 +183,9 @@ jobs:
             echo "::error::La salida de Drupal no contiene la URL de la página importada; no se pueden verificar sus imágenes."
             exit 1
           fi
-          node agent/bin/validate-imported-images.mjs "$page_url"
+          page_nid=$(printf '%s\n' "$page_url" | sed -n 's#.*/page/\([0-9][0-9]*\).*#\1#p')
+          if [ -z "$page_nid" ]; then
+            echo "::error::No se pudo obtener el nid de la página importada para verificar sus imágenes desde Drupal."
+            exit 1
+          fi
+          terminus drush sdc-landing-demo.dev -- php:eval "\$node=\Drupal\\node\\Entity\\Node::load($page_nid); if (!\$node) { throw new \Exception('No existe la página importada.'); } \$html=(string) \$node->get('body')->value; preg_match_all('/<img\\b[^>]*\\bsrc\\s*=\\s*[\"\\x27]([^\"\\x27]+)[\"\\x27]/i', \$html, \$matches); if (empty(\$matches[1])) { throw new \Exception('La página importada no contiene imágenes en su HTML.'); } foreach (array_unique(\$matches[1]) as \$src) { if (str_starts_with(\$src, '/themes/custom/sdc_landing/images/')) { \$path=DRUPAL_ROOT . \$src; if (!is_file(\$path) || filesize(\$path) === 0) { throw new \Exception('Asset de imagen ausente: ' . \$src); } echo '[OK] ' . \$src . PHP_EOL; } }"
