@@ -11,7 +11,7 @@ props:
     plan_1_name: { type: string, title: 'Nombre plan 1', examples: ['Base hogar'] }
     plan_1_price: { type: string, title: 'Precio plan 1', examples: ['29,90 €'] }
     plan_1_price_note: { type: string, title: 'Nota precio plan 1', examples: ['al mes · orientativo'] }
-    plan_1_recommended: { type: string, title: 'Destacado plan 1', examples: [''] }
+    plan_1_recommended: { type: string, title: 'Destacado plan 1', examples: ['No'] }
     plan_1_highlight: { type: string, title: 'Apunte plan 1', examples: ['Para empezar'] }
     plan_1_action_label: { type: string, title: 'Acción plan 1', examples: ['Ver Base'] }
     plan_1_action_url: { type: string, title: 'URL plan 1', format: uri-reference, examples: ['#contacto'] }
@@ -27,7 +27,7 @@ props:
     plan_3_name: { type: string, title: 'Nombre plan 3', examples: ['Flex movilidad'] }
     plan_3_price: { type: string, title: 'Precio plan 3', examples: ['49,90 €'] }
     plan_3_price_note: { type: string, title: 'Nota precio plan 3', examples: ['al mes · orientativo'] }
-    plan_3_recommended: { type: string, title: 'Destacado plan 3', examples: [''] }
+    plan_3_recommended: { type: string, title: 'Destacado plan 3', examples: ['No'] }
     plan_3_highlight: { type: string, title: 'Apunte plan 3', examples: ['Más flexibilidad'] }
     plan_3_action_label: { type: string, title: 'Acción plan 3', examples: ['Ver Flex'] }
     plan_3_action_url: { type: string, title: 'URL plan 3', format: uri-reference, examples: ['#contacto'] }
