@@ -1,0 +1,15 @@
+schema_version: "1.0"
+components:
+  - id: "C11"
+    name: "Plan comparison"
+    status: "experimental"
+    path: "components/plan-comparison"
+    source: "existing experimental component in theme and prior controlled package"
+    reason: "Tres alternativas comparables en una tabla semántica, con selección y recomendación textual."
+  - id: "C12"
+    name: "Recommendation wizard"
+    status: "experimental"
+    path: "components/recommendation-wizard"
+    source: "existing experimental component in theme and prior controlled package"
+    reason: "Tres pasos de orientación con validación y resultado condicionado, sin persistencia ni contratación."
+
