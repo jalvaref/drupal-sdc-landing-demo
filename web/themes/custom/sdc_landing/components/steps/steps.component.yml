@@ -15,4 +15,7 @@ props:
     step_3_title: { type: string, title: 'Título paso 3', examples: ['Implementación'] }
     step_3_text: { type: string, title: 'Texto paso 3', examples: ['Ponemos la solución en marcha.'] }
     step_3_icon: { type: string, title: 'Icono paso 3', examples: ['implementation'] }
+    step_4_title: { type: string, title: 'Título paso 4', examples: ['Escalado'] }
+    step_4_text: { type: string, title: 'Texto paso 4', examples: ['Impulsamos la mejora continua.'] }
+    step_4_icon: { type: string, title: 'Icono paso 4', examples: ['scale'] }
     variant: { type: string, title: 'Variante', enum: [vertical, horizontal, numbered, timeline], default: numbered, examples: ['numbered'] }

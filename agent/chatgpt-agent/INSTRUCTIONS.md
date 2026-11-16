@@ -44,6 +44,10 @@ Si una fuente está incluida en el conocimiento, úsala y no declares que falta.
 - Mantén una jerarquía clara con un único `h1` y CTA principal.
 - Produce `proposal.json`, `design/desktop.jpg`, `design/mobile.jpg` y `traceability.md`. El HTML responsive completo se genera después de la aprobación visual, pero la fase visual debe incluir un preview mínimo navegable o una representación visual equivalente.
 - El formato visual obligatorio es JPG. Genera una imagen JPG desktop y otra mobile, con suficiente resolución para revisar composición, jerarquía, espaciado, tipografía, color e imágenes. No sustituyas el JPG por una descripción textual, SVG o wireframe salvo que el usuario lo solicite expresamente.
+- Los JPG se generan antes que el HTML y son la referencia visual aprobable de la fase de diseño. Deben construirse usando `knowledge/design-system.md`, el catálogo, el briefing y la dirección visual; no deben depender de un HTML posterior.
+- Tras la aprobación visual, el HTML debe reproducir fielmente los JPG aprobados: composición, orden, copy aprobado, paleta, tipografía, espaciado, imágenes, estados visibles y responsive. No introduzcas una dirección creativa nueva en la fase HTML.
+- Tras la aprobación HTML, los Twig/CSS/JS y la composición Canvas deben reproducir el mismo contrato visual. Si una limitación técnica de Drupal obliga a una adaptación, documenta la diferencia y no la presentes como equivalente sin validarla.
+- No uses truncado artificial ni elipsis para ocultar diferencias entre fases. Si el copy no cabe en el diseño aprobado, corrige la composición en la fase correspondiente y vuelve a solicitar aprobación.
 - Adjunta o muestra explícitamente los dos JPG en la respuesta y entrega enlaces descargables a `design/desktop.jpg` y `design/mobile.jpg` cuando la interfaz permita generar archivos.
 - No declares “propuesta visual preparada” si no has entregado al menos una representación visual desktop y otra mobile.
 - Tras entregar los diseños, detente en `awaiting_visual_approval` y pregunta literalmente si el usuario aprueba la propuesta visual o quiere cambios.
@@ -51,14 +55,19 @@ Si una fuente está incluida en el conocimiento, úsala y no declares que falta.
 ### 3. HTML
 
 - Solo después de la aprobación visual genera o ajusta el HTML.
+- Usa los JPG aprobados y `design_direction` como referencia visual primaria. El HTML debe ser una implementación fiel del diseño, no una nueva propuesta.
+- Para cada componente seleccionado consulta también su JPG canónico en `docs/component-visuals/` y conserva su tratamiento visual: estructura, proporciones, jerarquía, espaciado, tipografía, color, imagen, estados y responsive. No conviertas el catálogo en una galería genérica de tarjetas.
 - El HTML debe ser autocontenido, responsive, navegable con teclado y usable sin dependencias externas obligatorias.
 - Incluye el inspector visual de componentes con sus IDs y props.
 - El inspector superpuesto pertenece exclusivamente al HTML de revisión: nunca lo incluyas en `canvas-composition.yaml`, en el árbol Canvas ni en Drupal.
+- Antes de solicitar aprobación HTML ejecuta una comprobación de paridad por componente contra los JPG aprobados y registra las desviaciones técnicas en `traceability.md`. Si la desviación es visual y no está justificada por el contrato real, corrige el HTML antes de detenerte.
 - Detente en `awaiting_html_approval`.
 
 ### 4. Componentes SDC
 
 - Solo después de la aprobación HTML genera el paquete SDC.
+- Usa el HTML aprobado como referencia estructural y los JPG aprobados como referencia visual. Mantén la misma composición y adapta únicamente lo que exijan los contratos reales de Drupal Canvas.
+- Comprueba que cada SDC conserva el tratamiento del JPG canónico del componente y la implementación HTML aprobada. No aceptes un componente técnicamente válido si cambia sin justificar la composición visual.
 - Si todos los componentes son estables y ya existen en el tema, genera un paquete de composición Canvas y no recrees Twig, CSS, fixtures ni `.component.yml`.
 - El paquete debe contener el activo local referenciado o una referencia Drupal válida, `canvas-composition.yaml`, `proposal.json`, `candidate-components.yaml`, `validation-report.md` y README.
 - El informe debe separar siempre: validación estructural realizada, validación contra contratos reales realizada y validación bloqueada.
@@ -99,6 +108,32 @@ Si el MCP de despliegue no está conectado, no simules ninguna operación ni dec
 ### Gateway de despliegue
 
 Cuando esté conectado el custom MCP de despliegue, usa únicamente estas herramientas y respeta sus puertas: `validate_landing_run`, `create_github_pull_request`, `deploy_pantheon_dev` e `import_drupal_draft`. Valida siempre antes de escribir; exige aprobación explícita antes de crear rama/PR, desplegar Pantheon o importar en Drupal; conserva Drupal como draft; y comunica las evidencias devueltas por cada herramienta. Si el MCP no está disponible, informa del bloqueo y no simules ninguna operación.
+
+#### Fallback manual por HTTP
+
+Si `deck_sdc_gateway` no aparece como herramienta nativa pero el entorno permite ejecutar Node.js, usa `agent/bin/mcp-gateway.mjs` como transporte manual. El script llama al mismo endpoint MCP, lee el secreto exclusivamente de `MCP_TOKEN` y no debe recibir tokens por argumentos ni escribirlos en archivos.
+
+Primero comprueba las herramientas:
+
+```text
+node agent/bin/mcp-gateway.mjs list
+```
+
+Para validar un run:
+
+```text
+node agent/bin/mcp-gateway.mjs validate --run-id <run_id>
+```
+
+Para operaciones de escritura crea antes un JSON temporal sin secretos, revisa que contiene el `run_id` correcto y `confirm: true`, y ejecútalo solo con aprobación explícita:
+
+```text
+node agent/bin/mcp-gateway.mjs create-pr --params-file <params.json>
+node agent/bin/mcp-gateway.mjs deploy --params-file <params.json>
+node agent/bin/mcp-gateway.mjs import-draft --params-file <params.json>
+```
+
+La validación es obligatoria antes de crear la PR. Si falta `MCP_TOKEN`, el endpoint devuelve HTML/no JSON, la autenticación falla o el gateway responde con error, detente y comunica el bloqueo. No simules resultados. El fallback conserva las mismas reglas: PR y despliegue requieren aprobación, Drupal se importa únicamente como draft y nunca se publica automáticamente.
 
 ## Reglas de seguridad y calidad
 

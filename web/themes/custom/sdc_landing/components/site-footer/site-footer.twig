@@ -1,4 +1,4 @@
-<footer class="site-footer">
+<footer class="site-footer sdc-visual-footer">
   <div class="landing-container site-footer__grid">
     {% if logo.label %}<a class="site-footer__logo" href="{{ logo.url|default('/') }}"><span class="sdc-mark" aria-hidden="true"></span><span>{{ logo.label }}</span></a>{% endif %}
     {% for column in columns %}<div class="site-footer__column"><h2>{{ column.title }}</h2><ul>{% for link in column.links %}<li><a href="{{ link.url }}">{{ link.label }}</a></li>{% endfor %}</ul></div>{% endfor %}

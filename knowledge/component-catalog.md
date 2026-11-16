@@ -15,6 +15,25 @@ El header y el footer son globales del tema y no se insertan dentro de una pági
 
 `Hero → Rich text → Feature grid → Image-text → Stats → Steps → Card grid → Quote → Accordion → CTA banner`
 
+## Referencias visuales
+
+Cada entrada del catálogo tiene una referencia JPG en `docs/component-visuals/`. La fase visual debe usarla para definir la composición y la fase HTML debe reproducirla. La existencia de un contrato SDC no autoriza a sustituir el diseño por una tarjeta, rejilla o layout genérico.
+
+| ID | Referencia JPG |
+|---|---|
+| C00 / C99 | `site-header.jpg` / `site-footer.jpg` |
+| C01 | `hero.jpg` |
+| C02 | `rich-text.jpg` |
+| C03 | `image-text.jpg` |
+| C04 | `feature-grid.jpg` |
+| C05 | `card-grid.jpg` |
+| C06 | `stats.jpg` |
+| C07 | `steps.jpg` |
+| C08 | `quote.jpg` |
+| C09 | `accordion.jpg` |
+| C10 | `cta-banner.jpg` |
+| C11 / C12 | `plan-comparison.jpg` / `recommendation-wizard.jpg` |
+
 No todos los bloques son obligatorios: la composición depende del briefing.
 
 ## Componentes disponibles
@@ -27,12 +46,23 @@ No todos los bloques son obligatorios: la composición depende del briefing.
 | C03 | Image-text | Explicación visual de una idea | `eyebrow`, `title`, `description`, `image_src`, `image_alt`, `cta_label`, `cta_url` |
 | C04 | Feature grid | Capacidades o beneficios homogéneos | `title`, `item_1_*`, `item_2_*`, `item_3_*`, `columns`, `variant` |
 | C05 | Card grid | Soluciones o contenidos navegables | `title`, `cards`, `variant` |
-| C06 | Stats | Datos destacados | `stat_1_*`, `stat_2_*`, `stat_3_*`, `variant` |
-| C07 | Steps | Procesos y fases ordenadas | `step_1_*`, `step_2_*`, `step_3_*`, `variant` |
+| C06 | Stats | Datos destacados | `stat_1_*`, `stat_2_*`, `stat_3_*`, `stat_4_*`, `variant` |
+| C07 | Steps | Procesos y fases ordenadas | `step_1_*`, `step_2_*`, `step_3_*`, `step_4_*`, `variant` |
 | C08 | Quote | Cita o mensaje editorial | `quote`, `author`, `role`, `image` |
 | C09 | Accordion | Preguntas frecuentes | `title`, `question_1`/`answer_1` … `question_4`/`answer_4`, `default_open` |
 | C10 | CTA banner | Cierre y conversión | `title`, `primary_label`, `primary_url`, `theme` |
 | C99 | Site footer | Global del tema | `columns`, `legal_links`, `copyright` |
+
+## Candidatos experimentales de la prueba Nexo Energía
+
+Los siguientes candidatos se han añadido como extensión experimental controlada. No son estables ni deben utilizarse fuera de la POC sin completar contrato, pruebas y despliegue.
+
+| ID | Componente | Necesidad | Estado |
+| --- | --- | --- | --- |
+| C11 | PlanComparison | Tabla simultánea de tres alternativas con recomendación, selección y acción | `experimental` |
+| C12 | RecommendationWizard | Recorrido con estado, validación, navegación y resultado condicionado | `experimental` |
+
+La justificación, el contrato preliminar, los estados, responsive y accesibilidad están en `knowledge/experimental-candidates.md` y en el paquete de la ejecución.
 
 ## Reglas de contenido
 
