@@ -242,6 +242,9 @@ body { font-family: Arial, Helvetica, sans-serif; background: #fff; }
 .sdc-quote__mark { display: none; }
 .sdc-accordion__control { flex: 0 0 auto; }
 .sdc-accordion details[open] .sdc-accordion__control { transform: rotate(45deg); }
+.sdc-accordion__question { flex: 1 1 auto; }
+.sdc-accordion__answer p { max-width: 800px; margin: 0; }
+.candidate-tag { display: none !important; }
 .sdc-cta__content { position: relative; z-index: 1; }
 .sdc-cta__inner { position: relative; }
 .sdc-cta__inner > img { display: none; }
