@@ -97,3 +97,9 @@ Tras aprobación SDC explícita y autorización externa explícita se iniciará 
 - El gateway aceptó las solicitudes de validación, despliegue e importación. No se considera finalizado ningún paso externo hasta disponer de una evidencia de resultado.
 - La comprobación CI detectó una incompatibilidad de ciclo de vida en `validate-run.mjs`: las rutas `preview/` se rechazaban también en `visual_draft`. Se corrige para permitirlas únicamente antes de SDC y mantener la prohibición desde `sdc_package_draft` en adelante.
 
+## Reconciliación de Pantheon Dev
+
+- La entrega corregida se fusionó en GitHub `main` mediante el PR #48.
+- El despliegue seguro rechazó actualizar Pantheon porque `master` tenía correcciones posteriores no presentes en GitHub. Se prepara una PR de reconciliación sin push forzado, integrando ambos historiales.
+- Se conservan `drupal_status: 0`, los activos públicos y el árbol Canvas. C11/C12 se alinean con las plantillas reconciliadas del tema.
+

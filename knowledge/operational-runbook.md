@@ -28,11 +28,18 @@ Antes de presentar una fase como preparada:
 
 ## Fase visual
 
-Entregar dos imágenes reales en JPG: `design/desktop.jpg` y `design/mobile.jpg`. Una descripción textual no sustituye a las imágenes. Detenerse en `awaiting_visual_approval`.
+Entregar dos imágenes reales en JPG: `design/desktop.jpg` y `design/mobile.jpg`. Una descripción textual no sustituye a las imágenes. Cada componente debe conservar la dirección visual de su JPG de catálogo en `docs/component-visuals/`; no se debe componer una propuesta genérica que solo reutilice colores. Detenerse en `awaiting_visual_approval`.
 
 ## Fase HTML
 
-Generar HTML autocontenido y responsive con inspector. El inspector mínimo debe mostrar IDs, nombres, variantes y props. La mejora de superposición contextual —estado de catálogo, justificación y resaltado directo sobre cada componente— queda como evolución post-POC. Detenerse en `awaiting_html_approval`.
+Generar HTML autocontenido y responsive con inspector. El HTML debe implementar fielmente los JPG aprobados y los JPG de referencia de cada componente: estructura, proporciones, jerarquía, espaciado, tipografía, color, imágenes, bordes, estados y responsive. El inspector mínimo debe mostrar IDs, nombres, variantes y props; puede añadir estado de catálogo y justificación. La mejora de superposición contextual no altera el diseño y nunca pasa a Drupal. Detenerse en `awaiting_html_approval`.
+
+Antes de pedir aprobación HTML, ejecutar una revisión de paridad por componente:
+
+1. Comparar el hero, rich text, image-text, grids, stats, steps, quote, accordion y CTA con sus JPG de referencia.
+2. Verificar que el orden y la composición no hayan cambiado respecto a los JPG aprobados.
+3. Verificar desktop y mobile, incluyendo colapsado de columnas, tamaños de texto y espaciado.
+4. Registrar cualquier desviación técnica en `traceability.md`; si es una desviación de diseño no justificada, corregirla antes de solicitar aprobación.
 
 ## Fase SDC/Canvas
 

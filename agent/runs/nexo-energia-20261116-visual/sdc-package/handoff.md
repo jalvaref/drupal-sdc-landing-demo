@@ -23,3 +23,7 @@ La contribución requiere que lleguen a Dev dos activos nuevos bajo `web/themes/
 - El gateway aceptó las solicitudes de validación, despliegue e importación; todavía falta una evidencia de finalización que permita afirmar el resultado de Dev o del borrador Canvas.
 - Se ha corregido la validación de ciclo de vida y se actualizará el PR con los JPG obligatorios de diseño para que el workflow pueda verificar el handoff completo.
 
+## Reconciliación requerida
+
+El push a Pantheon se rechazó como `non-fast-forward`: `master` contiene correcciones que no existían en GitHub `main`. Se abrirá una PR de reconciliación que conserva tanto la landing Nexo como las correcciones de Pantheon, sin usar push forzado. Tras fusionarla se repetirá el despliegue y, solo si termina correctamente, la importación como borrador.
+
