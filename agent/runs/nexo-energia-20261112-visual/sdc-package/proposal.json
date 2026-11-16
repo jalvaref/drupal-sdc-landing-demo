@@ -96,6 +96,9 @@
         "stat_3_value": "1",
         "stat_3_label": "conversación siguiente",
         "stat_3_context": "CTA principal de la landing",
+        "stat_4_value": "85%",
+        "stat_4_label": "satisfacción orientativa",
+        "stat_4_context": "Indicador ficticio de demostración",
         "variant": "highlighted"
       },
       "status": "catalog",
@@ -307,6 +310,9 @@
         "step_3_title": "Decides con contexto",
         "step_3_text": "Te llevas una orientación para valorar el siguiente paso.",
         "step_3_icon": "decision",
+        "step_4_title": "Escalas la solución",
+        "step_4_text": "Tras validar la orientación, defines cómo continuar.",
+        "step_4_icon": "scale",
         "variant": "numbered"
       },
       "status": "catalog",
