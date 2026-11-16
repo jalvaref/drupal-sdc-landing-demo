@@ -1,0 +1,21 @@
+schema_version: "1.0"
+source_run: "nexo-energia-20261116-visual"
+status: "experimental"
+components:
+  C11:
+    name: "Plan comparison"
+    include: "sdc_landing:plan-comparison"
+    status: "experimental"
+    canvas_props: "title, description, plan_1_*..plan_3_*, criterion_1_*..criterion_4_*, selected_plan, selection_label"
+    responsibility: "Comparar tres alternativas ficticias de forma simultánea mediante tabla, selección y acción por alternativa."
+    accessibility: ["Tabla con caption y scope", "Recomendación textual además de color", "Radios y enlaces distinguibles"]
+    out_of_scope: ["Precios reales", "Cálculo de ahorro", "Elegibilidad", "Contratación"]
+  C12:
+    name: "Recommendation wizard"
+    include: "sdc_landing:recommendation-wizard"
+    status: "experimental"
+    canvas_props: "title, description, step_1_*..step_3_*, rule_1_*..rule_3_*, result_title, result_body, primary_label, primary_url"
+    responsibility: "Recoger tres respuestas ficticias, validar cada paso y mostrar un resultado condicionado no comercial."
+    accessibility: ["Fieldset y legend", "Validación con región alert", "Foco gestionado", "Resultado textual"]
+    out_of_scope: ["Persistencia", "CRM", "Recomendación comercial", "Contratación"]
+

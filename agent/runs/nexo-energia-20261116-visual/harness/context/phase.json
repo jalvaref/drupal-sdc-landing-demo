@@ -1,0 +1,10 @@
+{
+  "run_id": "nexo-energia-20261116-visual",
+  "phase": "handoff",
+  "state": "handoff_authorized",
+  "previous_approval_required": true,
+  "next_approval_required": "none",
+  "external_actions_authorized": true,
+  "drupal_publication": "prohibited"
+}
+

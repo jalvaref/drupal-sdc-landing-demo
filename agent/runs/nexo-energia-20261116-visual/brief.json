@@ -1,0 +1,93 @@
+{
+  "campaign_name": "Nexo Energía · Hogar y movilidad",
+  "slug": "nexo-energia-hogar-movilidad",
+  "objective": "Explicar de forma clara y demostrativa cómo se pueden explorar conjuntamente el consumo energético del hogar y la movilidad eléctrica, facilitar la comparación de alternativas ficticias, ofrecer una orientación inicial y conducir a una solicitud de conversación no vinculante.",
+  "audience": {
+    "description": "Personas adultas interesadas en comprender y reducir su consumo energético, usar o instalar un vehículo eléctrico y comparar opciones antes de conversar con un equipo.",
+    "age_range": "Adultos",
+    "location": "No especificada; contenido demostrativo",
+    "needs": [
+      "Entender la relación entre hogar, consumo y movilidad eléctrica",
+      "Comparar alternativas con criterios claros",
+      "Resolver dudas antes de solicitar información",
+      "Recibir una orientación inicial sin contratación"
+    ]
+  },
+  "offer": {
+    "name": "Orientación Nexo Energía (demostración)",
+    "description": "Experiencia ficticia para explorar alternativas de hogar y movilidad. No es una oferta comercial, contratación ni recomendación real.",
+    "price": "Precios orientativos e ilustrativos, sin validez comercial",
+    "conditions": [
+      "Todas las alternativas, precios, condiciones y resultados son ficticios",
+      "La orientación no implica contratación ni recomendación comercial real",
+      "Las acciones no se conectarán con sistemas reales"
+    ],
+    "benefits": [
+      "Visión conjunta de hogar y movilidad",
+      "Comparación clara de alternativas demostrativas",
+      "Orientación inicial guiada"
+    ]
+  },
+  "ctas": [
+    {
+      "label": "Explorar mi orientación",
+      "goal": "Iniciar el recorrido demostrativo de orientación",
+      "priority": "primary"
+    },
+    {
+      "label": "Comparar alternativas",
+      "goal": "Ir a la comparativa ilustrativa",
+      "priority": "secondary"
+    },
+    {
+      "label": "Solicitar una conversación",
+      "goal": "Abrir una solicitud demostrativa, no conectada a sistemas reales",
+      "priority": "primary"
+    }
+  ],
+  "kpis": [
+    "Inicio de orientación demostrativa",
+    "Lectura de comparativa",
+    "Solicitud demostrativa de conversación"
+  ],
+  "brand_guidance": [
+    "Estética editorial, tecnológica y premium",
+    "Base luminosa, azul marino para confianza, coral para acciones",
+    "No usar referencias visuales ni textuales a TotalEnergies"
+  ],
+  "assets": [
+    "Dos maquetas visuales JPG generadas para esta propuesta; son activos ilustrativos"
+  ],
+  "constraints": [
+    "Contenido exclusivamente ficticio y demostrativo",
+    "Un único H1",
+    "Precios y condiciones marcados como ilustrativos",
+    "Header y footer son globales del tema, fuera de Canvas",
+    "La página final de Drupal deberá quedar siempre en draft / status 0"
+  ],
+  "candidate_components": [
+    {
+      "id": "C11",
+      "name": "PlanComparison",
+      "variant": "experimental",
+      "justification": "Es el componente existente necesario para comparar en una misma vista tres alternativas ficticias con criterios, selección y acciones.",
+      "props": {
+        "title": "Compara alternativas ilustrativas"
+      }
+    },
+    {
+      "id": "C12",
+      "name": "RecommendationWizard",
+      "variant": "experimental",
+      "justification": "Es el componente existente necesario para recoger respuestas, validar pasos y presentar una orientación condicionada de demostración.",
+      "props": {
+        "title": "Encuentra una orientación demostrativa"
+      }
+    }
+  ],
+  "content_policy": {
+    "allow_fictional_content": true,
+    "tone": "Profesional, claro, cercano y sin presión comercial"
+  }
+}
+
