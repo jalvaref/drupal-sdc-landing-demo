@@ -103,3 +103,12 @@ Tras aprobación SDC explícita y autorización externa explícita se iniciará 
 - El despliegue seguro rechazó actualizar Pantheon porque `master` tenía correcciones posteriores no presentes en GitHub. Se prepara una PR de reconciliación sin push forzado, integrando ambos historiales.
 - Se conservan `drupal_status: 0`, los activos públicos y el árbol Canvas. C11/C12 se alinean con las plantillas reconciliadas del tema.
 
+## Corrección de fidelidad visual · 2026-11-18
+
+- Auditoría completada frente al JPG aprobado y la vista Dev: la divergencia procedía del HTML/SDC previo, no solo de Canvas.
+- Se corrigen cabecera y pie globales para la demo Nexo, el hero editorial, la escala vertical, los iconos de ventajas, la composición de orientación, la CTA de cierre y el acordeón.
+- Nuevo activo ilustrativo de hero: `nexo-energia-20261118-hero-v2.png`; no contiene marcas ni afirmaciones comerciales reales.
+- C11 y C12 continúan diferenciados como componentes experimentales. No se añaden componentes ni props nuevos.
+- Preflight local: `validate-run`, `validate-assets` y `validate-sdc-package` correctos.
+
+
