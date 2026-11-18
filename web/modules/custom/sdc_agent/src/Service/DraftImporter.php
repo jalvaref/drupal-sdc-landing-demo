@@ -36,12 +36,7 @@ final class DraftImporter {
   }
 
   private function importCanvas(string $proposalFile, ?string $title = NULL): EntityInterface {
-    $path = str_starts_with($proposalFile, DIRECTORY_SEPARATOR)
-      ? $proposalFile
-      : DRUPAL_ROOT . '/../' . ltrim($proposalFile, DIRECTORY_SEPARATOR);
-    if (!is_file($path) || filesize($path) === 0) {
-      throw new \InvalidArgumentException(sprintf('No existe o está vacío el proposal: %s', $path));
-    }
+    $path = $this->resolveProposalPath($proposalFile);
     $proposal = json_decode((string) file_get_contents($path), TRUE, 512, JSON_THROW_ON_ERROR);
     $this->assertApprovedProposal($proposal);
     $hero = array_values(array_filter($proposal['components'], static fn (array $component): bool => ($component['component_id'] ?? '') === 'C01'))[0] ?? [];
@@ -90,6 +85,32 @@ final class DraftImporter {
         throw new \InvalidArgumentException('C00/C99 son globales del tema y no pueden importarse dentro de Canvas.');
       }
     }
+  }
+
+  /**
+   * Resolves an approved proposal from the repository or its deployable copy.
+   *
+   * Pantheon Composer artifacts intentionally omit ignored agent run folders.
+   * The explicit runtime copy is limited to approved run IDs and is only used
+   * when the original repository path is unavailable.
+   */
+  private function resolveProposalPath(string $proposalFile): string {
+    $path = str_starts_with($proposalFile, DIRECTORY_SEPARATOR)
+      ? $proposalFile
+      : DRUPAL_ROOT . '/../' . ltrim($proposalFile, DIRECTORY_SEPARATOR);
+    if (is_file($path) && filesize($path) > 0) {
+      return $path;
+    }
+
+    $normalized = str_replace('\\', '/', ltrim($proposalFile, '/'));
+    if (preg_match('#^agent/runs/([a-z0-9][a-z0-9-]{2,80})/proposal\\.json$#', $normalized, $matches)) {
+      $runtimePath = DRUPAL_ROOT . '/modules/custom/sdc_agent/resources/proposals/' . $matches[1] . '.json';
+      if (is_file($runtimePath) && filesize($runtimePath) > 0) {
+        return $runtimePath;
+      }
+    }
+
+    throw new \InvalidArgumentException(sprintf('No existe o está vacío el proposal: %s', $path));
   }
 
   private function buildCanvasTree(array $proposal): array {
@@ -371,15 +392,7 @@ final class DraftImporter {
   }
 
   private function importHtml(string $proposalFile, ?string $title = NULL): NodeInterface {
-    $path = str_starts_with($proposalFile, DIRECTORY_SEPARATOR)
-      ? $proposalFile
-      : DRUPAL_ROOT . '/../' . ltrim($proposalFile, DIRECTORY_SEPARATOR);
-    if (!is_file($path)) {
-      throw new \InvalidArgumentException(sprintf('No existe el proposal: %s', $path));
-    }
-    if (filesize($path) === 0) {
-      throw new \InvalidArgumentException(sprintf('El proposal está vacío: %s', $path));
-    }
+    $path = $this->resolveProposalPath($proposalFile);
 
     $proposal = json_decode((string) file_get_contents($path), TRUE, 512, JSON_THROW_ON_ERROR);
     if (($proposal['status'] ?? NULL) !== 'sdc_approved') {
