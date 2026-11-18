@@ -13,5 +13,9 @@ props:
     answer_3: { type: string, title: 'Respuesta 3', contentMediaType: text/html, x-formatting-context: block, examples: ['<p>Se empieza con un diagnóstico compartido.</p>'] }
     question_4: { type: string, title: 'Pregunta 4', examples: ['¿Qué resultado se obtiene?'] }
     answer_4: { type: string, title: 'Respuesta 4', contentMediaType: text/html, x-formatting-context: block, examples: ['<p>Una hoja de ruta priorizada y accionable.</p>'] }
+    question_5: { type: string, title: 'Pregunta 5', examples: ['¿Implica una contratación?'] }
+    answer_5: { type: string, title: 'Respuesta 5', contentMediaType: text/html, x-formatting-context: block, examples: ['<p>No implica contratación.</p>'] }
+    question_6: { type: string, title: 'Pregunta 6', examples: ['¿Cómo se usan los datos?'] }
+    answer_6: { type: string, title: 'Respuesta 6', contentMediaType: text/html, x-formatting-context: block, examples: ['<p>La finalidad debe estar claramente definida.</p>'] }
     default_open: { type: integer, title: 'Pregunta abierta', minimum: 0, maximum: 0, examples: [0] }
     variant: { type: string, title: 'Variante', enum: [faq, standard, bordered], default: faq, examples: ['faq'] }
