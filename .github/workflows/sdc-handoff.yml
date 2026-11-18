@@ -81,6 +81,18 @@ jobs:
           ssh-keyscan -p "$port" "$host" >> "$HOME/.ssh/known_hosts"
           git remote remove pantheon 2>/dev/null || true
           git remote add pantheon "$PANTHEON_GIT_REMOTE"
+          git fetch pantheon master
+          if git merge-base --is-ancestor pantheon/master HEAD; then
+            echo "Pantheon master ya es ancestro del commit de GitHub."
+          else
+            echo "Integrando Pantheon master para conservar su historial antes del despliegue."
+            git -c user.name='SDC handoff bot' -c user.email='sdc-handoff@users.noreply.github.com' merge --no-edit --no-ff pantheon/master
+          fi
+          deploy_sha=$(git rev-parse HEAD)
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" "$deploy_sha"; then
+            echo "::error::El commit de GitHub no quedó contenido en el commit de despliegue."
+            exit 1
+          fi
           command="${PANTHEON_DEPLOY_COMMAND//<run>/$RUN_ID}"
           if [[ "$command" != *"git push pantheon HEAD:master"* ]]; then
             echo "::error::PANTHEON_DEPLOY_COMMAND debe incluir exactamente git push pantheon HEAD:master."
@@ -89,8 +101,8 @@ jobs:
           echo "Ejecutando el procedimiento autorizado de Pantheon Dev (run: $RUN_ID)."
           git push pantheon HEAD:master
           remote_sha=$(git ls-remote pantheon refs/heads/master | awk '{print $1}')
-          if [ "$remote_sha" != "$GITHUB_SHA" ]; then
-            echo "::error::Pantheon no apunta al commit desplegado. Esperado $GITHUB_SHA; remoto $remote_sha."
+          if [ "$remote_sha" != "$deploy_sha" ]; then
+            echo "::error::Pantheon no apunta al commit desplegado. Esperado $deploy_sha; remoto $remote_sha."
             exit 1
           fi
           echo "Pantheon Codeserver apunta a $remote_sha."
