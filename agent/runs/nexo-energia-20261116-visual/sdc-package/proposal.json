@@ -34,8 +34,8 @@
       "variant": "no explicit variant (width=medium)",
       "props": {
         "eyebrow": "Hogar, consumo y movilidad",
-        "title": "Una misma conversación para tu día a día",
-        "body": "<p>La propuesta reúne estas tres perspectivas para entenderlas con calma y comparar alternativas de demostración. No constituye una oferta ni asesoramiento comercial real.</p>",
+        "title": "Tu hogar y tu movilidad, en una misma orientación",
+        "body": "<p>En Nexo Energía exploramos, de forma demostrativa, cómo se conectan el consumo de tu vivienda y la recarga de tu vehículo eléctrico, con alternativas claras y comprensibles para tu día a día.</p>",
         "alignment": "center",
         "width": "medium"
       },
@@ -49,17 +49,17 @@
       "name": "FeatureGrid",
       "variant": "with-icons",
       "props": {
-        "title": "Tres formas de empezar a entenderlo",
-        "description": "Contenido ilustrativo para esta demostración.",
+        "title": "",
+        "description": "",
         "item_1_icon": "home",
-        "item_1_title": "Tu hogar",
-        "item_1_text": "Ponemos el consumo de la vivienda en el centro de la conversación.",
+        "item_1_title": "Hogar",
+        "item_1_text": "Tu consumo en casa, en el centro de la orientación.",
         "item_2_icon": "charging",
-        "item_2_title": "Tu recarga",
-        "item_2_text": "Revisamos de forma orientativa cuándo y cómo encaja la movilidad en tu rutina.",
-        "item_3_icon": "compare",
-        "item_3_title": "Tus alternativas",
-        "item_3_text": "Compara opciones ilustrativas antes de solicitar una conversación.",
+        "item_2_title": "Recarga",
+        "item_2_text": "La recarga de tu vehículo, integrada en tu día a día.",
+        "item_3_icon": "guidance",
+        "item_3_title": "Orientación",
+        "item_3_text": "Alternativas ilustrativas para tu vivienda y tu movilidad.",
         "columns": 3,
         "theme": "light"
       },
@@ -276,4 +276,5 @@
     "comment": "Propuesta visual, HTML y paquete SDC aprobados; handoff externo autorizado."
   }
 }
+
 
