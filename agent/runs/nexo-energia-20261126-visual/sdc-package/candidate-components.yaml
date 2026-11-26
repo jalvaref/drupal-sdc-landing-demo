@@ -1,0 +1,19 @@
+schema_version: "1.0"
+source_run: "nexo-energia-20261126-visual"
+components:
+  C11:
+    name: "Plan comparison"
+    include: "sdc_landing:plan-comparison"
+    status: "experimental_existing"
+    source: "web/themes/custom/sdc_landing/components/plan-comparison"
+    action: "reuse"
+    responsibility: "Comparar tres alternativas ficticias simultáneamente, con criterios, selección y acción."
+    accessibility: ["Tabla con caption y scope", "Recomendación textual además de color", "Radios y enlaces distinguibles"]
+  C12:
+    name: "Recommendation wizard"
+    include: "sdc_landing:recommendation-wizard"
+    status: "experimental_existing"
+    source: "web/themes/custom/sdc_landing/components/recommendation-wizard"
+    action: "reuse"
+    responsibility: "Recoger tres respuestas demostrativas, validarlas y presentar un resultado condicionado no comercial."
+    accessibility: ["Fieldset y legend", "Región alert", "Foco visible", "Resultado textual"]

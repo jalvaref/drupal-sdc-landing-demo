@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "run_id": "nexo-energia-20261126-visual",
+  "status": "draft",
+  "drupal_target": "draft",
+  "drupal_status": 0,
+  "deployment_classification": "code_deploy_required",
+  "reused_components": ["C01", "C02", "C03", "C04", "C07", "C09", "C10"],
+  "experimental_existing_components": ["C11", "C12"],
+  "new_components": [],
+  "contents": ["canvas-composition.yaml", "proposal.json", "candidate-components.yaml", "assets/hero-arrival-home.jpg", "assets/editorial-routine.jpg", "preview/", "design/", "validation-report.md", "README.md", "handoff.md"]
+}
