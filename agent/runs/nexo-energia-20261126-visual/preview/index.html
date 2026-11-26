@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Prototipo demostrativo de Nexo Energía para hogar y movilidad eléctrica.">
+  <title>Nexo Energía · Hogar y movilidad · Demostración</title>
+  <style>
+    :root { --ink:#111827; --navy:#142d65; --coral:#f0442e; --coral-dark:#c93424; --soft:#f6f8fb; --line:#d9dee7; --muted:#536070; --white:#fff; --focus:#1666cc; --radius:18px; --shadow:0 18px 44px rgba(20,45,101,.12); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:var(--white); font:16px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; }
+    a { color:inherit; }
+    button,input,select { font:inherit; }
+    :focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+    .notice { padding:.65rem 1rem; color:var(--navy); background:#e9f0fa; text-align:center; font-size:.82rem; font-weight:850; letter-spacing:.01em; }
+    .container { width:min(1180px,calc(100% - 40px)); margin:0 auto; }
+    .global-header { position:sticky; top:0; z-index:20; border-bottom:1px solid var(--line); background:rgba(255,255,255,.96); backdrop-filter:blur(12px); }
+    .header-inner { display:flex; min-height:74px; align-items:center; justify-content:space-between; gap:1rem; }
+    .brand { color:var(--navy); font-size:1.45rem; font-weight:900; letter-spacing:-.06em; text-decoration:none; }
+    .brand-dot { color:var(--coral); }
+    .global-nav { display:flex; align-items:center; gap:1.2rem; color:var(--navy); font-size:.9rem; font-weight:750; }
+    .global-nav a { text-decoration:none; }
+    .button { display:inline-flex; min-height:48px; align-items:center; justify-content:center; gap:.5rem; border:2px solid transparent; border-radius:5px; padding:.7rem 1.05rem; color:var(--white); background:var(--coral); font-weight:850; line-height:1.2; text-align:center; text-decoration:none; cursor:pointer; }
+    .button:hover { background:var(--coral-dark); }
+    .button.secondary { border-color:var(--navy); color:var(--navy); background:var(--white); }
+    .button.secondary:hover { color:var(--white); background:var(--navy); }
+    .button.small { min-height:42px; padding:.55rem .8rem; font-size:.88rem; }
+    section { padding:clamp(4rem,8vw,7rem) 0; }
+    h1,h2,h3 { margin:0; color:var(--navy); letter-spacing:-.045em; line-height:1.07; }
+    h1 { max-width:680px; font-size:clamp(3.15rem,5.5vw,5.4rem); }
+    h2 { font-size:clamp(2rem,3.6vw,3.15rem); }
+    h3 { font-size:1.2rem; }
+    p { margin:.5rem 0 0; }
+    .eyebrow { margin:0 0 .85rem; color:var(--coral); font-size:.76rem; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
+    .lead { max-width:620px; color:var(--muted); font-size:clamp(1.08rem,1.7vw,1.3rem); }
+    .section-heading { max-width:760px; margin-bottom:2.3rem; }
+    .section-heading.center { margin-right:auto; margin-left:auto; text-align:center; }
+    .section-heading > p:last-child { color:var(--muted); }
+    .actions { display:flex; flex-wrap:wrap; gap:.8rem; margin-top:1.7rem; }
+    .hero { padding-top:clamp(3.5rem,7vw,6rem); background:linear-gradient(90deg,var(--soft) 0%,var(--soft) 51%,#fff 51%); }
+    .hero-grid,.editorial-grid,.wizard-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:center; gap:clamp(2rem,5vw,5rem); }
+    .hero-copy .demo-chip { display:inline-flex; margin-bottom:1.15rem; padding:.38rem .7rem; border:1px solid #f7b8af; border-radius:999px; color:#a42c1e; background:#fff2ef; font-size:.8rem; font-weight:850; }
+    .media { overflow:hidden; border-radius:var(--radius); box-shadow:var(--shadow); }
+    .media img { display:block; width:100%; aspect-ratio:1.28; object-fit:cover; }
+    .intro { text-align:center; }
+    .intro-copy { max-width:770px; margin:0 auto; color:var(--muted); font-size:1.14rem; }
+    .demo-callout { max-width:920px; margin:2rem auto 0; padding:1.1rem 1.25rem; border-left:4px solid var(--coral); color:var(--navy); background:#fff2ef; font-weight:700; text-align:left; }
+    .soft { background:var(--soft); }
+    .feature-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .feature { padding:1rem clamp(1.3rem,3vw,2.5rem); text-align:center; }
+    .feature + .feature { border-left:1px solid var(--line); }
+    .feature-icon { display:grid; width:62px; height:62px; place-items:center; margin:0 auto 1rem; border-radius:50%; color:var(--coral); background:#fff2ef; font-size:1.55rem; font-weight:900; }
+    .feature p { color:var(--muted); }
+    .candidate-mark { display:inline-flex; margin-bottom:1rem; padding:.35rem .65rem; border-radius:999px; color:var(--white); background:var(--coral); font-size:.72rem; font-weight:900; letter-spacing:.07em; text-transform:uppercase; }
+    .comparison-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:var(--radius); background:var(--white); box-shadow:var(--shadow); }
+    table { width:100%; min-width:850px; border-collapse:collapse; }
+    caption { padding:1rem; color:var(--muted); text-align:left; font-size:.88rem; }
+    th,td { padding:1rem; border-top:1px solid var(--line); text-align:left; vertical-align:top; }
+    thead th { border-top:0; color:var(--navy); background:var(--soft); }
+    th:first-child { width:23%; }
+    .plan-head { display:block; font-size:1.2rem; }
+    .price { display:block; margin-top:.45rem; color:var(--navy); font-size:1.38rem; }
+    .price-note { display:block; color:var(--muted); font-size:.82rem; font-weight:500; }
+    .recommended { background:#fff4f1 !important; box-shadow:inset 0 0 0 1px #f7b8af; }
+    .recommended-badge { display:inline-block; margin-top:.55rem; padding:.22rem .45rem; border-radius:999px; color:var(--white); background:var(--coral); font-size:.66rem; font-weight:900; }
+    .plan-choice { display:flex; align-items:center; gap:.45rem; color:var(--navy); font-size:.86rem; font-weight:750; }
+    .plan-choice input { accent-color:var(--coral); }
+    .selection-note { margin-top:.9rem; color:var(--muted); font-size:.92rem; font-weight:700; }
+    .mobile-plans { display:none; }
+    .plan-card { padding:1.1rem; border:1px solid var(--line); border-radius:12px; background:var(--white); }
+    .plan-card + .plan-card { margin-top:.8rem; }
+    .plan-card.recommended { border:2px solid var(--navy); }
+    .plan-card dl { display:grid; grid-template-columns:1fr 1fr; gap:.55rem; margin:1rem 0; font-size:.88rem; }
+    .plan-card dt { color:var(--muted); } .plan-card dd { margin:0; font-weight:750; }
+    .wizard-grid { align-items:stretch; }
+    .wizard-nav { padding:1.5rem; border-radius:var(--radius); color:var(--white); background:var(--navy); }
+    .wizard-nav h3 { color:var(--white); }
+    .wizard-step { display:flex; width:100%; align-items:center; gap:.7rem; margin-top:.6rem; padding:.75rem; border:0; border-radius:8px; color:var(--white); background:#49628f; font-weight:800; text-align:left; cursor:pointer; }
+    .wizard-step[aria-current="step"] { background:var(--coral); }
+    .wizard-number { font-size:.82rem; font-weight:950; }
+    .wizard-panel { padding:clamp(1.35rem,4vw,2.5rem); border:1px solid var(--line); border-radius:var(--radius); background:var(--white); box-shadow:var(--shadow); }
+    .wizard-panel h3 { font-size:clamp(1.55rem,3vw,2.3rem); }
+    fieldset { margin:1.5rem 0; padding:0; border:0; }
+    legend { margin-bottom:.8rem; color:var(--navy); font-size:1.08rem; font-weight:850; }
+    .choice-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.75rem; }
+    .choice { display:flex; min-height:56px; align-items:center; justify-content:center; padding:.75rem; border:1px solid var(--line); border-radius:8px; color:var(--navy); background:var(--soft); font-weight:800; text-align:center; cursor:pointer; }
+    .choice:has(input:checked) { border-color:var(--coral); box-shadow:0 0 0 2px var(--coral); background:#fff2ef; }
+    .choice:has(input:focus-visible) { outline:3px solid var(--focus); outline-offset:3px; }
+    .choice input { position:absolute; width:1px; height:1px; opacity:0; }
+    .wizard-error { min-height:1.5rem; color:#a52618; font-weight:800; }
+    .wizard-actions { display:flex; justify-content:space-between; gap:.75rem; }
+    .result { padding:1.25rem; border-left:4px solid var(--coral); background:#fff2ef; }
+    .result p { color:#38465a; }
+    .editorial-grid { align-items:center; }
+    .editorial-copy .lead { margin-bottom:1.5rem; }
+    .steps { position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem; }
+    .steps::before { position:absolute; top:1.25rem; right:8%; left:8%; height:1px; background:var(--line); content:""; }
+    .step { position:relative; z-index:1; }
+    .step-number { display:grid; width:42px; height:42px; place-items:center; margin-bottom:1rem; border-radius:50%; color:var(--white); background:var(--coral); font-weight:900; }
+    .step p { color:var(--muted); font-size:.94rem; }
+    .faq { max-width:900px; margin:0 auto; }
+    details { border-top:1px solid var(--line); }
+    details:last-child { border-bottom:1px solid var(--line); }
+    summary { display:flex; align-items:center; gap:.8rem; padding:1.05rem 0; color:var(--navy); font-weight:850; cursor:pointer; }
+    summary::marker { color:var(--coral); }
+    details p { max-width:760px; padding:0 0 1.1rem 1.3rem; color:var(--muted); }
+    .cta { padding:clamp(2rem,5vw,4rem); border-radius:var(--radius); color:var(--white); background:var(--navy); }
+    .cta h2 { color:var(--white); } .cta p { max-width:650px; color:#d5def0; }
+    .footer { padding:2rem 0; color:#d5def0; background:#0d214d; font-size:.86rem; }
+    .footer .container { display:flex; justify-content:space-between; gap:1rem; }
+    /* Inspector: exclusivamente para este prototipo; nunca se importa a Canvas. */
+    .inspector-toggle { position:fixed; right:1rem; bottom:1rem; z-index:50; border:0; border-radius:999px; padding:.8rem 1rem; color:var(--white); background:#111827; box-shadow:var(--shadow); font-weight:900; cursor:pointer; }
+    .inspector { position:fixed; top:1rem; right:1rem; z-index:51; display:none; width:min(410px,calc(100vw - 2rem)); max-height:calc(100vh - 2rem); overflow:auto; padding:1rem; border-radius:14px; color:var(--white); background:#111827; box-shadow:0 22px 60px rgba(0,0,0,.34); }
+    .inspector.open { display:block; } .inspector h2 { color:var(--white); font-size:1.25rem; }
+    .inspector-close { float:right; border:0; color:var(--white); background:transparent; font-size:1.5rem; cursor:pointer; }
+    .inspect-list { display:grid; gap:.55rem; margin-top:1rem; }
+    .inspect-item { padding:.7rem; border:1px solid #41506b; border-radius:8px; color:var(--white); background:#1b2b52; text-align:left; cursor:pointer; }
+    .inspect-item strong { display:block; color:#ff9b8f; } .inspect-item small { color:#d5def0; }
+    .inspect-detail { margin-top:.8rem; padding:.8rem; border-radius:8px; background:#253861; font-size:.84rem; }
+    .inspector-on [data-component-id] { outline:2px dashed var(--coral); outline-offset:4px; }
+    @media (max-width:760px) {
+      .container { width:min(100% - 28px,620px); } .global-nav a:not(.button) { display:none; } .global-nav { gap:.4rem; }
+      .hero { background:var(--soft); } .hero-grid,.editorial-grid,.wizard-grid { grid-template-columns:1fr; gap:2rem; }
+      h1 { font-size:clamp(2.65rem,12vw,4rem); } .media img { aspect-ratio:1.35; }
+      .feature-grid,.steps { grid-template-columns:1fr; gap:0; } .feature { display:grid; grid-template-columns:62px 1fr; column-gap:1rem; padding:1.15rem 0; text-align:left; } .feature + .feature { border-top:1px solid var(--line); border-left:0; } .feature-icon { grid-row:span 2; margin:0; } .feature p { margin-top:.25rem; }
+      .desktop-table { display:none; } .mobile-plans { display:block; } .choice-grid { grid-template-columns:1fr; } .wizard-step { min-height:48px; }
+      .steps::before { top:1.2rem; bottom:1.2rem; left:21px; width:1px; height:auto; } .step { display:grid; grid-template-columns:42px 1fr; column-gap:1rem; padding-bottom:1.5rem; } .step-number { grid-row:span 2; } .step p { margin-top:.25rem; }
+      .button { width:100%; } .actions .button { flex:1 0 100%; } .footer .container { flex-direction:column; }
+    }
+  </style>
+</head>
+<body id="inicio">
+  <div class="notice">Concepto de demostración — contenido y condiciones no válidos para publicación</div>
+  <!-- Header global del tema: no pertenece al árbol Canvas. -->
+  <header class="global-header"><div class="container header-inner"><a class="brand" href="#inicio" aria-label="Nexo Energía, inicio">Nexo Energía<span class="brand-dot">.</span></a><nav class="global-nav" aria-label="Navegación principal"><a href="#alternativas">Alternativas</a><a href="#orientacion">Orientación</a><a href="#preguntas">Preguntas</a><a class="button small" href="#contacto">Explorar mi orientación</a></nav></div></header>
+  <main>
+    <section class="hero" data-component-id="C01" data-name="Hero" data-variant="split" data-status="estable" data-props="eyebrow, title, description, image_src, image_alt, primary_label, primary_url, secondary_label, secondary_url, variant=split, theme=light" data-why="Único H1, propuesta de valor y CTA principal.">
+      <div class="container hero-grid"><div class="hero-copy"><span class="demo-chip">Concepto de demostración</span><p class="eyebrow">Hogar y movilidad</p><h1>La energía de tu hogar también puede acompañar tus trayectos</h1><p class="lead">Explora, de forma demostrativa, cómo se conectan el consumo de tu vivienda y la movilidad eléctrica.</p><div class="actions"><a class="button" href="#orientacion">Explorar mi orientación <span aria-hidden="true">→</span></a><a class="button secondary" href="#alternativas">Comparar alternativas</a></div></div><figure class="media"><img src="../assets/hero-arrival-home.jpg" alt="Persona llegando a casa junto a un vehículo eléctrico conectado a un cargador doméstico"></figure></div>
+    </section>
+    <section class="intro" data-component-id="C02" data-name="RichText" data-variant="width=medium" data-status="estable" data-props="eyebrow, title, body HTML, alignment=center, width=medium" data-why="Contexto editorial de lectura controlada."><div class="container"><div class="section-heading center"><p class="eyebrow">Hogar, consumo y movilidad</p><h2>Una misma conversación para tu día a día</h2><p class="intro-copy">La propuesta reúne estas tres perspectivas para entenderlas con calma y comparar alternativas de demostración, sin promesas técnicas ni contratación.</p></div><p class="demo-callout">Todo lo que ves aquí —precios, condiciones, imágenes y orientaciones— es ilustrativo. No constituye una oferta comercial real.</p></div></section>
+    <section class="soft" data-component-id="C04" data-name="FeatureGrid" data-variant="with-icons" data-status="estable" data-props="title, description, item_1..3, columns=3, variant=with-icons, theme=light" data-why="Resume tres ventajas homogéneas con los campos escalares del contrato."><div class="container"><div class="section-heading"><p class="eyebrow">La propuesta</p><h2>Todo empieza por entender mejor tu rutina</h2><p>Una visión clara para explorar opciones sin presión comercial.</p></div><div class="feature-grid"><article class="feature"><div class="feature-icon" aria-hidden="true">⌂</div><h3>Tu hogar</h3><p>El consumo de la vivienda como punto de partida.</p></article><article class="feature"><div class="feature-icon" aria-hidden="true">↯</div><h3>Tu recarga</h3><p>La frecuencia y el lugar de recarga en tu día a día.</p></article><article class="feature"><div class="feature-icon" aria-hidden="true">≋</div><h3>Tus alternativas</h3><p>Opciones ilustrativas que puedes comparar con calma.</p></article></div></div></section>
+    <section id="alternativas" data-component-id="C11" data-name="PlanComparison" data-variant="experimental" data-status="experimental" data-props="title, description, plan_1..3, criterion_1..4, selected_plan, selection_label" data-why="La lectura simultánea de tres alternativas requiere el candidato experimental C11."><div class="container"><span class="candidate-mark">C11 · componente experimental</span><div class="section-heading"><h2>Compara alternativas ilustrativas</h2><p>Precios orientativos, condiciones ficticias y beneficios demostrativos; no son precios publicados ni una oferta real.</p></div><div class="comparison-wrap desktop-table"><table><caption>Comparativa simultánea de alternativas demostrativas.</caption><thead><tr><th scope="col">Criterio</th><th scope="col"><span class="plan-head">Base hogar</span><span class="price">29 € / mes</span><span class="price-note">orientativo · demostración</span></th><th scope="col" class="recommended"><span class="plan-head">Equilibrio</span><span class="price">39 € / mes</span><span class="price-note">orientativo · demostración</span><span class="recommended-badge">Orientación demostrativa</span></th><th scope="col"><span class="plan-head">Flex movilidad</span><span class="price">49 € / mes</span><span class="price-note">orientativo · demostración</span></th></tr></thead><tbody><tr><th scope="row">Tipo de vivienda</th><td>Piso o casa</td><td class="recommended">Vivienda habitual</td><td>Vivienda con movilidad variable</td></tr><tr><th scope="row">Patrón de recarga</th><td>Ocasional</td><td class="recommended">Habitual en casa</td><td>Variable</td></tr><tr><th scope="row">Beneficio de movilidad</th><td>Guía inicial demostrativa</td><td class="recommended">Visión conjunta ilustrativa</td><td>Opciones flexibles ilustrativas</td></tr><tr><th scope="row">Condición principal</th><td>Sin condición comercial real</td><td class="recommended">Revisión ficticia de necesidades</td><td>Preferencia flexible ficticia</td></tr><tr><th scope="row">Continuar</th><td><label class="plan-choice"><input type="radio" name="plan" value="Base hogar"> Seleccionar Base</label></td><td class="recommended"><label class="plan-choice"><input type="radio" name="plan" value="Equilibrio"> Seleccionar Equilibrio</label></td><td><label class="plan-choice"><input type="radio" name="plan" value="Flex movilidad"> Seleccionar Flex</label></td></tr></tbody></table></div><div class="mobile-plans" aria-label="Alternativas ilustrativas"><article class="plan-card"><h3>Base hogar</h3><span class="price">29 € / mes</span><span class="price-note">orientativo · demostración</span><dl><dt>Vivienda</dt><dd>Piso o casa</dd><dt>Recarga</dt><dd>Ocasional</dd><dt>Movilidad</dt><dd>Guía inicial</dd></dl><label class="plan-choice"><input type="radio" name="plan-mobile" value="Base hogar"> Seleccionar Base</label></article><article class="plan-card recommended"><span class="recommended-badge">Orientación demostrativa</span><h3>Equilibrio</h3><span class="price">39 € / mes</span><span class="price-note">orientativo · demostración</span><dl><dt>Vivienda</dt><dd>Habitual</dd><dt>Recarga</dt><dd>En casa</dd><dt>Movilidad</dt><dd>Visión conjunta</dd></dl><label class="plan-choice"><input type="radio" name="plan-mobile" value="Equilibrio"> Seleccionar Equilibrio</label></article><article class="plan-card"><h3>Flex movilidad</h3><span class="price">49 € / mes</span><span class="price-note">orientativo · demostración</span><dl><dt>Vivienda</dt><dd>Movilidad variable</dd><dt>Recarga</dt><dd>Variable</dd><dt>Movilidad</dt><dd>Opciones flexibles</dd></dl><label class="plan-choice"><input type="radio" name="plan-mobile" value="Flex movilidad"> Seleccionar Flex</label></article></div><p id="plan-note" class="selection-note" aria-live="polite">Selecciona una alternativa para continuar con la orientación demostrativa.</p></div></section>
+    <section class="soft" id="orientacion" data-component-id="C12" data-name="RecommendationWizard" data-variant="experimental" data-status="experimental" data-props="title, description, step_1..3, rule_1..3, result_title, result_body, primary_label, primary_url" data-why="El recorrido de respuestas, validación y resultado condicionado requiere el candidato experimental C12."><div class="container"><span class="candidate-mark">C12 · componente experimental</span><div class="section-heading"><h2>Encuentra una orientación demostrativa</h2><p>Responde tres preguntas. No se guardan ni envían tus respuestas.</p></div><div class="wizard-grid"><nav class="wizard-nav" aria-label="Pasos de orientación"><h3>Tu recorrido</h3><button class="wizard-step" type="button" data-to="1" aria-current="step"><span class="wizard-number">01</span> Tu vivienda</button><button class="wizard-step" type="button" data-to="2"><span class="wizard-number">02</span> Tu recarga</button><button class="wizard-step" type="button" data-to="3"><span class="wizard-number">03</span> Tu prioridad</button><button class="wizard-step" type="button" data-to="4"><span class="wizard-number">✓</span> Resultado</button></nav><div class="wizard-panel"><p id="wizard-count" class="eyebrow">Paso 1 de 3</p><form id="wizard-form" novalidate><fieldset data-step="1"><legend>¿Qué tipo de vivienda tienes?</legend><div class="choice-grid"><label class="choice"><input type="radio" name="home" value="Piso">Piso</label><label class="choice"><input type="radio" name="home" value="Casa">Casa</label><label class="choice"><input type="radio" name="home" value="Otra vivienda">Otra vivienda</label></div></fieldset><fieldset data-step="2" hidden><legend>¿Con qué frecuencia recargas?</legend><div class="choice-grid"><label class="choice"><input type="radio" name="charge" value="Ocasional">Ocasional</label><label class="choice"><input type="radio" name="charge" value="Habitual en casa">Habitual en casa</label><label class="choice"><input type="radio" name="charge" value="Variable o aún no lo sé">Variable o aún no lo sé</label></div></fieldset><fieldset data-step="3" hidden><legend>¿Qué prefieres explorar primero?</legend><div class="choice-grid"><label class="choice"><input type="radio" name="priority" value="Simplicidad">Simplicidad</label><label class="choice"><input type="radio" name="priority" value="Equilibrio diario">Equilibrio diario</label><label class="choice"><input type="radio" name="priority" value="Flexibilidad y movilidad">Flexibilidad y movilidad</label></div></fieldset><p id="wizard-error" class="wizard-error" role="alert"></p><div class="wizard-actions"><button id="wizard-back" class="button secondary" type="button" hidden>Volver</button><button id="wizard-next" class="button" type="button">Siguiente</button></div></form><div id="wizard-result" class="result" hidden><h3 id="result-title">Tu orientación ficticia</h3><p id="result-copy"></p><a class="button" href="#contacto">Solicitar una conversación</a></div></div></div></div></section>
+    <section data-component-id="C03" data-name="ImageText" data-variant="image_position=left" data-status="estable" data-props="eyebrow, title, description, image_src, image_alt, cta_label, cta_url, image_position=left, theme=light" data-why="Escena editorial cotidiana con un único CTA secundario."><div class="container editorial-grid"><figure class="media"><img src="../assets/editorial-routine.jpg" alt="Dos personas junto a un coche eléctrico y un cargador doméstico mientras revisan una tableta"></figure><div class="editorial-copy"><p class="eyebrow">Una escena cotidiana</p><h2>La energía de tu hogar también mueve tu día a día</h2><p class="lead">Un ejemplo ilustrativo de cómo la vivienda, la rutina y la movilidad pueden contemplarse de forma conjunta.</p><a class="button secondary" href="#orientacion">Volver a mi orientación</a></div></div></section>
+    <section class="soft" data-component-id="C07" data-name="Steps" data-variant="numbered" data-status="estable" data-props="title, description, step_1..4, variant=numbered" data-why="Explica en cuatro pasos qué ocurre tras solicitar información."><div class="container"><div class="section-heading"><p class="eyebrow">Después de solicitar información</p><h2>Así continúa la conversación</h2><p>Un proceso demostrativo y no conectado a sistemas reales.</p></div><div class="steps"><article class="step"><span class="step-number">1</span><h3>Cuéntanos tu punto de partida</h3><p>Hablas de tu vivienda y movilidad de forma general.</p></article><article class="step"><span class="step-number">2</span><h3>Explora alternativas</h3><p>Revisas opciones y condiciones ficticias.</p></article><article class="step"><span class="step-number">3</span><h3>Recibe una orientación</h3><p>Consultas un resultado ilustrativo según tus respuestas.</p></article><article class="step"><span class="step-number">4</span><h3>Decide el siguiente paso</h3><p>Solicitas una conversación demostrativa si te interesa.</p></article></div></div></section>
+    <section id="preguntas" data-component-id="C09" data-name="Accordion" data-variant="faq" data-status="estable" data-props="title, question_1..6, answer_1..6 HTML, default_open=0, variant=faq" data-why="Preguntas frecuentes con controles details/summary nativos, operables con teclado."><div class="container"><div class="section-heading center"><p class="eyebrow">Dudas frecuentes</p><h2>Preguntas frecuentes</h2><p>Respuestas claras sobre esta experiencia de demostración.</p></div><div class="faq"><details open><summary>¿Quién puede utilizar esta propuesta?</summary><p>Cualquier persona adulta puede recorrer esta demostración. No crea derechos, elegibilidad ni acceso a una oferta real.</p></details><details><summary>¿Los precios y las condiciones son reales?</summary><p>No. Todos los precios, ventajas y condiciones son ilustrativos y no válidos para publicación ni contratación.</p></details><details><summary>¿Es necesario tener un vehículo eléctrico?</summary><p>No. También está dirigida a quien está valorando la movilidad eléctrica o solo quiere entender su encaje con el hogar.</p></details><details><summary>¿Qué ocurre después de solicitar información?</summary><p>En este prototipo no se envía ninguna solicitud. Un flujo real requeriría definición, aprobación y conexión específica.</p></details><details><summary>¿La orientación implica contratación?</summary><p>No. El resultado es ficticio, demostrativo y no supone una contratación ni una recomendación comercial real.</p></details><details><summary>¿Cómo se utilizarían los datos introducidos?</summary><p>En esta demostración no se almacenan ni se envían datos. Un flujo real necesitaría aviso de privacidad, finalidad y controles aprobados.</p></details></div></div></section>
+    <section id="contacto" data-component-id="C10" data-name="CtaBanner" data-variant="standard" data-status="estable" data-props="eyebrow, title, description, primary_label, primary_url, secondary_label, secondary_url, theme=dark, variant=standard" data-why="Cierre azul marino con una acción principal y una secundaria de retorno."><div class="container"><div class="cta"><p class="eyebrow">Siguiente paso</p><h2>Hablemos de tu hogar y tu movilidad</h2><p>Solicita una conversación demostrativa para resolver tus dudas. No hay contratación automática ni conexión a un sistema real.</p><div class="actions"><a class="button" href="#inicio">Solicitar una conversación <span aria-hidden="true">→</span></a><a class="button secondary" href="#alternativas">Volver a la comparativa</a></div></div></div></section>
+  </main>
+  <!-- Footer global del tema: no pertenece al árbol Canvas. -->
+  <footer class="footer"><div class="container"><span>Nexo Energía · concepto ficticio para validación</span><span>Contenido y condiciones no válidos para publicación</span></div></footer>
+  <button id="inspector-toggle" class="inspector-toggle" type="button" aria-controls="inspector" aria-expanded="false">Mostrar inspector</button>
+  <aside id="inspector" class="inspector" aria-label="Inspector de componentes" aria-hidden="true"><button id="inspector-close" class="inspector-close" type="button" aria-label="Cerrar inspector">×</button><h2>Inspector de componentes</h2><p style="color:#d5def0;font-size:.85rem">Solo aparece en este prototipo de revisión; no se importa a Drupal Canvas.</p><div id="inspect-list" class="inspect-list"></div><div id="inspect-detail" class="inspect-detail">Selecciona un bloque para ver ID, variante, props, estado y motivo de uso.</div></aside>
+  <script>
+    (() => {
+      const components=[...document.querySelectorAll('[data-component-id]')], body=document.body, toggle=document.getElementById('inspector-toggle'), inspector=document.getElementById('inspector'), close=document.getElementById('inspector-close'), list=document.getElementById('inspect-list'), detail=document.getElementById('inspect-detail'); let isOpen=false;
+      const show=(el)=>{detail.innerHTML=`<strong>${el.dataset.componentId} · ${el.dataset.name}</strong><br>Variante: ${el.dataset.variant}<br>Estado: ${el.dataset.status}<br>Props: ${el.dataset.props}<br>Motivo: ${el.dataset.why}`;};
+      components.forEach((el)=>{const item=document.createElement('button');item.type='button';item.className='inspect-item';item.innerHTML=`<strong>${el.dataset.componentId} · ${el.dataset.name}</strong><small>${el.dataset.status} · ${el.dataset.variant}</small>`;item.addEventListener('click',()=>{el.scrollIntoView({behavior:'smooth',block:'center'});show(el);});list.appendChild(item);el.addEventListener('click',(event)=>{if(!isOpen)return;event.preventDefault();event.stopPropagation();show(el);});});
+      const setInspector=(open)=>{isOpen=open;body.classList.toggle('inspector-on',open);inspector.classList.toggle('open',open);inspector.setAttribute('aria-hidden',String(!open));toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'Ocultar inspector':'Mostrar inspector';}; toggle.addEventListener('click',()=>setInspector(!isOpen));close.addEventListener('click',()=>setInspector(false));document.addEventListener('keydown',(e)=>{if(e.key==='Escape')setInspector(false);});
+      const note=document.getElementById('plan-note');document.querySelectorAll('input[name="plan"],input[name="plan-mobile"]').forEach((input)=>input.addEventListener('change',()=>{note.textContent=`Has seleccionado ${input.value}. Puedes continuar con la orientación demostrativa.`;}));
+      const form=document.getElementById('wizard-form'), sets=[...form.querySelectorAll('fieldset')], nav=[...document.querySelectorAll('.wizard-step')], count=document.getElementById('wizard-count'), error=document.getElementById('wizard-error'), back=document.getElementById('wizard-back'), next=document.getElementById('wizard-next'), result=document.getElementById('wizard-result'); let step=1;
+      const setStep=(n)=>{step=n;sets.forEach((set)=>set.hidden=Number(set.dataset.step)!==step);nav.forEach((button)=>button.setAttribute('aria-current',Number(button.dataset.to)===step?'step':'false'));count.textContent=step<4?`Paso ${step} de 3`:'Resultado';back.hidden=step===1||step===4;next.hidden=step===4;next.textContent=step===3?'Ver orientación':'Siguiente';error.textContent='';if(step<4)sets[step-1].querySelector('input,select').focus();};
+      const valid=()=>{const set=sets[step-1], field=set.querySelector('input:checked');if(!field){error.textContent='Selecciona una opción para continuar.';return false;}return true;};
+      next.addEventListener('click',()=>{if(!valid())return;if(step<3){setStep(step+1);return;}const home=form.elements.home.value,charge=form.elements.charge.value,priority=form.elements.priority.value;const plan=priority==='Flexibilidad y movilidad'?'Flex movilidad':(charge==='Ocasional'?'Base hogar':(home==='Casa'&&charge==='Habitual en casa'?'Equilibrio':'Equilibrio'));document.getElementById('result-title').textContent=`Tu orientación ficticia: ${plan}`;document.getElementById('result-copy').textContent=`Por tus respuestas de demostración (${home}, ${charge}, ${priority}), ${plan} puede servir como punto de partida para una conversación. No es una recomendación comercial real ni una contratación.`;form.hidden=true;result.hidden=false;setStep(4);});
+      back.addEventListener('click',()=>{if(step>1&&step<4)setStep(step-1);});nav.forEach((button)=>button.addEventListener('click',()=>{const to=Number(button.dataset.to);if(to<step&&to<4)setStep(to);}));
+    })();
+  </script>
+</body>
+</html>
+
