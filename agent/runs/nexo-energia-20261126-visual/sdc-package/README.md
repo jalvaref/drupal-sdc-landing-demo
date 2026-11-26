@@ -14,6 +14,7 @@ Paquete SDC de una landing ficticia y demostrativa. No contiene una oferta comer
 - `canvas-composition.yaml`: nueve instancias Canvas, sin cabecera ni pie globales.
 - `proposal.json`: propuesta aprobada visualmente y en HTML, con el paquete SDC pendiente de aprobación.
 - `candidate-components.yaml`: inventario de C11/C12 ya existentes; no se recrean Twig, CSS, JavaScript, fixtures ni contratos.
+- `catalog-extension.yaml`: índice vacío de compatibilidad para el validador legacy; los experimentales existentes siguen inventariados en `candidate-components.yaml`.
 - `assets/`: activos ilustrativos incluidos en el paquete y disponibles también en el tema.
 - `preview/`: HTML aprobado con inspector, exclusivo de revisión.
 - `validation-report.md`: validaciones estructurales, contractuales y bloqueos externos.

@@ -69,3 +69,7 @@ No hay componentes o variantes nuevos propuestos. C11 y C12 son experimentales y
 - Clasificación: `code_deploy_required` por activos del tema y componentes experimentales existentes.
 - Secuencia permitida solo tras autorización explícita: `validate_landing_run` → PR → despliegue Pantheon Dev → `import_drupal_draft` → verificación de Canvas e imágenes.
 - La página se mantendrá como `draft` / `status: 0`; no se publicará automáticamente.
+- Autorización externa recibida el 2026-11-26.
+- PR creada mediante `deck_sdc_gateway`: [#55](https://github.com/jalvaref/drupal-sdc-landing-demo/pull/55), rama `codex/landing-nexo-energia-hogar-movilidad-20261126`, commit `583b53e2307c8dc3f46f3763d774dde9222071ef`.
+- El gateway aceptó solicitudes de despliegue Dev e importación como draft. No devolvió todavía una evidencia terminal de despliegue, entidad Drupal, estado de borrador, Canvas editable ni imágenes 2xx; esas verificaciones quedan pendientes.
+- Reintento posterior a la fusión de PR #55: el workflow en `main` falló durante `Validar ejecución`; los pasos Pantheon y Drupal fueron omitidos. La corrección añade los JPG obligatorios de diseño al artefacto remoto y un índice legacy vacío, sin alterar la landing ni duplicar C11/C12.

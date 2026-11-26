@@ -24,6 +24,6 @@
 
 ## Validación bloqueada / externa
 
-- La validación genérica `validate-sdc-package.mjs` está bloqueada para este paquete porque exige el legado `catalog-extension.yaml` y un directorio con Twig/CSS/fixtures para cualquier experimental. Este paquete declara `candidate-components.yaml`; C11/C12 ya existen en el tema y duplicarlos incumpliría la regla de no recrear código existente.
+- `catalog-extension.yaml` declara un catálogo legacy vacío para que `validate-sdc-package.mjs` valide el paquete sin requerir duplicar C11/C12. Los componentes experimentales existentes permanecen documentados en `candidate-components.yaml`.
 - La comprobación de biblioteca Canvas, props editables, URL Dev y respuesta de imágenes requiere despliegue e importación posteriores.
 - PR, despliegue Pantheon Dev e importación Drupal no se han solicitado: requieren aprobación SDC y autorización externa explícita.
