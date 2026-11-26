@@ -1,0 +1,22 @@
+{
+  "run_id": "nexo-energia-20261126-visual",
+  "phase": "handoff_import_fix_ready",
+  "brief_ref": "agent/runs/nexo-energia-20261126-visual/brief.json",
+  "proposal_ref": "agent/runs/nexo-energia-20261126-visual/proposal.json",
+  "visuals": [
+    "agent/runs/nexo-energia-20261126-visual/design/desktop.jpg",
+    "agent/runs/nexo-energia-20261126-visual/design/mobile.jpg"
+  ],
+  "html_artifact": "agent/runs/nexo-energia-20261126-visual/preview/index.html",
+  "sdc_package": "agent/runs/nexo-energia-20261126-visual/sdc-package",
+  "pull_request": "https://github.com/jalvaref/drupal-sdc-landing-demo/pull/55",
+  "validation_fix_pull_request": "https://github.com/jalvaref/drupal-sdc-landing-demo/pull/56",
+  "deployment": "completed",
+  "deployment_workflow": "https://github.com/jalvaref/drupal-sdc-landing-demo/actions/runs/45802146486",
+  "drupal_import": "failed",
+  "drupal_import_workflow": "https://github.com/jalvaref/drupal-sdc-landing-demo/actions/runs/45802159673",
+  "approval_required": "merge_import_fix_then_retry_drupal_import",
+  "drupal_import_failure_reason": "Pantheon Composer artifact omits agent/runs; importer fallback lacked the approved deployable proposal resource.",
+  "import_fix": "web/modules/custom/sdc_agent/resources/proposals/nexo-energia-20261126-visual.json"
+}
+
